@@ -31,11 +31,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <!--<i class="fas fa-laugh-wink"></i>-->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center bg-warning" href="{{ route('home') }}">
+            <div class="sidebar-brand-icon">
+                <img src="{{ asset('img/Logoudi.png') }}" alt="Logo Udi">
             </div>
-            <div class="sidebar-brand-text mx-3">Plan de Mejoramiento</div>
+            <div class="sidebar-brand-text mx-3">Mejora<span class="text-primary">Soft</span></div>
         </a>
 
         <!-- Divider -->
@@ -71,7 +71,7 @@
             </div>
         </li>
 
-        @if(Auth::user()->rol->nombre=="Decano")
+        {{-- @if(Auth::user()->rol->nombre=="Decano")
         <!-- Nav Item - Planes -->
         <li class="nav-item {{ Nav::isRoute('planes') }}">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePlanes" aria-expanded="true" aria-controls="collapsePlanes">
@@ -127,10 +127,10 @@
                 </div>
             </div>
         </li>
-        @endif
+        @endif --}}
 
         <!-- Nav Item - Indicadores -->
-        <li class="nav-item {{ Nav::isRoute('indicadores') }}">
+        {{-- <li class="nav-item {{ Nav::isRoute('indicadores') }}">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseIndicadores" aria-expanded="true" aria-controls="collapseIndicadores">
                 <i class="fas fa-2x text-gray-300 fa-tag"></i>
                 <span>{{ __('Indicadores') }}</span>
@@ -141,10 +141,10 @@
                     <a class="collapse-item" href="#">Crear</a>
                 </div>
             </div>
-        </li>
+        </li> --}}
 
         <!-- Nav Item - Actividades -->
-        <li class="nav-item {{ Nav::isRoute('actividades') }}">
+        {{-- <li class="nav-item {{ Nav::isRoute('actividades') }}">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
             <i class="fas fa-calendar fa-2x text-gray-300"></i>
                 <span>{{ __('Actividades') }}</span>
@@ -155,7 +155,7 @@
                     <a class="collapse-item" href="#">Crear</a>
                 </div>
             </div>
-        </li>
+        </li> --}}
 
         @if(Auth::user()->rol->nombre=="Decano")
                  <!-- Nav Item - Roles -->
@@ -175,7 +175,7 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
-        <!--  Nav Item - Manuelaes 
+        <!--  Nav Item - Manuelaes
         <li class="nav-item {{ Nav::isRoute('manuales') }}">
             <a class="nav-link" href="{{ route('manuales') }}" >
                 <i class="fas fa-2x text-gray-300 fa-book"></i>
