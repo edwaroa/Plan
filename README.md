@@ -1,76 +1,40 @@
-# Laravel SB Admin 2
+# Primera versión del prototipo software para plan de mejoramiento
 
-SB Admin 2 for Laravel.
+Prototipo de software para documentar las evidencias de las actividades del plan de mejoramiento para el programa de Ingeniería de Sistemas.
 
-| Laravel Version | Branch |
-|-----------------|--------|
-| 8.0             | master |
-| 7.0             | v7.0   |
-| 6.0             | v6.0   |
-| 5.8             | v5.8   |
+## Funcionalidades
 
-## Requirements
-
-- PHP >= 7.3.0
-- BCMath PHP Extension
-- Ctype PHP Extension
-- JSON PHP Extension
-- Mbstring PHP Extension
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-
-## Installation
-
-- Clone the repo and `cd` into it
-- Run `composer install`
-- Rename or copy `.env.example` file to `.env`
-- Run `php artisan key:generate`
-- Set your database credentials in your `.env` file
-
-## Note
-
-Recommend to install this preset on a project that you are starting from scratch, otherwise your project's design might break.
-
-## Credits
-
-Laravel SB Admin 2 uses some open-source third-party libraries/packages, many thanks to the web community.
-
-- Laravel - Open source framework.
-- LaravelEasyNav - Making managing navigation in Laravel easy.
-- SB Admin 2 - Thanks to Start Bootstrap.
+- CRUD de los usuarios
+- Modificacion de perfil
+- Inicio de Sesión
+- Recuperacion de Contraseña
 
 ## Preview
 
-`login`
+Algunas de las paginas principales:
 
-<img src="https://imgur.com/YjGp6Sbl.png">
+`Bienvenida`
 
-***
-
-`register`
-
-<img src="https://imgur.com/Wj09cu4l.png">
+<img src="public/img/udi/Bienvenida.png">
 
 ***
 
-`dashboard`
+`Login`
 
-<img src="https://imgur.com/CrmOfT5l.png">
-
-***
-
-`profile`
-
-<img src="https://imgur.com/5t4eS1rl.png">
+<img src="public/img/udi/Login.png">
 
 ***
 
-`logout`
+`Inicio`
 
-<img src="https://imgur.com/d9JclOYl.png">
+<img src="public/img/udi/Inicio.png">
 
-## License
+***
 
-Licensed under the MIT license.
+`Perfil`
+
+<img src="public/img/udi/Perfil.png">
+
+## Creado
+
+Universidad de Investigación y Desarrollo - UDI.
