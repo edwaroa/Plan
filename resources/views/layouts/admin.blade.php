@@ -167,7 +167,6 @@
             <div id="collapseRoles" class="collapse" aria-labelledby="headingRoles" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('roles.index') }}">Ver</a>
-                    <a class="collapse-item" href="{{ route('roles.create') }}">Crear</a>
                 </div>
             </div>
         </li>

@@ -33,13 +33,6 @@
                             <input id="estado" type="estado" class="form-control" name="estado" value="{{$rol->estado}}" readonly="readonly">
                         </div>
                     </div>
-
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-3 text-center">
-                        <a href="{{route('roles.edit',['rol'=>$rol->id])}}" class="btn btn-primary">
-                            <span class="icon text-white-50">Editar</span></a>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>

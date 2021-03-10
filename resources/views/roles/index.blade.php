@@ -19,10 +19,6 @@
                         <th scole="col">Nombre</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Ver</th>
-                        @if(auth()->user()->rol->nombre=="Decano")
-                        <th scole="col">Editar</th>
-                        <th scole="col">Eliminar</th>
-                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -35,22 +31,6 @@
                             <a href="{{route('roles.show',['rol'=>$rol->id])}}" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">Ver</span></a>
                         </td>
-                        @if(auth()->user()->rol->nombre=="Decano")
-                        <td>
-                            <a href="{{route('roles.edit',['rol'=>$rol->id])}}" class="btn btn-info btn-icon-split">
-                                <span class="icon text-white-50">Editar</span></a>
-                        </td>
-                        <td>
-                            <form action="{{route('roles.estado',['rol'=>$rol->id])}}" method="POST">
-                                @csrf
-                                @if($rol->estado=='Activado')
-                                <input type="submit" class="btn btn-danger icon text-white-50" value="Desactivar">
-                                @else
-                                <input type="submit" class="btn btn-success icon text-white-50" value="Activar">
-                                @endif
-                            </form>
-                        </td>
-                        @endif
                     </tr>
                      @endforeach
                 </tbody>

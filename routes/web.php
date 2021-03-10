@@ -23,13 +23,7 @@ Route::get('/manuales/descarga/{nombre}', 'HomeController@descargar')->name('man
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/roles', 'RolController@index')->name('roles.index');
-Route::get('/roles/create', 'RolController@create')->name('roles.create');
-Route::post('/roles', 'RolController@store')->name('roles.store');
 Route::get('/roles/{rol}', 'RolController@show')->name('roles.show');
-Route::get('/roles/{rol}/edit', 'RolController@edit')->name('roles.edit');
-Route::put('/roles/{rol}', 'RolController@update')->name('roles.update');
-Route::get('/roles/{rol}/eliminar', 'RolController@eliminar')->name('roles.delete');
-Route::post('/roles/{rol}', 'RolController@estado')->name('roles.estado');
 
 
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
