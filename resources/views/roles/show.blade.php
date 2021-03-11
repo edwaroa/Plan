@@ -6,7 +6,7 @@
     <div class="col-lg-10 order-lg-1">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">{{ __('Información del Rol') }}</div>
+                <div class="m-0 font-weight-bold text-primary">{{ __('Información General') }}</div>
             </div>
             @if(session('estado'))
                 <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -19,6 +19,7 @@
             <div class="card-body">
                 <form method="POST" action="" enctype="multipart/form-data" novalidate>
                     @csrf
+                    <h6 class="heading-small text-muted mb-4">Información del Rol</h6>
                     <h1 class="text-center">{{$rol->name}}</h1>
                     <div class="form-group row">
                         <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
@@ -40,11 +41,11 @@
 </div>
 
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
+    <h1 class="h3 mb-2 text-gray-800">Miembros</h1>
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Usuarios asignados</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Miembros asignados</h6>
         </div>
 
         <div class="card-body">
