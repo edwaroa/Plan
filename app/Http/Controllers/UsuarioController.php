@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\EstadoUsuario;
+use App\Notifications\DesactivarUsuario;
 
 class UsuarioController extends Controller
 {
@@ -106,10 +108,12 @@ class UsuarioController extends Controller
         if($user->estado=='Desactivado'){
             //Leer el nuevo estado
             $user->estado='Activado';
+            $user->notify(new EstadoUsuario($user));
             $user->save();
         }
         else{
             $user->estado='Desactivado';
+            $user->notify(new DesactivarUsuario($user));
             $user->save();
         }
         return redirect()->action('UsuarioController@index');

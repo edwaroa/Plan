@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class EstadoUsuario extends Notification
+class DesactivarUsuario extends Notification
 {
     use Queueable;
 
@@ -16,7 +16,7 @@ class EstadoUsuario extends Notification
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct()
     {
         //
     }
@@ -41,11 +41,10 @@ class EstadoUsuario extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Cuenta activada')
-            ->line('Tu cuenta ha sido activada por los administradores, ya tienes ingreso al sistema.')
-            ->action('Acceder', url('/'))
+            ->subject('Cuenta desactivada')
+            ->line('Tu cuenta ha sido desactivada por los administradores, ya no tienes ingreso al sistema.')
             ->line('Gracias por usar nuestra aplicación!');
-             
+          
     }
 
     /**
