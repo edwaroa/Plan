@@ -17,7 +17,7 @@
             </div>
             @endif
             <div class="card-body">
-                <form method="POST" action="{{ route('usuarios.store') }}" autocomplete="off" novalidate>
+                <form method="POST" action="{{ route('usuarios.store') }}" autocomplete="off" novalidate enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <h6 class="heading-small text-muted mb-4">Información del miembro</h6>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="confirmar_contraseña">Contraseña</label>
+                                    <label class="form-control-label" for="confirmar_contraseña">Confirmar Contraseña</label>
                                     <input type="password" id="confirmar_contraseña" class="form-control @error('confirmar_contraseña') is-invalid @enderror" name="confirmar_contraseña" placeholder="Confirmar contraseña">
                                     @error('confirmar_contraseña')
                                     <span class="invalid-feedback" role="alert">
@@ -127,6 +127,18 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="imagen" class="form-control-label">{{ __('Imagen') }}</label>
+                                    <input type="file" id="imagen" class="form-control @error('imagen') is-invalid @enderror" name="imagen">
+
+                                    @error('imagen')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>

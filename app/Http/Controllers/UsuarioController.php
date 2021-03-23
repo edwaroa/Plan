@@ -7,9 +7,10 @@ use App\User;
 use App\Actividad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\EstadoUsuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Notifications\EstadoUsuario;
+use Intervention\Image\Facades\Image;
 use App\Notifications\DesactivarUsuario;
 
 class UsuarioController extends Controller
@@ -49,7 +50,15 @@ class UsuarioController extends Controller
             'contraseña' => ['required', 'string', 'min:8','max:12'],
             'confirmar_contraseña' => ['min:8','max:12','required_with:contraseña','same:contraseña'],
             'rol' => 'required',
+            'imagen' => 'required | image'
         ]);
+
+        // Variable para la ruta de la imagen
+        $ruta_imagen = $request['imagen']->store('upload-usuarios', 'public');
+
+        // resize de la imagen
+        $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 550);
+        $img->save();
 
         //Almacenar en la base de datos
         DB::table('users')->insert([
@@ -59,7 +68,8 @@ class UsuarioController extends Controller
             'apellido'=> $data['apellido'],
             'email' => $data['email'],
             'password' => Hash::make($data['contraseña']),
-            'id_rol' => $data['rol']
+            'id_rol' => $data['rol'],
+            'imagen' => $ruta_imagen
         ]);
 
         return redirect()->action('UsuarioController@index');
@@ -79,15 +89,15 @@ class UsuarioController extends Controller
 
     public function update(Request $request,User $user){
 
-       //Validacion de los campos del formulario
-       $request->validate([
-        'tipo_documento' => ['required','string', 'max:255'],
-        'documento' => 'string|unique:users,documento,' .$user->id,
-        'nombre' => ['required', 'string', 'max:255'],
-        'apellido' => ['required', 'string', 'max:255'],
-        'email' =>'required|string|email|max:255|unique:users,email,'.$user->id,
-        'rol' => 'required',
-    ]);
+        //Validacion de los campos del formulario
+        $request->validate([
+            'tipo_documento' => ['required','string', 'max:255'],
+            'documento' => 'string|unique:users,documento,' .$user->id,
+            'nombre' => ['required', 'string', 'max:255'],
+            'apellido' => ['required', 'string', 'max:255'],
+            'email' =>'required|string|email|max:255|unique:users,email,'.$user->id,
+            'rol' => 'required',
+        ]);
 
         //Asignar los valores
         $user = User::findOrFail($user->id);
@@ -97,6 +107,13 @@ class UsuarioController extends Controller
         $user->apellido=$request['apellido'];
         $user->email=$request['email'];
         $user->id_rol=$request['rol'];
+
+        // Si el usuario sube una nueva imagen
+        if(request('imagen')){
+            $ruta_imagen = $request['imagen']->store('upload-usuarios', 'public');
+            $user->imagen = $ruta_imagen;
+        }
+
         $user->save();
         return redirect()->action('UsuarioController@index');
     }

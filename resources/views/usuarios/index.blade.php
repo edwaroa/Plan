@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800">Miembros</h1>
-     
+
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -13,7 +13,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-primary text-light">
                     <tr>
                         <th scole="col">Tipo de documento</th>
@@ -22,11 +22,9 @@
                         <th scole="col">Apellidos</th>
                         <th scole="col">Correo electronico</th>
                         <th scole="col">Rol</th>
-                        <th scole="col">Ver</th>
-                        @if(auth()->user()->rol->nombre=="Decano")
-                        <th scole="col">Editar</th>
-                        <th scole="col">Eliminar</th>
-                        @endif
+                        <th scole="col">Estado</th>
+                        <th scole="col">Imagen</th>
+                        <th scole="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,26 +36,39 @@
                         <td>{{$usuario->apellido}}</td>
                         <td>{{$usuario->email}}</td>
                         <td>{{$usuario->rol->nombre}}</td>
-                        <td>
-                            <a href="{{route('usuarios.show',['user'=>$usuario->id])}}" class="btn btn-primary btn-icon-split">
-                                <span class="icon text-white-50">Ver</span></a>
+                        <td class="text-center">
+                            @if ($usuario->estado == "Activado")
+                                <span class="btn btn-success btn-sm">{{ $usuario->estado }}</span>
+                            @else
+                                <span class="btn btn-danger btn-sm">{{ $usuario->estado }}</span>
+                            @endif
+
                         </td>
-                        @if(auth()->user()->rol->nombre=="Decano")
                         <td>
-                            <a href="{{route('usuarios.edit',['user'=>$usuario->id])}}" class="btn btn-info btn-icon-split">
-                                <span class="icon text-white-50">Editar</span></a>
+                            <img src="/storage/{{ $usuario->imagen }}" width="40px" alt="Imagen del usuario">
                         </td>
                         <td>
-                            <form action="{{route('usuarios.estado',['user'=>$usuario->id])}}" method="POST">
-                                @csrf
-                                @if($usuario->estado=='Activado')
-                                <input type="submit" class="btn btn-danger icon text-white-50" value="Desactivar">
-                                @else
-                                <input type="submit" class="btn btn-success icon text-white-50" value="Activar">
+                            <div class="btn-group">
+                                <a href="{{route('usuarios.show',['user'=>$usuario->id])}}" class="btn btn-primary rounded">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                @if (auth()->user()->rol->nombre == "Decano")
+                                    <a href="{{route('usuarios.edit',['user'=>$usuario->id])}}" class="btn btn-info mx-2 rounded">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+
+                                    <form action="{{route('usuarios.estado',['user'=>$usuario->id])}}" method="POST">
+                                        @csrf
+                                        @if($usuario->estado=='Activado')
+                                        <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-user-times"></i></button>
+                                        @else
+                                        <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-user-check"></i></button>
+                                        @endif
+                                    </form>
                                 @endif
-                            </form>
+
+                            </div>
                         </td>
-                        @endif
                     </tr>
                      @endforeach
                 </tbody>

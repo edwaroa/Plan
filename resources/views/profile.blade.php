@@ -19,7 +19,11 @@
         <div class="col-lg-4 order-lg-2">
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->nombre[0] }}"></figure>
+                    @if (Auth::user()->imagen)
+                        <img src="/storage/{{ Auth::user()->imagen }}" alt="Imagen del Usuario" class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;">
+                    @else
+                        <figure class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->nombre[0] }}"></figure>
+                    @endif
                 </div>
                 <div class="card-body">
 

@@ -44,7 +44,7 @@ class DesactivarUsuario extends Notification
             ->subject('Cuenta desactivada')
             ->line('Tu cuenta ha sido desactivada por los administradores, ya no tienes ingreso al sistema.')
             ->line('Gracias por usar nuestra aplicación!');
-          
+
     }
 
     /**

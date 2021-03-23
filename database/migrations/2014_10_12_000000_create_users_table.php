@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->foreignId('id_rol')->references('id')->on('rols')->constrained()
             ->onUpdate('cascade');
+            $table->string('imagen');
             $table->string('estado')->default('Activado');
             $table->rememberToken();
             $table->timestamps();
