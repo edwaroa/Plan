@@ -28,7 +28,7 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center bg-warning" href="{{ route('home') }}">
@@ -218,33 +218,11 @@
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
-
-                    <!-- Nav Item - Messages
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i> -->
-                            <!-- Counter - Messages
-                        <span class="badge badge-danger badge-counter">1</span>
-                        </a>  -->
-                        <!-- Dropdown - Messages
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Centro de Mensajes
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">Ver actividades</a>
-                        </div>
-                    </li> -->
                     <div class="topbar-divider d-none d-sm-block"></div>
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->nombre[0] }}"></figure> -->
+                            <img class="img-profile rounded-circle mr-2" src="/storage/{{ Auth::user()->imagen }}">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nombre }}</span>
                         </a>
                         <!-- Dropdown - User Information -->

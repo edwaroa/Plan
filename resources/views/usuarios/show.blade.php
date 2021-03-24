@@ -1,85 +1,111 @@
 @extends('layouts.admin')
 
 @section('main-content')
-<div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Miembros</h1>
-    <div class="col-lg-12 order-lg-1">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <div class="m-0 font-weight-bold text-primary">{{ __('Información general') }}</div>
-            </div>
-            @if(session('estado'))
-                <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-                    {{session('estado')}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+    <!-- Page Heading -->
+    <a href="javascript:history.back()" class="btn btn-outline-warning px-3 mx-1 my-2"><i class="fas fa-arrow-circle-left"></i></a>
+
+    @if ($errors->any())
+        <div class="alert alert-danger border-left-danger" role="alert">
+            <ul class="pl-4 my-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="row">
+
+        <div class="col-lg-4 order-lg-2">
+            <div class="card shadow mb-4">
+                <div class="card-profile-image mt-3">
+                    @if ($user->imagen)
+                        <img src="/storage/{{ $user->imagen }}" alt="Imagen del Usuario" class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;">
+                    @else
+                        <figure class="rounded-circle avatar avatar font-weight-bold" style="font-size: 60px; height: 180px; width: 180px;" data-initial="{{ Auth::user()->nombre[0] }}"></figure>
+                    @endif
                 </div>
-            @endif
-            <div class="card-body">
-                <form method="POST" action="" enctype="multipart/form-data" novalidate>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="_method" value="PUT">
-                        <h6 class="heading-small text-muted mb-4">Información del miembro</h6>
+                <div class="card-body">
 
-                        <div class="pl-lg-4">
-                        <h1 class="text-center">{{$user->nombre}}</h1>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label for="tipo documento" class="form-control-label">{{ __('Tipo de documento') }}</label>
-                                        <input id="tipo documento" type="text" class="form-control" name="tipo documento" value="{{$user->tipo_documento}}" readonly="readonly" autofocus>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label for="documento" class="form-control-label">{{ __('N° documento') }}</label>
-                                        <input id="documento" type="text" class="form-control" name="documento" value="{{$user->documento}}" readonly="readonly" autofocus>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="nombre">Nombres</label>
-                                        <input id="nombre" type="text" class="form-control" name="nombre" value="{{$user->nombre}}" readonly="readonly" autofocus>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="apellido">Apellidos</label>
-                                        <input id="apellido" type="text" class="form-control" name="apellido" value="{{$user->apellido}}" readonly="readonly" autofocus>
-                                </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="email">Correo electronico</label>
-                                        <input id="email" type="email" class="form-control" name="email" value="{{$user->email}}" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label for="rol" class="form-control-label">{{ __('Rol') }}</label>
-                                        <input id="rol" type="text" class="form-control" name="rol" value="{{$user->rol->nombre}}" readonly="readonly" autofocus>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <h5 class="font-weight-bold">{{  $user->fullName }}</h5>
+                                <p>{{  $user->rol->nombre }}</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        @if(auth()->user()->rol->nombre=="Decano")
-                        <div class="form-group row mb-0">
-                            <div class="col-md-7 offset-md-5">
-                            <a href="{{route('usuarios.edit',['user'=>$user->id])}}" class="btn btn-primary">
-                                <span class="icon text-white-50">Editar</span></a>
+        <div class="col-lg-8 order-lg-1">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 my-1">
+                    <h6 class="m-0 font-weight-bold text-primary">Miembro: {{ $user->fullname }}</h6>
+                </div>
+                <div class="card-body">
+                    <h6 class="heading-small text-muted mb-4">Información del miembro</h6>
+                    <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label font-weight-bold" for="tipo documento">Tipo de documento</label>
+                                <p>{{ $user->tipo_documento }}</p>
                             </div>
                         </div>
-                        @endif
-                </form>
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label font-weight-bold" for="documento">N° documento</label>
+                                <p>{{ $user->documento }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="nombre">Nombres<span class="small text-danger">*</span></label>
+                                <input type="text" id="nombre" class="form-control" name="nombre" placeholder="Nombres" value="{{ old('nombre', $user->nombre) }}" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label" for="apellido">Apellidos</label>
+                                <input type="text" id="apellido" class="form-control" name="apellido" placeholder="Apellidos" value="{{ old('apellido', $user->apellido) }}" readonly>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label font-weight-bold" for="email">Correo electronico</label>
+                                <p>{{ $user->email }}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label font-weight-bold" for="estado">Correo electronico</label>
+                                @if ($user->estado == "Activado")
+                                    <p>
+                                        <span class="badge badge-success">{{ $user->estado }}</span>
+                                    </p>
+                                @else
+                                    <p>
+                                        <span class="badge badge-danger">{{ $user->estado }}</span>
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row my-3">
+                        <div class="col">
+                            <a href="{{ route('usuarios.edit', ['user' => $user->id]) }}" class="text-primary">¿Desea editar este usuario?</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 @endsection
-

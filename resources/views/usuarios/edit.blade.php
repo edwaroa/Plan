@@ -2,8 +2,8 @@
 
 @section('main-content')
 <div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Miembros</h1>
-    <div class="col-lg-10 order-lg-1">
+    <a href="javascript:history.back()" class="btn btn-outline-warning px-3 mx-2 my-2"><i class="fas fa-arrow-circle-left"></i></a>
+    <div class="col-lg-12 order-lg-1">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="m-0 font-weight-bold text-primary">{{ __('Editar Miembro') }}</div>

@@ -2,24 +2,22 @@
 
 @section('main-content')
 
-<div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800">Miembros</h1>
-
-
+<div>
+    <div>
+        <h2>Administrar Miembros</h2>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Miembros Registrados</h6>
+            <a href="{{ route('usuarios.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-user-plus"></i></a>
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-primary text-light">
                     <tr>
-                        <th scole="col">Tipo de documento</th>
                         <th scole="col">Documento</th>
-                        <th scole="col">Nombres</th>
-                        <th scole="col">Apellidos</th>
+                        <th scole="col">Nombre Completo</th>
                         <th scole="col">Correo electronico</th>
                         <th scole="col">Rol</th>
                         <th scole="col">Estado</th>
@@ -30,21 +28,19 @@
                 <tbody>
                      @foreach($usuarios as $usuario)
                     <tr>
-                        <td>{{$usuario->tipo_documento}}</td>
                         <td>{{$usuario->documento}}</td>
-                        <td>{{$usuario->nombre}}</td>
-                        <td>{{$usuario->apellido}}</td>
+                        <td>{{$usuario->nombre}} {{ $usuario->apellido }}</td>
                         <td>{{$usuario->email}}</td>
                         <td>{{$usuario->rol->nombre}}</td>
                         <td class="text-center">
                             @if ($usuario->estado == "Activado")
-                                <span class="btn btn-success btn-sm">{{ $usuario->estado }}</span>
+                                <span class="badge badge-success">{{ $usuario->estado }}</span>
                             @else
-                                <span class="btn btn-danger btn-sm">{{ $usuario->estado }}</span>
+                                <span class="badge badge-danger">{{ $usuario->estado }}</span>
                             @endif
 
                         </td>
-                        <td>
+                        <td class="text-center">
                             <img src="/storage/{{ $usuario->imagen }}" width="40px" alt="Imagen del usuario">
                         </td>
                         <td>

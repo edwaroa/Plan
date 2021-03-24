@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use App\Notifications\DesactivarUsuario;
+use Carbon\Carbon;
 
 class UsuarioController extends Controller
 {
@@ -28,6 +29,7 @@ class UsuarioController extends Controller
             //Muestra las actividades del usuario logeado
             $usuarios=User::where('estado','Activado')->get();
         }
+
         return view('usuarios.index')->with('usuarios',$usuarios);
     }
 
@@ -60,6 +62,10 @@ class UsuarioController extends Controller
         $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 550);
         $img->save();
 
+        // Fecha actual
+        $fecha = Carbon::now();
+        $fecha->format('d-m-Y');
+
         //Almacenar en la base de datos
         DB::table('users')->insert([
             'tipo_documento' => $data['tipo_documento'],
@@ -69,16 +75,15 @@ class UsuarioController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['contraseña']),
             'id_rol' => $data['rol'],
-            'imagen' => $ruta_imagen
+            'imagen' => $ruta_imagen,
+            'created_at' => $fecha,
+            'updated_at' => $fecha
         ]);
 
         return redirect()->action('UsuarioController@index');
     }
     public function show(User $user){
 
-        if($user->estado==='Desactivado'){
-            return abort(404);
-        }
         return view('usuarios.show', compact('user'));
 
     }
