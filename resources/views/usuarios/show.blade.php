@@ -84,7 +84,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label class="form-control-label font-weight-bold" for="estado">Correo electronico</label>
+                                <label class="form-control-label font-weight-bold" for="estado">Estado</label>
                                 @if ($user->estado == "Activado")
                                     <p>
                                         <span class="badge badge-success">{{ $user->estado }}</span>
