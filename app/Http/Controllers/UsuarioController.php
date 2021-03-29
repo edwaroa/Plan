@@ -88,6 +88,7 @@ class UsuarioController extends Controller
 
     }
     public function edit(User $user){
+        // Trayendo el id y el nombre de todos los roles
         $roles=Rol::all(['id','nombre']);
         return view('usuarios.edit',compact('roles','user'));
     }
