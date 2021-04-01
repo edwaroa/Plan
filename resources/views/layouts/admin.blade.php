@@ -22,6 +22,7 @@
 
     <!-- Favicon -->
     <link href="{{ asset('img/Logoudi.png') }}" rel="icon" type="image/png">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body id="page-top">
 
@@ -71,20 +72,23 @@
             </div>
         </li>
 
-        {{-- @if(Auth::user()->rol->nombre=="Decano")
-        <!-- Nav Item - Planes -->
-        <li class="nav-item {{ Nav::isRoute('planes') }}">
-            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePlanes" aria-expanded="true" aria-controls="collapsePlanes">
-            <i class="fas fa-2x text-gray-300 fa-database"></i>
-                <span>{{ __('Planes') }}</span>
-            </a>
-            <div id="collapsePlanes" class="collapse" aria-labelledby="headingPlanes" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="#">Ver</a>
-                    <a class="collapse-item" href="#">Crear</a>
+        @if(Auth::user()->rol->nombre=="Decano")
+            <!-- Nav Item - Planes -->
+            <li class="nav-item {{ Nav::isRoute('planes') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePlanes" aria-expanded="true" aria-controls="collapsePlanes">
+                <i class="fas fa-2x text-gray-300 fa-database"></i>
+                    <span>{{ __('Planes') }}</span>
+                </a>
+                <div id="collapsePlanes" class="collapse" aria-labelledby="headingPlanes" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('planes.index') }}">Ver</a>
+                        <a class="collapse-item" href="{{ route('planes.create') }}">Crear</a>
+                    </div>
                 </div>
-            </div>
-        </li>
+            </li>
+        @endif
+
+        {{--
 
         <!-- Nav Item - Factores -->
         <li class="nav-item {{ Nav::isRoute('factores') }}">

@@ -4,11 +4,11 @@
 
 <div>
     <div>
-        <h2>Administrar Miembros</h2>
+        <h2>Administrar Planes</h2>
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="{{ route('usuarios.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-user-plus"></i></a>
+            <a href="{{ route('planes.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-user-plus"></i></a>
         </div>
 
         <div class="card-body">
@@ -16,46 +16,51 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="bg-primary text-light">
                     <tr>
-                        <th scole="col">Documento</th>
-                        <th scole="col">Nombre Completo</th>
-                        <th scole="col">Correo electronico</th>
-                        <th scole="col">Rol</th>
+                        <th scole="col">Nombre</th>
+                        <th scole="col">Descripción</th>
+                        <th scole="col">Progreso</th>
                         <th scole="col">Estado</th>
-                        <th scole="col">Imagen</th>
                         <th scole="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                     @foreach($usuarios as $usuario)
+                     @foreach($planes as $plan)
                     <tr>
-                        <td>{{$usuario->documento}}</td>
-                        <td>{{$usuario->nombre}} {{ $usuario->apellido }}</td>
-                        <td>{{$usuario->email}}</td>
-                        <td>{{$usuario->rol->nombre}}</td>
-                        <td class="text-center">
-                            @if ($usuario->estado == "Activado")
-                                <span class="badge badge-success">{{ $usuario->estado }}</span>
+                        <td>{{$plan->nombre}}</td>
+                        <td>{{$plan->descripcion}}</td>
+                        <td>
+                            @if ($plan->progreso == 0)
+                                El plan aún no tiene progreso
                             @else
-                                <span class="badge badge-danger">{{ $usuario->estado }}</span>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                        {{ $plan->progreso }} %
+                                    </div>
+                                </div>
                             @endif
 
                         </td>
-                        <td width="100" style="padding: 2px">
-                            <img src="/storage/{{ $usuario->imagen }}" width="100%" alt="Imagen del usuario">
+                        <td class="text-center">
+                            @if ($plan->estado == "Activado")
+                                <span class="badge badge-success">{{ $plan->estado }}</span>
+                            @else
+                                <span class="badge badge-danger">{{ $plan->estado }}</span>
+                            @endif
+
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{route('usuarios.show',['user'=>$usuario->id])}}" class="btn btn-primary rounded">
+                                <a href="{{route('usuarios.show',['user'=>$plan->id])}}" class="btn btn-primary rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if (auth()->user()->rol->nombre == "Decano")
-                                    <a href="{{route('usuarios.edit',['user'=>$usuario->id])}}" class="btn btn-warning mx-2 rounded">
+                                    <a href="#" class="btn btn-warning mx-2 rounded">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <form action="{{route('usuarios.estado',['user'=>$usuario->id])}}" method="POST">
+                                    <form action="#" method="POST">
                                         @csrf
-                                        @if($usuario->estado=='Activado')
+                                        @if($plan->estado=='Activado')
                                         <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-user-times"></i></button>
                                         @else
                                         <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-user-check"></i></button>
@@ -74,3 +79,4 @@
     </div>
 </div>
 @endsection
+

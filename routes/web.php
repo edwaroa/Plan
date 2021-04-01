@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/roles', 'RolController@index')->name('roles.index');
 Route::get('/roles/{rol}', 'RolController@show')->name('roles.show');
 
-
+// Usuarios
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
 Route::get('/usuarios/create', 'UsuarioController@create')->name('usuarios.create');
 Route::post('/usuarios', 'UsuarioController@store')->name('usuarios.store');
@@ -41,8 +42,14 @@ Route::delete('usuarios/{user}', 'UsuarioController@destroy')->name('usuarios.de
 Auth::routes();
 //Desactivar el register
 
+// Perfil
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
+
+// Planes
+Route::get('/planes', [PlanController::class, 'index'])->name('planes.index');
+Route::get('/planes/create', [PlanController::class, 'create'])->name('planes.create');
+Route::post('/planes', [PlanController::class, 'store'])->name('planes.store');
 
 Route::get('/about', function () {
     return view('about');
