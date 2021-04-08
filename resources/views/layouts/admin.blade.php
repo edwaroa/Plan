@@ -87,7 +87,7 @@
                 </a>
                 <div id="collapsePlanes" class="collapse" aria-labelledby="headingPlanes" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('planes.index') }}">Ver</a>
+                        <a class="collapse-item" href="{{route('planes.index')}}">Ver</a>
                         <a class="collapse-item" href="{{ route('planes.create') }}">Crear</a>
                     </div>
                 </div>

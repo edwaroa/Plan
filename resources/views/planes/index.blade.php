@@ -8,7 +8,7 @@
     </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <a href="{{ route('planes.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-user-plus"></i></a>
+            <a href="{{ route('planes.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-database"></i></a>
         </div>
 
         <div class="card-body">
