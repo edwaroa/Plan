@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\UniversidadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -71,6 +72,15 @@ Route::get('/facultades/{facultad}', [FacultadController::class, 'show'])->name(
 Route::get('/facultades/{facultad}/edit', [FacultadController::class, 'edit'])->name('facultades.edit');
 Route::put('/facultades/{facultad}', [FacultadController::class, 'update'])->name('facultades.update');
 Route::post('/facultades/{facultad}', [FacultadController::class, 'estado'])->name('facultades.estado');
+
+// Programas
+Route::get('/programas', [ProgramaController::class, 'index'])->name('programas.index');
+Route::get('/programas/create', [ProgramaController::class, 'create'])->name('programas.create');
+Route::post('/programas', [ProgramaController::class, 'store'])->name('programas.store');
+Route::get('/programas/{programa}', [ProgramaController::class, 'show'])->name('programas.show');
+Route::get('/programas/{programa}/edit', [ProgramaController::class, 'edit'])->name('programas.edit');
+Route::put('/programas/{programa}', [ProgramaController::class, 'update'])->name('programas.update');
+Route::post('/programas/{programa}', [ProgramaController::class, 'estado'])->name('programas.estado');
 
 Route::get('/about', function () {
     return view('about');

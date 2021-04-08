@@ -36,7 +36,7 @@
                         <div class="card-body text-center">
                           <h3 class="card-title text-center">Programas</h3>
                           <p class="card-text">En este modulo podra administrar los programas que se registraron en la base de datos.</p>
-                          <a href="#" class="btn btn-success">Ingresar</a>
+                          <a href="{{ route('programas.index') }}" class="btn btn-success">Ingresar</a>
                         </div>
                     </div>
                 </div>
