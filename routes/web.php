@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\UniversidadController;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,15 @@ Route::get('/universidades/{universidad}', [UniversidadController::class, 'show'
 Route::get('/universidades/{universidad}/edit', [UniversidadController::class, 'edit'])->name('universidades.edit');
 Route::put('/universidades/{universidad}', [UniversidadController::class, 'update'])->name('universidades.update');
 Route::post('/universidades/{universidad}', [UniversidadController::class, 'estado'])->name('universidades.estado');
+
+// Facultades
+Route::get('/facultades', [FacultadController::class, 'index'])->name('facultades.index');
+Route::get('/facultades/create', [FacultadController::class, 'create'])->name('facultades.create');
+Route::post('/facultades', [FacultadController::class, 'store'])->name('facultades.store');
+Route::get('/facultades/{facultad}', [FacultadController::class, 'show'])->name('facultades.show');
+Route::get('/facultades/{facultad}/edit', [FacultadController::class, 'edit'])->name('facultades.edit');
+Route::put('/facultades/{facultad}', [FacultadController::class, 'update'])->name('facultades.update');
+Route::post('/facultades/{facultad}', [FacultadController::class, 'estado'])->name('facultades.estado');
 
 Route::get('/about', function () {
     return view('about');

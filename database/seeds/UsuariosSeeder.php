@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Rol;
 use App\User;
 use FontLib\Table\Type\name;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,18 @@ class UsuariosSeeder extends Seeder
      */
     public function run()
     {
+        Rol::create([
+            'nombre' => 'Decano'
+        ]);
+
+        Rol::create([
+            'nombre' => 'Administrativo'
+        ]);
+
+        Rol::create([
+            'nombre' => 'Docente'
+        ]);
+
         $user = User::create([
             'tipo_documento' => 'Cedula de Ciudadanía',
             'documento' => '1098811453',
