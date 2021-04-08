@@ -57,7 +57,13 @@
         </div>
 
         <!-- Nav Item - Miembros -->
-        <li class="nav-item {{ Nav::isRoute('usuarios') }}">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('homeCorporacion') }}">
+                <i class="fas fa-university fa-2x text-gray-300"></i>
+                <span>{{ __('Corporación') }}</span>
+            </a>
+        </li>
+        <li class="nav-item {{ Nav::isRoute('universidad') }}">
             <a class="nav-link" href="" data-toggle="collapse" data-target="#collapseUsuarios" aria-expanded="true" aria-controls="collapseUsuarios">
                 <i class="fas fa-users fa-2x text-gray-300"></i>
                 <span>{{ __('Miembros') }}</span>
@@ -258,6 +264,7 @@
                 <div class="copyright text-center my-auto">
                     <span>Copyright &copy; Universidad de Investigacion y Desarrollo 2020</span>
                 </div>
+                <div class="text-center my-2">Iconos diseñados por <a href="https://smashicons.com/" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
             </div>
         </footer>
         <!-- End of Footer -->

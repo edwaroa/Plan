@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\UniversidadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () { return view('welcome'); });
 
+Route::get('/home/corporacion', function () { return view('homeCorporacion'); })->name('homeCorporacion');
 
 Auth::routes();
 
@@ -50,6 +52,15 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/planes', [PlanController::class, 'index'])->name('planes.index');
 Route::get('/planes/create', [PlanController::class, 'create'])->name('planes.create');
 Route::post('/planes', [PlanController::class, 'store'])->name('planes.store');
+
+// Universidades
+Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');
+Route::get('/universidades/create', [UniversidadController::class, 'create'])->name('universidades.create');
+Route::post('/universidades', [UniversidadController::class, 'store'])->name('universidades.store');
+Route::get('/universidades/{universidad}', [UniversidadController::class, 'show'])->name('universidades.show');
+Route::get('/universidades/{universidad}/edit', [UniversidadController::class, 'edit'])->name('universidades.edit');
+Route::put('/universidades/{universidad}', [UniversidadController::class, 'update'])->name('universidades.update');
+Route::post('/universidades/{universidad}', [UniversidadController::class, 'estado'])->name('universidades.estado');
 
 Route::get('/about', function () {
     return view('about');

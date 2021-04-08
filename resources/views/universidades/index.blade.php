@@ -4,13 +4,17 @@
 
 <div>
     <div>
-        <h2>Administrar Planes</h2>
+        <h2>Administrar Universidad</h2>
     </div>
     <div class="card shadow mb-4">
+        @if ($contarUniversidades === 0)
+            <div class="card-header py-3">
+                <a href="{{ route('universidades.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
+            </div>
+        @endif
         <div class="card-header py-3">
-            <a href="{{ route('planes.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-user-plus"></i></a>
+            <h6 class="text-primary font-weight-bold">Universidad Registrada</h6>
         </div>
-
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -18,49 +22,36 @@
                     <tr>
                         <th scole="col">Nombre</th>
                         <th scole="col">Descripción</th>
-                        <th scole="col">Progreso</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                     @foreach($planes as $plan)
+                     @foreach($universidades as $universidad)
                     <tr>
-                        <td>{{$plan->nombre}}</td>
-                        <td>{{$plan->descripcion}}</td>
-                        <td>
-                            @if ($plan->progreso == 0)
-                                El plan aún no tiene progreso
-                            @else
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $plan->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                        {{ $plan->progreso }} %
-                                    </div>
-                                </div>
-                            @endif
-
-                        </td>
+                        <td>{{$universidad->nombre}}</td>
+                        <td>{{$universidad->descripcion}}</td>
                         <td class="text-center">
-                            @if ($plan->estado == "Activado")
-                                <span class="badge badge-success">{{ $plan->estado }}</span>
+                            @if ($universidad->estado == "Activado")
+                                <span class="badge badge-success">{{ $universidad->estado }}</span>
                             @else
-                                <span class="badge badge-danger">{{ $plan->estado }}</span>
+                                <span class="badge badge-danger">{{ $universidad->estado }}</span>
                             @endif
 
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{route('usuarios.show',['user'=>$plan->id])}}" class="btn btn-primary rounded">
+                                <a href="{{route('universidades.show',['universidad'=>$universidad->id])}}" class="btn btn-primary rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if (auth()->user()->rol->nombre == "Decano")
-                                    <a href="#" class="btn btn-warning mx-2 rounded">
+                                    <a href="{{ route('universidades.edit', ['universidad' => $universidad->id]) }}" class="btn btn-warning mx-2 rounded">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('universidades.estado', ['universidad' => $universidad->id]) }}" method="POST">
                                         @csrf
-                                        @if($plan->estado=='Activado')
+                                        @if($universidad->estado=='Activado')
                                         <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-user-times"></i></button>
                                         @else
                                         <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-user-check"></i></button>
