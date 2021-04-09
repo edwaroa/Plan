@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Facultad;
 use App\Programa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProgramaController extends Controller
@@ -16,7 +17,12 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Programa::all();
+        if(Auth::user()->rol->nombre == 'Decano') {
+            $programas = Programa::all();
+        }else {
+            $programas = Programa::where('estado', 'Activado')->get();
+        }
+
         return view('programas.index', compact('programas'));
     }
 
@@ -27,8 +33,12 @@ class ProgramaController extends Controller
      */
     public function create()
     {
-        $facultades = Facultad::all(['id', 'nombre']);
-        return view('programas.create', compact('facultades'));
+        if(Auth::user()->rol->nombre == 'Decano') {
+            $facultades = Facultad::all(['id', 'nombre']);
+            return view('programas.create', compact('facultades'));
+        }else {
+            return redirect()->action([ProgramaController::class, 'index']);
+        }
     }
 
     /**
@@ -73,8 +83,12 @@ class ProgramaController extends Controller
      */
     public function edit(Programa $programa)
     {
-        $facultades = Facultad::all(['id', 'nombre']);
-        return view('programas.edit', compact('facultades', 'programa'));
+        if(Auth::user()->rol->nombre == 'Decano') {
+            $facultades = Facultad::all(['id', 'nombre']);
+            return view('programas.edit', compact('facultades', 'programa'));
+        }else {
+            return redirect()->action([ProgramaController::class, 'index']);
+        }
     }
 
     /**

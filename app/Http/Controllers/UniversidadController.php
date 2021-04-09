@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Universidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UniversidadController extends Controller
@@ -19,8 +20,13 @@ class UniversidadController extends Controller
      */
     public function index()
     {
-        $universidades = Universidad::all();
         $contarUniversidades = DB::table('universidads')->count();
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $universidades = Universidad::all();
+        }else {
+            $universidades = Universidad::where('estado', 'Activado')->get();
+        }
+
         return view('universidades.index', compact('universidades', 'contarUniversidades'));
     }
 
@@ -32,10 +38,10 @@ class UniversidadController extends Controller
     public function create()
     {
         $contarUniversidades = DB::table('universidads')->count();
-        if ($contarUniversidades === 0) {
+        if ($contarUniversidades === 0 && Auth::user()->rol->nombre == 'Decano') {
             return view('universidades.create');
         }else {
-            return abort('404');
+            return redirect()->action([UniversidadController::class, 'index']);
         }
     }
 
@@ -83,7 +89,11 @@ class UniversidadController extends Controller
      */
     public function edit(Universidad $universidad)
     {
-        return view('universidades.edit', compact('universidad'));
+        if (Auth::user()->rol->nombre == 'Decano') {
+            return view('universidades.edit', compact('universidad'));
+        }else {
+            return redirect()->action([UniversidadController::class, 'index']);
+        }
     }
 
     /**

@@ -87,6 +87,56 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="fecha_inicio" class="form-control-label">{{ __('Fecha de inicio') }}</label>
+                                    <input class="form-control" name="fecha_inicio" type="date" id="fecha_inicio">
+
+                                    @error('fecha_inicio')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="fecha_final" class="form-control-label">{{ __('Fecha final') }}</label>
+                                    <input class="form-control" name="fecha_final" type="date" id="fecha_final">
+
+                                    @error('fecha_final')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="form-group focused">
+                                    <label for="id_programa" class="form-control-label">{{ __('Programa') }}</label>
+                                    <select name="id_programa" id="id_programa" class="form-control @error('id_programa') is-invalid @enderror">
+                                        <option value="" selected disabled>-- Seleccione un Programa --</option>
+                                        @foreach ($programas as $programa)
+                                            <option value="{{ $programa->id }}" {{ old('id_programa') == $programa->id ? 'selected' : '' }}>
+                                                {{ $programa->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('id_programa')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                                 <!-- Button -->
                         <div class="pl-lg-4">
                             <div class="row">

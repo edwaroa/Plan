@@ -7,9 +7,15 @@
         <h2>Administrar Programas</h2>
     </div>
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <a href="{{ route('programas.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
-        </div>
+        @if (auth()->user()->rol->nombre == 'Decano')
+            <div class="card-header py-3">
+                <a href="{{ route('programas.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
+            </div>
+        @else
+            <div class="card-header py-3">
+                <h6 class="text-primary font-weight-bold">Programas Registrados</h6>
+            </div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

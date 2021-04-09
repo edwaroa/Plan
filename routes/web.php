@@ -54,6 +54,10 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/planes', [PlanController::class, 'index'])->name('planes.index');
 Route::get('/planes/create', [PlanController::class, 'create'])->name('planes.create');
 Route::post('/planes', [PlanController::class, 'store'])->name('planes.store');
+Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('planes.show');
+Route::get('/planes/{plan}/edit', [PlanController::class, 'edit'])->name('planes.edit');
+Route::put('/planes/{plan}', [PlanController::class, 'update'])->name('planes.update');
+// Route::post('/planes/{plan}', [PlanController::class, 'estado'])->name('planes.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

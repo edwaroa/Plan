@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Facultad;
 use App\Universidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class FacultadController extends Controller
@@ -16,7 +17,12 @@ class FacultadController extends Controller
      */
     public function index()
     {
-        $facultades = Facultad::all();
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $facultades = Facultad::all();
+        }else {
+            $facultades = Facultad::where('estado','Activado')->get();
+        }
+
         return view('facultades.index', compact('facultades'));
     }
 
@@ -27,8 +33,12 @@ class FacultadController extends Controller
      */
     public function create()
     {
-        $universidades = Universidad::all(['id', 'nombre']);
-        return view('facultades.create', compact('universidades'));
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $universidades = Universidad::all(['id', 'nombre']);
+            return view('facultades.create', compact('universidades'));
+        }else {
+            return redirect()->action([FacultadController::class, 'index']);
+        }
     }
 
     /**
@@ -73,8 +83,12 @@ class FacultadController extends Controller
      */
     public function edit(Facultad $facultad)
     {
-        $universidades = Universidad::all(['id', 'nombre']);
-        return view('facultades.edit', compact('facultad', 'universidades'));
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $universidades = Universidad::all(['id', 'nombre']);
+            return view('facultades.edit', compact('facultad', 'universidades'));
+        }else {
+            return redirect()->action([FacultadController::class, 'index']);
+        }
     }
 
     /**

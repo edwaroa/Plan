@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
+use App\Programa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\CodeCleaner\ReturnTypePass;
+use Illuminate\Support\Facades\Auth;
 
 class PlanController extends Controller
 {
@@ -21,8 +23,12 @@ class PlanController extends Controller
      */
     public function index()
     {
-        // Trae los planes de mejoramiento insertados en la base de datos
-        $planes = Plan::all();
+        if(Auth::user()->rol->nombre == 'Decano'){
+            // Trae los planes de mejoramiento insertados en la base de datos
+            $planes = Plan::all();
+        }else {
+            $planes = Plan::where('estado', 'Activado')->get();
+        }
 
         return view('planes.index', compact('planes'));
     }
@@ -34,7 +40,12 @@ class PlanController extends Controller
      */
     public function create()
     {
-        return view('planes.create');
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $programas = Programa::all(['id', 'nombre']);
+            return view('planes.create', compact('programas'));
+        }else {
+            return redirect()->action([PlanController::class, 'index']);
+        }
     }
 
     /**

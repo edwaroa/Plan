@@ -7,7 +7,7 @@
         <h2>Administrar Universidad</h2>
     </div>
     <div class="card shadow mb-4">
-        @if ($contarUniversidades === 0)
+        @if ($contarUniversidades === 0 && auth()->user()->rol->nombre == 'Decano')
             <div class="card-header py-3">
                 <a href="{{ route('universidades.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
             </div>

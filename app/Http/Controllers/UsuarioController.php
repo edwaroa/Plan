@@ -23,10 +23,10 @@ class UsuarioController extends Controller
     public function index(){
 
         if(Auth::user()->rol->nombre=='Decano'){
-            //Muestra las actividades de todos los usuarios
+            //Muestra todos los usuarios
             $usuarios = User::all();
         }else{
-            //Muestra las actividades del usuario logeado
+            //Muestra los usuarios activados
             $usuarios=User::where('estado','Activado')->get();
         }
 
@@ -34,11 +34,14 @@ class UsuarioController extends Controller
     }
 
     public function create(){
+        if(Auth::user()->rol->nombre == 'Decano') {
+            //Traer con modelo
+            $roles=Rol::all(['id','nombre']);
 
-        //Traer con modelo
-        $roles=Rol::all(['id','nombre']);
-
-        return view('usuarios.create', compact('roles'));
+            return view('usuarios.create', compact('roles'));
+        }else {
+            return redirect()->action([UsuarioController::class, 'index']);
+        }
     }
 
     public function store(Request $request){
@@ -83,14 +86,17 @@ class UsuarioController extends Controller
         return redirect()->action('UsuarioController@index');
     }
     public function show(User $user){
-
         return view('usuarios.show', compact('user'));
-
     }
+
     public function edit(User $user){
-        // Trayendo el id y el nombre de todos los roles
-        $roles=Rol::all(['id','nombre']);
-        return view('usuarios.edit',compact('roles','user'));
+        if(Auth::user()->rol->nombre == 'Decano') {
+            // Trayendo el id y el nombre de todos los roles
+            $roles=Rol::all(['id','nombre']);
+            return view('usuarios.edit',compact('roles','user'));
+        }else {
+            return redirect()->action([UsuarioController::class, 'index']);
+        }
     }
 
     public function update(Request $request,User $user){
