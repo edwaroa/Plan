@@ -4,6 +4,7 @@ use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\UniversidadController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -89,3 +90,4 @@ Route::post('/programas/{programa}', [ProgramaController::class, 'estado'])->nam
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+

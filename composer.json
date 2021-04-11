@@ -10,10 +10,12 @@
     "require": {
         "php": "^7.3.0",
         "ext-gd": "*",
+        "aprendible/storage-link-route": "^1.0",
         "devmarketer/easynav": "^1.0",
         "dompdf/dompdf": "^0.8.6",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "fzaninotto/faker": "^1.4",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.5",
         "laravel/framework": "^8.0",
@@ -23,8 +25,7 @@
         "laraveles/spanish": "^1.5",
         "maatwebsite/excel": "^3.1",
         "nesbot/carbon": "^2.41",
-        "phpoffice/phpspreadsheet": "^1.15",
-        "fzaninotto/faker": "^1.4"
+        "phpoffice/phpspreadsheet": "^1.15"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
