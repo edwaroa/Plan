@@ -47,7 +47,7 @@
 
                         </td>
                         <td width="100" style="padding: 2px">
-                            <img src="https://mejorasoftudi.herokuapp.com/storage/{{ $usuario->imagen }}" width="100%" alt="Imagen del usuario">
+                            <img src="/storage/{{ $usuario->imagen }}" width="100%" alt="Imagen del usuario">
                         </td>
                         <td>
                             <div class="btn-group">
