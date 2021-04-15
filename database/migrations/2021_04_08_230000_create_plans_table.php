@@ -20,6 +20,8 @@ class CreatePlansTable extends Migration
             $table->text('objetivo_general');
             $table->text('objetivos_especificos');
             $table->float('progreso');
+            $table->date('fecha_inicio');
+            $table->date('fecha_final');
             $table->foreignId('id_programa')->references('id')->on('programas')->constrained()->onUpdate('cascade');
             $table->string('estado')->default('Activado');
             $table->timestamps();

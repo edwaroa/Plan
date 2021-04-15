@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Plan;
 use App\Programa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Psy\CodeCleaner\ReturnTypePass;
@@ -42,7 +43,9 @@ class PlanController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $programas = Programa::all(['id', 'nombre']);
-            return view('planes.create', compact('programas'));
+            $fecha_actual = date('Y-m-d');
+
+            return view('planes.create', compact('programas', 'fecha_actual'));
         }else {
             return redirect()->action([PlanController::class, 'index']);
         }
@@ -60,7 +63,10 @@ class PlanController extends Controller
             'nombre' => 'required | string',
             'descripcion' => 'required | string',
             'objetivo_general' => 'required | string',
-            'objetivos_especificos' => 'required | string'
+            'objetivos_especificos' => 'required | string',
+            'id_programa' => 'required',
+            'fecha_inicio' => 'required | date | date_format:Y-m-d',
+            'fecha_final' => 'required | date | date_format:Y-m-d'
         ]);
 
         DB::table('plans')->insert([
@@ -68,6 +74,9 @@ class PlanController extends Controller
             'descripcion' => $data['descripcion'],
             'objetivo_general' => $data['objetivo_general'],
             'objetivos_especificos' => $data['objetivos_especificos'],
+            'id_programa' => $data['id_programa'],
+            'fecha_inicio' => $data['fecha_inicio'],
+            'fecha_final' => $data['fecha_final'],
             'progreso' => 0
         ]);
 
@@ -82,7 +91,7 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        //
+        return view('planes.show', compact('plan'));
     }
 
     /**

@@ -92,7 +92,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="fecha_inicio" class="form-control-label">{{ __('Fecha de inicio') }}</label>
-                                    <input class="form-control" name="fecha_inicio" type="date" id="fecha_inicio">
+                                    <input class="form-control @error('fecha_final') is-invalid @enderror" name="fecha_inicio" type="date" min="{{ $fecha_actual }}" id="fecha_inicio" value="{{ old('fecha_inicio') }}">
 
                                     @error('fecha_inicio')
                                         <span class="invalid-feedback" role="alert">
@@ -105,7 +105,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="fecha_final" class="form-control-label">{{ __('Fecha final') }}</label>
-                                    <input class="form-control" name="fecha_final" type="date" id="fecha_final">
+                                    <input class="form-control @error('fecha_final') is-invalid @enderror" name="fecha_final" type="date" id="fecha_final" value="{{ old('fecha_final') }}">
 
                                     @error('fecha_final')
                                         <span class="invalid-feedback" role="alert">

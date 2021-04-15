@@ -23,7 +23,7 @@
                 <thead class="bg-primary text-light">
                     <tr>
                         <th scole="col">Nombre</th>
-                        <th scole="col">Descripción</th>
+                        <th scole="col">Programa</th>
                         <th scole="col">Progreso</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
@@ -33,7 +33,7 @@
                      @foreach($planes as $plan)
                     <tr>
                         <td>{{$plan->nombre}}</td>
-                        <td>{{$plan->descripcion}}</td>
+                        <td>{{$plan->programa->nombre}}</td>
                         <td>
                             @if ($plan->progreso == 0)
                                 El plan aún no tiene progreso
@@ -56,7 +56,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{route('usuarios.show',['user'=>$plan->id])}}" class="btn btn-primary rounded">
+                                <a href="{{route('planes.show',['plan'=>$plan->id])}}" class="btn btn-primary rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if (auth()->user()->rol->nombre == "Decano")
