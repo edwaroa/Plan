@@ -3,6 +3,7 @@
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProgramaController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UniversidadController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,15 @@ Route::get('/planes/{plan}', [PlanController::class, 'show'])->name('planes.show
 Route::get('/planes/{plan}/edit', [PlanController::class, 'edit'])->name('planes.edit');
 Route::put('/planes/{plan}', [PlanController::class, 'update'])->name('planes.update');
 Route::post('/planes/{plan}', [PlanController::class, 'estado'])->name('planes.estado');
+
+// Proyectos
+Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyectos.index');
+Route::get('/proyectos/create', [ProyectoController::class, 'create'])->name('proyectos.create');
+Route::post('/proyectos', [ProyectoController::class, 'store'])->name('proyectos.store');
+Route::get('/proyectos/{proyecto}', [ProyectoController::class, 'show'])->name('proyectos.show');
+Route::get('/proyectos/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('proyectos.edit');
+Route::put('/proyectos/{proyecto}', [ProyectoController::class, 'update'])->name('proyectos.update');
+// Route::post('/proyectos/{proyecto}', [ProyectoController::class, 'estado'])->name('proyectos.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

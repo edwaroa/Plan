@@ -66,7 +66,16 @@ class PlanController extends Controller
             'objetivos_especificos' => 'required | string',
             'id_programa' => 'required',
             'fecha_inicio' => 'required | date | date_format:Y-m-d',
-            'fecha_final' => 'required | date | date_format:Y-m-d'
+            'fecha_final' => [
+                'required',
+                'date',
+                'date_format:Y-m-d',
+                function ($attribute, $value, $fail) use($request) {
+                    if($value < $request['fecha_inicio']){
+                        $fail($attribute.' no puede ser menor a la fecha de inicio');
+                    }
+                }
+            ]
         ]);
 
         DB::table('plans')->insert([
