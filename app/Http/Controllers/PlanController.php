@@ -91,7 +91,12 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        return view('planes.show', compact('plan'));
+        $fecha_inicio = Carbon::parse($plan->fecha_inicio);
+        $fecha_final = Carbon::parse($plan->fecha_final);
+
+        $dias_fechas = $fecha_inicio->diffInDays($fecha_final);
+
+        return view('planes.show', compact('plan', 'dias_fechas'));
     }
 
     /**
@@ -102,7 +107,13 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $programas = Programa::all(['id', 'nombre']);
+
+            return view('planes.edit', compact('programas', 'plan'));
+        }else {
+            return redirect()->action([PlanController::class, 'index']);
+        }
     }
 
     /**
@@ -114,17 +125,41 @@ class PlanController extends Controller
      */
     public function update(Request $request, Plan $plan)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'required | string',
+            'descripcion' => 'required | string',
+            'objetivo_general' => 'required | string',
+            'objetivos_especificos' => 'required | string',
+            'id_programa' => 'required',
+            'fecha_inicio' => 'required | date | date_format:Y-m-d',
+            'fecha_final' => 'required | date | date_format:Y-m-d'
+        ]);
+
+        $plan = Plan::findOrFail($plan->id);
+        $plan->nombre = $data['nombre'];
+        $plan->descripcion = $data['descripcion'];
+        $plan->objetivo_general = $data['objetivo_general'];
+        $plan->objetivos_especificos = $data['objetivos_especificos'];
+        $plan->id_programa = $data['id_programa'];
+        $plan->fecha_inicio = $data['fecha_inicio'];
+        $plan->fecha_final = $data['fecha_final'];
+
+        $plan->save();
+
+        return redirect()->action([PlanController::class, 'index']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Plan  $plan
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Plan $plan)
+    public function estado(Request $request, Plan $plan)
     {
-        //
+        if($plan->estado=='Desactivado'){
+            //Leer el nuevo estado
+            $plan->estado='Activado';
+            $plan->save();
+        }
+        else{
+            $plan->estado='Desactivado';
+            $plan->save();
+        }
+        return redirect()->action([PlanController::class, 'index']);
     }
 }

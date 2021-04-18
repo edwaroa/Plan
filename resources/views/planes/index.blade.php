@@ -60,11 +60,11 @@
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if (auth()->user()->rol->nombre == "Decano")
-                                    <a href="#" class="btn btn-warning mx-2 rounded">
+                                    <a href="{{ route('planes.edit', ['plan' => $plan->id]) }}" class="btn btn-warning mx-2 rounded">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <form action="#" method="POST">
+                                    <form action="{{ route('planes.estado', ['plan' => $plan->id]) }}" method="POST">
                                         @csrf
                                         @if($plan->estado=='Activado')
                                         <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-user-times"></i></button>
