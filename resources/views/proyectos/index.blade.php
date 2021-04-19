@@ -25,15 +25,16 @@
                         <th scole="col">Nombre</th>
                         <th scole="col">Plan</th>
                         <th scole="col">Progreso</th>
+                        <th scole="col">Peso</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                     @foreach($proyectos as $plan)
+                     @foreach($proyectos as $proyecto)
                     <tr>
                         <td>{{$proyecto->nombre}}</td>
-                        <td>{{$proyecto->programa->nombre}}</td>
+                        <td>{{$proyecto->plan->nombre}}</td>
                         <td>
                             @if ($proyecto->progreso == 0)
                                 El proyecto aún no tiene progreso
@@ -46,6 +47,7 @@
                             @endif
 
                         </td>
+                        <td>{{ $proyecto->peso }}</td>
                         <td class="text-center">
                             @if ($proyecto->estado == "Activado")
                                 <span class="badge badge-success">{{ $proyecto->estado }}</span>

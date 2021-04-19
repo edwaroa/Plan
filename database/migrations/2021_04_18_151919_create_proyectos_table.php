@@ -22,6 +22,7 @@ class CreateProyectosTable extends Migration
             $table->float('progreso');
             $table->float('peso');
             $table->foreignId('id_plan')->references('id')->on('plans')->constrained()->onUpdate('cascade');
+            $table->string('estado')->default('Activado');
             $table->timestamps();
         });
     }

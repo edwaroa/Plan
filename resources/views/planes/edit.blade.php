@@ -145,7 +145,7 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <button type="submit" class="btn btn-primary">
-                                        <span class="icon text-white-50">Crear Plan</span>
+                                        <span class="icon text-white-50">Editar Plan</span>
                                     </button>
                                 </div>
                             </div>
