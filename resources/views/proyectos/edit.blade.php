@@ -128,7 +128,7 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <button type="submit" class="btn btn-primary">
-                                        <span class="icon text-white-50">Editar Proyecto</span>
+                                        <span class="icon text-white-50">Guardar Cambios</span>
                                     </button>
                                 </div>
                             </div>

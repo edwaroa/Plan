@@ -15,12 +15,12 @@ class CreateTipoFactorsTable extends Migration
     {
         Schema::create('tipo_factors', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('nombre');
             $table->text('descripcion');
             $table->float('porcentaje');
             $table->float('progreso');
             $table->string('estado')->default('Activado');
+            $table->timestamps();
         });
     }
 

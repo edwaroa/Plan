@@ -10,7 +10,7 @@
     <div class="col-lg-12 order-lg-1">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ __('Editar: ') }} {{ $universidad->nombre }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('Crear Tipo de Factor') }}</h6>
             </div>
             @if(session('estado'))
             <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -21,18 +21,18 @@
             </div>
             @endif
             <div class="card-body">
-                <form method="POST" action="{{ route('universidades.update', ['universidad' => $universidad->id]) }}" autocomplete="off" novalidate enctype="multipart/form-data">
+                <form method="POST" action="{{ route('tipofactores.update', ['tipofactor' => $tipoFactor->id]) }}" autocomplete="off" novalidate enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="_method" value="PUT">
+                    @method('PUT')
 
-                    <h6 class="heading-small text-muted mb-4">Información de la universidad</h6>
+                    <h6 class="heading-small text-muted mb-4">Información del Tipo de Factor</h6>
 
                     <div class="pl-lg-4">
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="form-group focused">
-                                    <label for="nombre" class="form-control-label">{{ __('Nombre de la Universidad') }}</label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $universidad->nombre }}" placeholder="Nombre de la Universidad">
+                                    <label for="nombre" class="form-control-label">{{ __('Nombre del Tipo de Factor') }}</label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $tipoFactor->nombre }}" placeholder="Nombre del tipo de factor">
 
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
@@ -44,10 +44,10 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label for="descripcion" class="form-control-label">{{ __('Descripción') }}</label>
-                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción de la Universidad">{{ $universidad->descripcion }}</textarea>
+                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del tipo de factor">{{ $tipoFactor->descripcion }}</textarea>
 
 
                                     @error('descripcion')
@@ -58,29 +58,12 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="form-group focused">
-                                    <label for="mision" class="form-control-label">{{ __('Misión') }}</label>
-
-                                    <textarea name="mision" id="mision" class="form-control area @error('mision') is-invalid @enderror" placeholder="Misión de la Universidad">{{ $universidad->mision }}</textarea>
-
-                                    @error('mision')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="form-group focused">
-                                    <label for="vision" class="form-control-label">{{ __('Visión') }}</label>
-                                    <textarea name="vision" id="vision" class="form-control @error('vision') is-invalid @enderror" placeholder="Vision de la universidad" style="min-height: 200px">{{ $universidad->vision }}</textarea>
+                                    <label for="porcentaje" class="form-control-label">{{ __('Porcentaje del tipo de factor: ') }} <span class="text-success">{{ $porcentaje_total }} Disponible</span></label>
+                                    <input type="number" step=".1" class="form-control @error('porcentaje') is-invalid @enderror" max="{{ ($porcentaje_total + $tipoFactor->porcentaje) }}" min="0" name="porcentaje" id="porcentaje" value="{{ $tipoFactor->porcentaje }}" placeholder="Porcentaje del tipo de factor">
 
-
-                                    @error('vision')
+                                    @error('porcentaje')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

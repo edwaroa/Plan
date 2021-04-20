@@ -96,13 +96,26 @@
             <!-- Nav Item - Proyectos -->
             <li class="nav-item {{ Nav::isRoute('proyectos') }}">
                 <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseProyectos" aria-expanded="true" aria-controls="collapseProyectos">
-                <i class="fas fa-2x text-gray-300 fa-database"></i>
+                    <i class="fas fa-2x text-gray-300 fa-project-diagram"></i>
                     <span>{{ __('Proyectos') }}</span>
                 </a>
                 <div id="collapseProyectos" class="collapse" aria-labelledby="headingProyectos" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('proyectos.index')}}">Ver</a>
                         <a class="collapse-item" href="{{ route('proyectos.create') }}">Crear</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item {{ Nav::isRoute('tiposFactores') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTiposFactores" aria-expanded="true" aria-controls="collapseTiposFactores">
+                    <i class="fab fa-2x text-gray-300 fa-buffer"></i>
+                    <span>{{ __('Factores') }}</span>
+                </a>
+                <div id="collapseTiposFactores" class="collapse" aria-labelledby="headingTiposFactores" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('tipofactores.index')}}">Tipos de Factores</a>
+                        <a class="collapse-item" href="#">Factores</a>
                     </div>
                 </div>
             </li>

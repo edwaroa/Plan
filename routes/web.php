@@ -4,6 +4,7 @@ use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\TipoFactorController;
 use App\Http\Controllers\UniversidadController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +70,15 @@ Route::get('/proyectos/{proyecto}', [ProyectoController::class, 'show'])->name('
 Route::get('/proyectos/{proyecto}/edit', [ProyectoController::class, 'edit'])->name('proyectos.edit');
 Route::put('/proyectos/{proyecto}', [ProyectoController::class, 'update'])->name('proyectos.update');
 Route::post('/proyectos/{proyecto}', [ProyectoController::class, 'estado'])->name('proyectos.estado');
+
+// TiposFatores
+Route::get('/tipofactores', [TipoFactorController::class, 'index'])->name('tipofactores.index');
+Route::get('/tipofactores/create', [TipoFactorController::class, 'create'])->name('tipofactores.create');
+Route::post('/tipofactores', [TipoFactorController::class, 'store'])->name('tipofactores.store');
+Route::get('/tipofactores/{tipofactor}', [TipoFactorController::class, 'show'])->name('tipofactores.show');
+Route::get('/tipofactores/{tipofactor}/edit', [TipoFactorController::class, 'edit'])->name('tipofactores.edit');
+Route::put('/tipofactores/{tipofactor}', [TipoFactorController::class, 'update'])->name('tipofactores.update');
+Route::post('/tipofactores/{tipofactor}', [TipoFactorController::class, 'estado'])->name('tipofactores.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');
