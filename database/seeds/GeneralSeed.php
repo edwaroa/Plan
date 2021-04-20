@@ -6,6 +6,7 @@ use App\Facultad;
 use App\Plan;
 use App\Programa;
 use App\Proyecto;
+use App\TipoFactor;
 use App\Universidad;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -65,6 +66,33 @@ class GeneralSeed extends Seeder
             'progreso' => 0,
             'peso' => 30,
             'id_plan' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        TipoFactor::create([
+            'nombre' => 'Factores Estratégicos',
+            'descripcion' => 'Proporcionan directrices a los diferentes factores y son responsabilidad de los órganos de gobierno de la institución principalmente.',
+            'porcentaje' => 10,
+            'progreso' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        TipoFactor::create([
+            'nombre' => 'Factores Misionales',
+            'descripcion' => 'Determinan la razón de ser de la institución y apuntan al cumplimiento de los objetivos de la educación superior.',
+            'porcentaje' => 70,
+            'progreso' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        TipoFactor::create([
+            'nombre' => 'Factores de Apoyo',
+            'descripcion' => 'Brindan soporte a los Factores Misionales',
+            'porcentaje' => 20,
+            'progreso' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);

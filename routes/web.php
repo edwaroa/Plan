@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FactorController;
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProgramaController;
@@ -79,6 +80,15 @@ Route::get('/tipofactores/{tipofactor}', [TipoFactorController::class, 'show'])-
 Route::get('/tipofactores/{tipofactor}/edit', [TipoFactorController::class, 'edit'])->name('tipofactores.edit');
 Route::put('/tipofactores/{tipofactor}', [TipoFactorController::class, 'update'])->name('tipofactores.update');
 Route::post('/tipofactores/{tipofactor}', [TipoFactorController::class, 'estado'])->name('tipofactores.estado');
+
+// Factores
+Route::get('/factores', [FactorController::class, 'index'])->name('factores.index');
+Route::get('/factores/create', [FactorController::class, 'create'])->name('factores.create');
+Route::post('/factores', [FactorController::class, 'store'])->name('factores.store');
+Route::get('/factores/{factor}', [FactorController::class, 'show'])->name('factores.show');
+Route::get('/factores/{factor}/edit', [FactorController::class, 'edit'])->name('factores.edit');
+Route::put('/factores/{factor}', [FactorController::class, 'update'])->name('factores.update');
+// Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');
