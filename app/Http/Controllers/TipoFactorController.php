@@ -122,7 +122,7 @@ class TipoFactorController extends Controller
 
             return view('tipos_factores.edit', compact('tipoFactor', 'porcentaje_total'));
         }else {
-            return redirect()->action([ProyectoController::class, 'index']);
+            return redirect()->action([TipoFactorController::class, 'index']);
         }
     }
 

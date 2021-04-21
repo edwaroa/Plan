@@ -88,7 +88,7 @@ Route::post('/factores', [FactorController::class, 'store'])->name('factores.sto
 Route::get('/factores/{factor}', [FactorController::class, 'show'])->name('factores.show');
 Route::get('/factores/{factor}/edit', [FactorController::class, 'edit'])->name('factores.edit');
 Route::put('/factores/{factor}', [FactorController::class, 'update'])->name('factores.update');
-// Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
+Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

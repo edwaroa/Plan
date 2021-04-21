@@ -107,15 +107,15 @@
                 </div>
             </li>
 
-            <li class="nav-item {{ Nav::isRoute('tiposFactores') }}">
-                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseTiposFactores" aria-expanded="true" aria-controls="collapseTiposFactores">
+            <li class="nav-item {{ Nav::isRoute('factores') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseFactores" aria-expanded="true" aria-controls="collapseFactores">
                     <i class="fab fa-2x text-gray-300 fa-buffer"></i>
                     <span>{{ __('Factores') }}</span>
                 </a>
-                <div id="collapseTiposFactores" class="collapse" aria-labelledby="headingTiposFactores" data-parent="#accordionSidebar">
+                <div id="collapseFactores" class="collapse" aria-labelledby="headingFactores" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('tipofactores.index')}}">Tipos de Factores</a>
-                        <a class="collapse-item" href="#">Factores</a>
+                        <a class="collapse-item" href="{{ route('factores.index') }}">Factores</a>
                     </div>
                 </div>
             </li>

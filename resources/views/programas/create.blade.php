@@ -63,7 +63,7 @@
                                 <div class="form-group focused">
                                     <label for="id_facultad" class="form-control-label">{{ __('Facultad') }}</label>
                                     <select name="id_facultad" id="id_facultad" class="form-control @error('id_facultad') is-invalid @enderror">
-                                        <option value="" selected disabled>-- Seleccione una universidad --</option>
+                                        <option value="" selected disabled>-- Seleccione una facultad --</option>
                                         @foreach ($facultades as $facultad)
                                             <option value="{{ $facultad->id }}" {{ old('id_facultad') == $facultad->id ? 'selected' : '' }}>
                                                 {{ $facultad->nombre }}

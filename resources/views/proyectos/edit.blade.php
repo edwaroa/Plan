@@ -32,7 +32,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label for="nombre" class="form-control-label">{{ __('Nombre del Proyecto') }}</label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $proyecto->nombre }}" placeholder="Nombre del plan">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $proyecto->nombre }}" placeholder="Nombre del proyecto">
 
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="descripcion" class="form-control-label">{{ __('Descripción') }}</label>
-                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del plan">{{ $proyecto->descripcion }}</textarea>
+                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del proyecto">{{ $proyecto->descripcion }}</textarea>
 
 
                                     @error('descripcion')
@@ -62,7 +62,7 @@
                                 <div class="form-group focused">
                                     <label for="objetivo_general" class="form-control-label">{{ __('Objetivo General') }}</label>
 
-                                    <textarea name="objetivo_general" id="objetivo_general" class="form-control area @error('objetivo_general') is-invalid @enderror" placeholder="Objetivo General del plan">{{ $proyecto->objetivo_general }}</textarea>
+                                    <textarea name="objetivo_general" id="objetivo_general" class="form-control area @error('objetivo_general') is-invalid @enderror" placeholder="Objetivo General del proyecto">{{ $proyecto->objetivo_general }}</textarea>
 
                                     @error('objetivo_general')
                                         <span class="invalid-feedback" role="alert">
@@ -77,7 +77,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label for="objetivos_especificos" class="form-control-label">{{ __('Objetivos Especificos') }}</label>
-                                    <textarea name="objetivos_especificos" id="objetivos_especificos" class="form-control @error('objetivos_especificos') is-invalid @enderror" placeholder="Objetivos Especificos del plan" style="min-height: 200px">{{ $proyecto->objetivos_especificos }}</textarea>
+                                    <textarea name="objetivos_especificos" id="objetivos_especificos" class="form-control @error('objetivos_especificos') is-invalid @enderror" placeholder="Objetivos Especificos del proyecto" style="min-height: 200px">{{ $proyecto->objetivos_especificos }}</textarea>
 
 
                                     @error('objetivos_especificos')
