@@ -119,6 +119,19 @@
                     </div>
                 </div>
             </li>
+
+            <li class="nav-item {{ Nav::isRoute('caracteristicas') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseCaracteristicas" aria-expanded="true" aria-controls="collapseCaracteristicas">
+                    <i class="fas fa-2x text-gray-300 fa-cubes"></i>
+                    <span>{{ __('Características') }}</span>
+                </a>
+                <div id="collapseCaracteristicas" class="collapse" aria-labelledby="headingCaracteristicas" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{route('caracteristicas.index')}}">Ver</a>
+                        <a class="collapse-item" href="{{ route('caracteristicas.create') }}">Crear</a>
+                    </div>
+                </div>
+            </li>
         @endif
 
         {{--

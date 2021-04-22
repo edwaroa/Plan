@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\FactorController;
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\PlanController;
@@ -89,6 +90,16 @@ Route::get('/factores/{factor}', [FactorController::class, 'show'])->name('facto
 Route::get('/factores/{factor}/edit', [FactorController::class, 'edit'])->name('factores.edit');
 Route::put('/factores/{factor}', [FactorController::class, 'update'])->name('factores.update');
 Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
+
+// Características
+Route::get('/caracteristicas', [CaracteristicaController::class, 'index'])->name('caracteristicas.index');
+Route::get('/caracteristicas/create', [CaracteristicaController::class, 'create'])->name('caracteristicas.create');
+Route::post('/caracteristicas', [CaracteristicaController::class, 'store'])->name('caracteristicas.store');
+Route::get('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'show'])->name('caracteristicas.show');
+Route::get('/caracteristicas/{caracteristica}/edit', [CaracteristicaController::class, 'edit'])->name('caracteristicas.edit');
+Route::put('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'update'])->name('caracteristicas.update');
+Route::post('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'estado'])->name('caracteristicas.estado');
+
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

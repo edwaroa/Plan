@@ -70,8 +70,8 @@ class FactorController extends Controller
             'id_tipo_factor' => 'required',
             'peso' => [
                 'required',
-                function($attribute, $value, $fail) {
-                    $factores = Proyecto::all();
+                function($attribute, $value, $fail) use($request){
+                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $factores->count(); $i++){
@@ -145,15 +145,15 @@ class FactorController extends Controller
     public function update(Request $request, Factor $factor)
     {
         $data = $request->validate([
-            'codigo' => 'required',
+            'codigo' => 'required|integer',
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string',
             'id_proyecto' => 'required',
             'id_tipo_factor' => 'required',
             'peso' => [
                 'required',
-                function($attribute, $value, $fail) use($factor) {
-                    $factores = Factor::all();
+                function($attribute, $value, $fail) use($factor, $request) {
+                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $factores->count(); $i++){

@@ -72,8 +72,8 @@ class ProyectoController extends Controller
             'id_plan' => 'required',
             'peso' => [
                 'required',
-                function($attribute, $value, $fail) {
-                    $proyectos = Proyecto::all();
+                function($attribute, $value, $fail) use($request) {
+                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $proyectos->count(); $i++){
@@ -152,8 +152,8 @@ class ProyectoController extends Controller
             'id_plan' => 'required',
             'peso' => [
                 'required',
-                function($attribute, $value, $fail) use($proyecto) {
-                    $proyectos = Proyecto::all();
+                function($attribute, $value, $fail) use($proyecto, $request) {
+                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $proyectos->count(); $i++){
