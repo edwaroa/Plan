@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="peso" class="form-control-label">{{ __('Peso de la característica sobre el factor: ') }} <span class="text-success" id="peso_total"></span></label>
+                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total"></span></label>
                                     <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" max="{{ $peso_total }}" min="0" name="peso" id="peso" value="{{ old('peso') }}" placeholder="Peso de la característica">
 
                                     @error('peso')
@@ -123,6 +123,6 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset('js/caracteristicas.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous"></script>
 @endsection

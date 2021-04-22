@@ -195,4 +195,19 @@ class ProyectoController extends Controller
         }
         return redirect()->action([ProyectoController::class, 'index']);
     }
+
+    public function peso(Request $request){
+        $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
+        $peso_total = 100;
+
+        for($i = 0; $i < $proyectos->count(); $i++){
+            $peso_total -= $proyectos[$i]->peso;
+        }
+
+        $plan = Plan::findOrFail($request['id_plan']);
+        return response()->json([
+            'peso_total' => $peso_total,
+            'plan' => $plan->nombre
+        ], 200);
+    }
 }

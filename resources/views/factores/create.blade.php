@@ -114,7 +114,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="form-group focused">
-                                    <label for="peso" class="form-control-label">{{ __('Peso del factor sobre el proyecto: ') }} <span class="text-success">{{ $peso_total }} Disponibles</span></label>
+                                    <label for="peso" class="form-control-label">{{ __('Peso ') }} <span class="text-success" id="peso_total"></span></label>
                                     <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" max="{{ $peso_total }}" min="0" name="peso" id="peso" value="{{ old('peso') }}" placeholder="Peso del factor">
 
                                     @error('peso')
@@ -145,5 +145,6 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/factores.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous"></script>
 @endsection

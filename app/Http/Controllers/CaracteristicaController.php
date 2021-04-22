@@ -190,4 +190,19 @@ class CaracteristicaController extends Controller
         }
         return redirect()->action([CaracteristicaController::class, 'index']);
     }
+
+    public function peso(Request $request){
+        $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->get();
+        $peso_total = 100;
+
+        for($i = 0; $i < $caracteristicas->count(); $i++){
+            $peso_total -= $caracteristicas[$i]->peso;
+        }
+
+        $factor = Factor::findOrFail($request['id_factor']);
+        return response()->json([
+            'peso_total' => $peso_total,
+            'factor' => $factor->nombre
+        ], 200);
+    }
 }

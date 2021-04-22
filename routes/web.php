@@ -65,6 +65,8 @@ Route::put('/planes/{plan}', [PlanController::class, 'update'])->name('planes.up
 Route::post('/planes/{plan}', [PlanController::class, 'estado'])->name('planes.estado');
 
 // Proyectos
+// Peso
+Route::post('/pesopro', [ProyectoController::class, 'peso'])->name('proyectos.peso');
 Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyectos.index');
 Route::get('/proyectos/create', [ProyectoController::class, 'create'])->name('proyectos.create');
 Route::post('/proyectos', [ProyectoController::class, 'store'])->name('proyectos.store');
@@ -83,6 +85,8 @@ Route::put('/tipofactores/{tipofactor}', [TipoFactorController::class, 'update']
 Route::post('/tipofactores/{tipofactor}', [TipoFactorController::class, 'estado'])->name('tipofactores.estado');
 
 // Factores
+// Peso
+Route::post('/pesofac', [FactorController::class, 'peso']);
 Route::get('/factores', [FactorController::class, 'index'])->name('factores.index');
 Route::get('/factores/create', [FactorController::class, 'create'])->name('factores.create');
 Route::post('/factores', [FactorController::class, 'store'])->name('factores.store');
@@ -92,6 +96,8 @@ Route::put('/factores/{factor}', [FactorController::class, 'update'])->name('fac
 Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
 
 // Características
+// Peso
+Route::post('/pesocar', [CaracteristicaController::class, 'peso']);
 Route::get('/caracteristicas', [CaracteristicaController::class, 'index'])->name('caracteristicas.index');
 Route::get('/caracteristicas/create', [CaracteristicaController::class, 'create'])->name('caracteristicas.create');
 Route::post('/caracteristicas', [CaracteristicaController::class, 'store'])->name('caracteristicas.store');
@@ -99,7 +105,6 @@ Route::get('/caracteristicas/{caracteristica}', [CaracteristicaController::class
 Route::get('/caracteristicas/{caracteristica}/edit', [CaracteristicaController::class, 'edit'])->name('caracteristicas.edit');
 Route::put('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'update'])->name('caracteristicas.update');
 Route::post('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'estado'])->name('caracteristicas.estado');
-
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

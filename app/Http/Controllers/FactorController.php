@@ -197,4 +197,19 @@ class FactorController extends Controller
         }
         return redirect()->action([FactorController::class, 'index']);
     }
+
+    public function peso(Request $request){
+        $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
+        $peso_total = 100;
+
+        for($i = 0; $i < $factores->count(); $i++){
+            $peso_total -= $factores[$i]->peso;
+        }
+
+        $proyecto = Proyecto::findOrFail($request['id_proyecto']);
+        return response()->json([
+            'peso_total' => $peso_total,
+            'proyecto' => $proyecto->nombre
+        ], 200);
+    }
 }
