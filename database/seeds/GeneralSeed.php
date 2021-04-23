@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Caracteristica;
 use App\Factor;
 use App\Facultad;
 use App\Plan;
@@ -100,10 +101,21 @@ class GeneralSeed extends Seeder
 
         Factor::create([
             'codigo' => '1',
-            'nombre' => 'Estudiantes',
+            'nombre' => 'Misión, Visión y Proyecto Institucional y de Programa',
             'descripcion' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'id_tipo_factor' => 2,
             'id_proyecto' => 1,
+            'peso' => 20,
+            'progreso' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        Caracteristica::create([
+            'codigo' => '1.1',
+            'nombre' => 'Misión, Visión y Proyecto Institucional.',
+            'descripcion' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'id_factor' => 1,
             'peso' => 20,
             'progreso' => 0,
             'created_at' => Carbon::now(),
