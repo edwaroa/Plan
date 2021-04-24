@@ -4,6 +4,7 @@ use App\Http\Controllers\AspectoController;
 use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\FactorController;
 use App\Http\Controllers\FacultadController;
+use App\Http\Controllers\IndicadorController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\ProyectoController;
@@ -120,6 +121,17 @@ Route::get('/aspectos/{aspecto}', [AspectoController::class, 'show'])->name('asp
 Route::get('/aspectos/{aspecto}/edit', [AspectoController::class, 'edit'])->name('aspectos.edit');
 Route::put('/aspectos/{aspecto}', [AspectoController::class, 'update'])->name('aspectos.update');
 Route::post('/aspectos/{aspecto}', [AspectoController::class, 'estado'])->name('aspectos.estado');
+
+// Indicadores
+// Peso
+Route::post('/pesoind', [IndicadorController::class, 'peso']);
+Route::get('/indicadores', [IndicadorController::class, 'index'])->name('indicadores.index');
+Route::get('/indicadores/create', [IndicadorController::class, 'create'])->name('indicadores.create');
+Route::post('/indicadores', [IndicadorController::class, 'store'])->name('indicadores.store');
+Route::get('/indicadores/{indicador}', [IndicadorController::class, 'show'])->name('indicadores.show');
+Route::get('/indicadores/{indicador}/edit', [IndicadorController::class, 'edit'])->name('indicadores.edit');
+Route::put('/indicadores/{indicador}', [IndicadorController::class, 'update'])->name('indicadores.update');
+Route::post('/indicadores/{indicador}', [IndicadorController::class, 'estado'])->name('indicadores.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

@@ -24,7 +24,11 @@ class FactorController extends Controller
      */
     public function index()
     {
-        $factores = Factor::all();
+        if(Auth::user()->rol->nombre == "Decano"){
+            $factores = Factor::all();
+        }else {
+            $factores = Factor::where('estado', 'Activado')->get();
+        }
 
         return view('factores.index', compact('factores'));
     }
@@ -71,7 +75,7 @@ class FactorController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($request){
-                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
+                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $factores->count(); $i++){
@@ -153,7 +157,7 @@ class FactorController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($factor, $request) {
-                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
+                    $factores = Factor::where('id_proyecto', $request['id_proyecto'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $factores->count(); $i++){
@@ -184,22 +188,37 @@ class FactorController extends Controller
 
     public function estado(Request $request, Factor $factor)
     {
+        $factores = Factor::where('id_proyecto', $factor->id_proyecto)->where('estado', 'Activado')->get();
+
+        $peso_total = 100;
+
+        for($i = 0; $i < $factores->count(); $i++){
+            $peso_total -= $factores[$i]->peso;
+        }
+
         $factor = Factor::findOrFail($factor->id);
 
         if($factor->estado=='Desactivado'){
             //Leer el nuevo estado
-            $factor->estado='Activado';
-            $factor->save();
+            if($factor->peso <= $peso_total){
+                $factor->estado='Activado';
+                $factor->save();
+
+                return redirect()->route('factores.index')->with('status_estado', 'si')->with('tipo', 'Activado');
+            }else {
+                return redirect()->route('factores.index')->with('status_estado', 'no');
+            }
         }
         else{
             $factor->estado='Desactivado';
             $factor->save();
+
+            return redirect()->route('factores.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
-        return redirect()->action([FactorController::class, 'index']);
     }
 
     public function peso(Request $request){
-        $factores = Factor::where('id_proyecto', $request['id_proyecto'])->get();
+        $factores = Factor::where('id_proyecto', $request['id_proyecto'])->where('estado', 'Activado')->get();
         $peso_total = 100;
 
         for($i = 0; $i < $factores->count(); $i++){

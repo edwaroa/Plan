@@ -73,7 +73,7 @@ class ProyectoController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($request) {
-                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
+                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $proyectos->count(); $i++){
@@ -153,7 +153,7 @@ class ProyectoController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($proyecto, $request) {
-                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
+                    $proyectos = Proyecto::where('id_plan', $request['id_plan'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $proyectos->count(); $i++){
@@ -184,20 +184,37 @@ class ProyectoController extends Controller
 
     public function estado(Request $request, Proyecto $proyecto)
     {
+        $proyectos = Proyecto::where('id_plan', $proyecto->id_plan)->where('estado', 'Activado')->get();
+
+        $peso_total = 100;
+
+        for($i = 0; $i < $proyectos->count(); $i++){
+            $peso_total -= $proyectos[$i]->peso;
+        }
+
+        $proyecto = Proyecto::findOrFail($proyecto->id);
+
         if($proyecto->estado=='Desactivado'){
             //Leer el nuevo estado
-            $proyecto->estado='Activado';
-            $proyecto->save();
+            if($proyecto->peso <= $peso_total){
+                $proyecto->estado='Activado';
+                $proyecto->save();
+
+                return redirect()->route('proyectos.index')->with('status_estado', 'si')->with('tipo', 'Activado');
+            }else {
+                return redirect()->route('proyectos.index')->with('status_estado', 'no');
+            }
         }
         else{
             $proyecto->estado='Desactivado';
             $proyecto->save();
+
+            return redirect()->route('proyectos.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
-        return redirect()->action([ProyectoController::class, 'index']);
     }
 
     public function peso(Request $request){
-        $proyectos = Proyecto::where('id_plan', $request['id_plan'])->get();
+        $proyectos = Proyecto::where('id_plan', $request['id_plan'])->where('estado', 'Activado')->get();
         $peso_total = 100;
 
         for($i = 0; $i < $proyectos->count(); $i++){

@@ -21,7 +21,11 @@ class CaracteristicaController extends Controller
      */
     public function index()
     {
-        $caracteristicas = Caracteristica::all();
+        if(Auth::user()->rol->nombre == "Decano"){
+            $caracteristicas = Caracteristica::all();
+        }else {
+            $caracteristicas = Caracteristica::where('estado', 'Activado')->get();
+        }
 
         return view('caracteristicas.index', compact('caracteristicas'));
     }
@@ -67,7 +71,7 @@ class CaracteristicaController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail)  use($request){
-                    $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->get();
+                    $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $caracteristicas->count(); $i++){
@@ -147,7 +151,7 @@ class CaracteristicaController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($caracteristica, $request) {
-                    $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->get();
+                    $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $caracteristicas->count(); $i++){
@@ -177,22 +181,38 @@ class CaracteristicaController extends Controller
 
     public function estado(Request $request, Caracteristica $caracteristica)
     {
+
+        $caracteristicas = Caracteristica::where('id_factor', $caracteristica->id_factor)->where('estado', 'Activado')->get();
+
+        $peso_total = 100;
+
+        for($i = 0; $i < $caracteristicas->count(); $i++){
+            $peso_total -= $caracteristicas[$i]->peso;
+        }
+
         $caracteristica = Caracteristica::findOrFail($caracteristica->id);
 
         if($caracteristica->estado=='Desactivado'){
             //Leer el nuevo estado
-            $caracteristica->estado='Activado';
-            $caracteristica->save();
+            if($caracteristica->peso <= $peso_total){
+                $caracteristica->estado='Activado';
+                $caracteristica->save();
+
+                return redirect()->route('caracteristicas.index')->with('status_estado', 'si')->with('tipo', 'Activado');
+            }else {
+                return redirect()->route('caracteristicas.index')->with('status_estado', 'no');
+            }
         }
         else{
             $caracteristica->estado='Desactivado';
             $caracteristica->save();
+
+            return redirect()->route('caracteristicas.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
-        return redirect()->action([CaracteristicaController::class, 'index']);
     }
 
     public function peso(Request $request){
-        $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->get();
+        $caracteristicas = Caracteristica::where('id_factor', $request['id_factor'])->where('estado', 'Activado')->get();
         $peso_total = 100;
 
         for($i = 0; $i < $caracteristicas->count(); $i++){

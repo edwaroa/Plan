@@ -38,7 +38,7 @@ class TipoFactorController extends Controller
     public function create()
     {
         if(Auth::user()->rol->nombre == 'Decano'){
-            $tiposFactores = TipoFactor::all();
+            $tiposFactores = TipoFactor::where('estado', 'Activado')->get();
             $total_tiposFactores = $tiposFactores->count();
             $porcentaje_total = 100;
 
@@ -66,7 +66,7 @@ class TipoFactorController extends Controller
             'porcentaje' => [
                 'required',
                 function($attribute, $value, $fail) {
-                    $tiposFactores = TipoFactor::all();
+                    $tiposFactores = TipoFactor::where('estado', 'Activado')->get();
                     $porcentaje_total = 100;
 
                     for($i = 0; $i < $tiposFactores->count(); $i++){
@@ -112,7 +112,7 @@ class TipoFactorController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $tipoFactor = TipoFactor::findOrFail($tipofactor);
-            $tiposFactores = TipoFactor::all();
+            $tiposFactores = TipoFactor::where('estado', 'Activado')->get();
             $total_tiposFactores = $tiposFactores->count();
             $porcentaje_total = 100;
 
@@ -141,7 +141,7 @@ class TipoFactorController extends Controller
             'porcentaje' => [
                 'required',
                 function($attribute, $value, $fail) use($tipoFactor, $tipofactor) {
-                    $tiposFactores = TipoFactor::all();
+                    $tiposFactores = TipoFactor::where('estado', 'Activado')->get();
                     $tipoFactor = TipoFactor::findOrFail($tipofactor);
                     $peso_total = 100;
 
@@ -168,19 +168,35 @@ class TipoFactorController extends Controller
         return redirect()->action([TipoFactorController::class, 'index']);
     }
 
-    public function estado(Request $request, TipoFactor $tipoFactor, $tipofactor)
+    public function estado(TipoFactor $tipoFactor, $tipofactor)
     {
-        $tipoFactor = TipoFactor::findOrFail($tipofactor);
+        $tiposFactores = TipoFactor::where('estado', 'Activado')->get();
 
-        if($tipoFactor->estado=='Desactivado'){
+        $peso_total = 100;
+
+        for($i = 0; $i < $tiposFactores->count(); $i++){
+            $peso_total -= $tiposFactores[$i]->porcentaje;
+        }
+
+        $tipofactor = TipoFactor::findOrFail($tipofactor);
+
+        if($tipofactor->estado=='Desactivado'){
             //Leer el nuevo estado
-            $tipoFactor->estado='Activado';
-            $tipoFactor->save();
+            if($tipofactor->porcentaje <= $peso_total){
+                $tipofactor->estado='Activado';
+                $tipofactor->save();
+
+                return redirect()->route('tipofactores.index')->with('status_estado', 'si')->with('tipo', 'Activado');
+            }else {
+                return redirect()->route('tipofactores.index')->with('status_estado', 'no');
+            }
         }
-        else{
-            $tipoFactor->estado='Desactivado';
-            $tipoFactor->save();
+        else
+        {
+            $tipofactor->estado='Desactivado';
+            $tipofactor->save();
+
+            return redirect()->route('tipofactores.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
-        return redirect()->action([TipoFactorController::class, 'index']);
     }
 }

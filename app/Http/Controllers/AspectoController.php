@@ -59,7 +59,7 @@ class AspectoController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail)  use($request){
-                    $aspectos = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->get();
+                    $aspectos = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $aspectos->count(); $i++){
@@ -138,7 +138,7 @@ class AspectoController extends Controller
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($aspecto, $request) {
-                    $aspectos = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->get();
+                    $aspectos = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->where('estado', 'Activado')->get();
                     $peso_total = 100;
 
                     for($i = 0; $i < $aspectos->count(); $i++){
@@ -168,22 +168,37 @@ class AspectoController extends Controller
 
     public function estado(Request $request, Aspecto $aspecto)
     {
+        $aspectos = Aspecto::where('id_caracteristica', $aspecto->id_caracteristica)->where('estado', 'Activado')->get();
+
+        $peso_total = 100;
+
+        for($i = 0; $i < $aspectos->count(); $i++){
+            $peso_total -= $aspectos[$i]->peso;
+        }
+
         $aspecto = Aspecto::findOrFail($aspecto->id);
 
         if($aspecto->estado=='Desactivado'){
             //Leer el nuevo estado
-            $aspecto->estado='Activado';
-            $aspecto->save();
+            if($aspecto->peso <= $peso_total){
+                $aspecto->estado='Activado';
+                $aspecto->save();
+
+                return redirect()->route('aspectos.index')->with('status_estado', 'si')->with('tipo', 'Activado');
+            }else {
+                return redirect()->route('aspectos.index')->with('status_estado', 'no');
+            }
         }
         else{
             $aspecto->estado='Desactivado';
             $aspecto->save();
+
+            return redirect()->route('aspectos.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
-        return redirect()->action([AspectoController::class, 'index']);
     }
 
     public function peso(Request $request){
-        $aspecto = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->get();
+        $aspecto = Aspecto::where('id_caracteristica', $request['id_caracteristica'])->where('estado', 'Activado')->get();
         $peso_total = 100;
 
         for($i = 0; $i < $aspecto->count(); $i++){
