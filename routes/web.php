@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AspectoController;
 use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\FactorController;
 use App\Http\Controllers\FacultadController;
@@ -24,7 +25,10 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', function () { return view('welcome'); });
 
-Route::get('/home/corporacion', function () { return view('homeCorporacion'); })->name('homeCorporacion');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home/corporacion', function () { return view('homeCorporacion'); })->name('homeCorporacion');
+
+});
 
 Auth::routes();
 
@@ -105,6 +109,17 @@ Route::get('/caracteristicas/{caracteristica}', [CaracteristicaController::class
 Route::get('/caracteristicas/{caracteristica}/edit', [CaracteristicaController::class, 'edit'])->name('caracteristicas.edit');
 Route::put('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'update'])->name('caracteristicas.update');
 Route::post('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'estado'])->name('caracteristicas.estado');
+
+// Aspectos
+// Peso
+Route::post('/pesoasp', [AspectoController::class, 'peso']);
+Route::get('/aspectos', [AspectoController::class, 'index'])->name('aspectos.index');
+Route::get('/aspectos/create', [AspectoController::class, 'create'])->name('aspectos.create');
+Route::post('/aspectos', [AspectoController::class, 'store'])->name('aspectos.store');
+Route::get('/aspectos/{aspecto}', [AspectoController::class, 'show'])->name('aspectos.show');
+Route::get('/aspectos/{aspecto}/edit', [AspectoController::class, 'edit'])->name('aspectos.edit');
+Route::put('/aspectos/{aspecto}', [AspectoController::class, 'update'])->name('aspectos.update');
+Route::post('/aspectos/{aspecto}', [AspectoController::class, 'estado'])->name('aspectos.estado');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

@@ -5,7 +5,7 @@ caracteristica.addEventListener('change', function () {
     var params = {
         'id_caracteristica': this.value
     }
-    axios.post('/pesopro', params)
+    axios.post('/pesoasp', params)
         .then(function(res){
             var data = res.data;
             peso_total.innerHTML = "Puede agregar " + data.peso_total;

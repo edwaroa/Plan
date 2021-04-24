@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Mejorasoft') }}</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -129,6 +129,19 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('caracteristicas.index')}}">Ver</a>
                         <a class="collapse-item" href="{{ route('caracteristicas.create') }}">Crear</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item {{ Nav::isRoute('aspectos') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseAspectos" aria-expanded="true" aria-controls="collapseAspectos">
+                    <i class="fas fa-2x text-gray-300 fa-copy"></i>
+                    <span>{{ __('Aspectos') }}</span>
+                </a>
+                <div id="collapseAspectos" class="collapse" aria-labelledby="headingAspectos" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('aspectos.index') }}">Ver</a>
+                        <a class="collapse-item" href="{{ route('aspectos.create') }}">Crear</a>
                     </div>
                 </div>
             </li>

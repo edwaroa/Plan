@@ -28,7 +28,7 @@
                                 <div class="form-group focused">
                                     <label for="tipo_documento" class="form-control-label">{{ __('Tipo de documento') }}</label>
                                         <select id="tipo_documento" name="tipo_documento" class="form-control @error('tipo_documento') is-invalid @enderror" value="{{ old('tipo_documento')}}" autofocus>
-                                            <option value="">-- Tipo de documento --</option>
+                                            <option value="" selected disabled>-- Tipo de documento --</option>
                                             <option value="Cedula de Ciudadania">Cedula de Ciudadanía</option>
                                             <option value="Cedula de Extranjeria">Cedula de Extranjeria</option>
                                             <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
@@ -118,7 +118,7 @@
                                 <div class="form-group focused">
                                     <label for="rol" class="form-control-label">{{ __('Rol') }}</label>
                                     <select id="rol" name="rol" class="form-control @error('rol') is-invalid @enderror">
-                                    <option value="">-- Seleccione un Rol --</option>
+                                    <option value="" selected disabled>-- Seleccione un Rol --</option>
                                         @foreach($roles as $rol)
                                             <option value="{{$rol->id}}" {{old('rol') == $rol->id ? 'selected' : '' }}>{{$rol->nombre}}</option>
                                         @endforeach
