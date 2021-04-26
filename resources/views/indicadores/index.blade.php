@@ -4,16 +4,16 @@
 
 <div>
     <div>
-        <h2>Administrar Aspectos</h2>
+        <h2>Administrar Indicadores</h2>
     </div>
     <div class="card shadow mb-4">
         @if (auth()->user()->rol->nombre == 'Decano')
             <div class="card-header py-3">
-                <a href="{{ route('aspectos.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
+                <a href="{{ route('indicadores.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
             </div>
         @else
             <div class="card-header py-3">
-                <h6 class="text-primary font-weight-bold">Aspectos Registrados</h6>
+                <h6 class="text-primary font-weight-bold">Indicadores Registrados</h6>
             </div>
         @endif
 
@@ -27,7 +27,7 @@
                     <tr>
                         <th scole="col">Codigo</th>
                         <th scole="col">Nombre</th>
-                        <th scole="col">Característica</th>
+                        <th scole="col">Aspecto</th>
                         <th scole="col">Progreso</th>
                         <th scole="col">Peso</th>
                         <th scole="col">Estado</th>
@@ -35,45 +35,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                     @foreach($aspectos as $aspecto)
+                     @foreach($indicadores as $indicador)
                     <tr>
-                        <td class="text-center">{{$aspecto->codigo}}</td>
-                        <td>{{$aspecto->nombre}}</td>
-                        <td>{{$aspecto->caracteristica->nombre}}</td>
+                        <td class="text-center">{{$indicador->codigo}}</td>
+                        <td>{{$indicador->nombre}}</td>
+                        <td>{{$indicador->aspecto->nombre}}</td>
                         <td>
-                            @if ($aspecto->progreso == 0)
-                                El aspecto aún no tiene progreso
+                            @if ($indicador->progreso == 0)
+                                El indicador aún no tiene progreso
                             @else
                                 <div class="progress">
-                                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $aspecto->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                        {{ $aspecto->progreso }} %
+                                    <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $indicador->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                        {{ $indicador->progreso }} %
                                     </div>
                                 </div>
                             @endif
 
                         </td>
-                        <td>{{ $aspecto->peso }}</td>
+                        <td>{{ $indicador->peso }}</td>
                         <td class="text-center">
-                            @if ($aspecto->estado == "Activado")
-                                <span class="badge badge-success">{{ $aspecto->estado }}</span>
+                            @if ($indicador->estado == "Activado")
+                                <span class="badge badge-success">{{ $indicador->estado }}</span>
                             @else
-                                <span class="badge badge-danger">{{ $aspecto->estado }}</span>
+                                <span class="badge badge-danger">{{ $indicador->estado }}</span>
                             @endif
 
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="{{route('aspectos.show',['aspecto'=>$aspecto->id])}}" class="btn btn-primary rounded">
+                                <a href="{{route('indicadores.show',['indicador'=>$indicador->id])}}" class="btn btn-primary rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
                                 @if (auth()->user()->rol->nombre == "Decano")
-                                    <a href="{{ route('aspectos.edit', ['aspecto' => $aspecto->id]) }}" class="btn btn-warning mx-2 rounded">
+                                    <a href="{{ route('indicadores.edit', ['indicador' => $indicador->id]) }}" class="btn btn-warning mx-2 rounded">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <form action="{{ route('aspectos.estado', ['aspecto' => $aspecto->id]) }}" method="POST">
+                                    <form action="{{ route('indicadores.estado', ['indicador' => $indicador->id]) }}" method="POST">
                                         @csrf
-                                        @if($aspecto->estado=='Activado')
+                                        @if($indicador->estado=='Activado')
                                         <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-trash"></i></button>
                                         @else
                                         <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-check"></i></button>

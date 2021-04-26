@@ -145,6 +145,18 @@
                     </div>
                 </div>
             </li>
+
+            <li class="nav-item {{ Nav::isRoute('indicadores') }}">
+                <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseIndicadores" aria-expanded="true" aria-controls="collapseIndicadores">
+                    <i class="fas fa-2x text-gray-300 fa-tag"></i>
+                    <span>{{ __('Indicadores') }}</span>
+                </a>
+                <div id="collapseIndicadores" class="collapse" aria-labelledby="headingIndicadores" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('indicadores.index') }}">Ver</a>
+                        <a class="collapse-item" href="{{ route('indicadores.create') }}">Crear</a>
+                    </div>
+                </div>
         @endif
 
         {{--
@@ -366,6 +378,5 @@
 <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{ asset('js/demo/datatables-demo.js')}}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
 </body>
 </html>

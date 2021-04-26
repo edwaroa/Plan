@@ -22,8 +22,11 @@ class AspectoController extends Controller
      */
     public function index()
     {
-        $aspectos = Aspecto::all();
-
+        if(Auth::user()->rol->nombre == "Decano"){
+            $aspectos = Aspecto::all();
+        }else {
+            $aspectos = Aspecto::where('estado', 'Activado')->get();
+        }
         return view('aspectos.index', compact('aspectos'));
     }
 

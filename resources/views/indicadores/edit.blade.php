@@ -10,7 +10,7 @@
     <div class="col-lg-12 order-lg-1">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ __('Crear Aspecto') }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('Editar Indicador') }}</h6>
             </div>
             @if(session('estado'))
             <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -21,17 +21,18 @@
             </div>
             @endif
             <div class="card-body">
-                <form method="POST" action="{{ route('aspectos.store') }}" autocomplete="off" novalidate enctype="multipart/form-data">
+                <form method="POST" action="{{ route('indicadores.update', ['indicador' => $indicador->id]) }}" autocomplete="off" novalidate enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    @method('PUT')
 
-                    <h6 class="heading-small text-muted mb-4">Información del aspecto</h6>
+                    <h6 class="heading-small text-muted mb-4">Información del indicador</h6>
 
                     <div class="pl-lg-4">
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="codigo" class="form-control-label">{{ __('Codigo del Aspecto') }}</label>
-                                    <input type="text" class="form-control @error('codigo') is-invalid @enderror" min="0" name="codigo" id="codigo" value="{{ old('codigo') }}" placeholder="Codigo del aspecto">
+                                    <label for="codigo" class="form-control-label">{{ __('Codigo del indicador') }}</label>
+                                    <input type="text" class="form-control @error('codigo') is-invalid @enderror" min="0" name="codigo" id="codigo" value="{{ $indicador->codigo }}" placeholder="Codigo del indicador">
 
                                     @error('codigo')
                                         <span class="invalid-feedback" role="alert">
@@ -42,8 +43,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="nombre" class="form-control-label">{{ __('Nombre del aspectos') }}</label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ old('nombre') }}" placeholder="Nombre del aspecto">
+                                    <label for="nombre" class="form-control-label">{{ __('Nombre del indicador') }}</label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $indicador->nombre }}" placeholder="Nombre del indicador">
 
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
@@ -58,7 +59,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label for="descripcion" class="form-control-label">{{ __('Descripción') }}</label>
-                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del aspecto">{{ old('descripcion') }}</textarea>
+                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del indicador">{{ $indicador->descripcion }}</textarea>
 
 
                                     @error('descripcion')
@@ -73,17 +74,17 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="id_caracteristica" class="form-control-label">{{ __('Caracteristica') }}</label>
-                                    <select name="id_caracteristica" id="id_caracteristica" class="form-control @error('id_caracteristica') is-invalid @enderror">
-                                        <option value="" selected disabled>-- Seleccione una característica --</option>
-                                        @foreach ($caracteristicas as $caracteristica)
-                                            <option value="{{ $caracteristica->id }}" {{ old('id_caracteristica') == $caracteristica->id ? 'selected' : '' }}>
-                                                {{ $caracteristica->codigo }}. {{ $caracteristica->nombre }}
+                                    <label for="id_aspecto" class="form-control-label">{{ __('Aspecto') }}</label>
+                                    <select name="id_aspecto" id="id_aspecto" class="form-control @error('id_aspecto') is-invalid @enderror">
+                                        <option value="" selected disabled>-- Seleccione un aspecto --</option>
+                                        @foreach ($aspectos as $aspecto)
+                                            <option value="{{ $aspecto->id }}" {{ $indicador->id_aspecto == $aspecto->id ? 'selected' : '' }}>
+                                                {{ $aspecto->codigo }}. {{ $aspecto->nombre }}
                                             </option>
                                         @endforeach
                                     </select>
 
-                                    @error('id_caracteristica')
+                                    @error('id_aspecto')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -92,8 +93,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total"></span></label>
-                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" min="0" name="peso" id="peso" value="{{ old('peso') }}" placeholder="Peso del aspecto">
+                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total">Puede agregar {{ $peso_total }}</span></label>
+                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" min="0" name="peso" id="peso" value="{{ $indicador->peso }}" placeholder="Peso del indicadpr">
 
                                     @error('peso')
                                         <span class="invalid-feedback" role="alert">
@@ -109,7 +110,7 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <button type="submit" class="btn btn-primary">
-                                        <span class="icon text-white-50">Crear Aspecto</span>
+                                        <span class="icon text-white-50">Guardar Cambios</span>
                                     </button>
                                 </div>
                             </div>
@@ -123,6 +124,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/aspectos.js') }}"></script>
+    <script src="{{ asset('js/indicadores.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous"></script>
 @endsection
