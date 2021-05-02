@@ -20,6 +20,7 @@ class CreateActividadsTable extends Migration
             $table->date('fecha_inicio');
             $table->date('tiempo_entrega');
             $table->foreignId('id_indicador')->references('id')->on('indicadors')->constrained()->onUpdate('cascade');
+            $table->text('comentario')->nullable();
             $table->string('estado')->default('Iniciada');
             $table->timestamps();
         });

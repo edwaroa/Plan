@@ -147,7 +147,23 @@ class ActividadController extends Controller
      */
     public function edit(Actividad $actividad)
     {
-        //
+        if(Auth::user()->rol->nombre == 'Decano'){
+            $indicadores = Indicador::all(['id', 'nombre', 'codigo']);
+            $usuarios = User::paginate(10);
+            $fecha_actual = Carbon::now()->format('Y-m-d');
+
+            $actividad_user = [];
+
+            foreach($actividad->users as $usuario) {
+                $actividad_user[] = $usuario->id;
+            }
+
+            return view('actividades.edit', compact('indicadores', 'actividad_user', 'usuarios', 'actividad'));
+        }else {
+            return redirect()->action([ActividadController::class, 'index']);
+        }
+
+
     }
 
     /**
@@ -159,7 +175,61 @@ class ActividadController extends Controller
      */
     public function update(Request $request, Actividad $actividad)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'required | string | max:255',
+            'descripcion' => 'required | string',
+            'id_indicador' => 'required',
+            'fecha_inicio' => [
+                'required',
+                function($attribute, $value, $fail) use($request) {
+                    if($request['id_indicador']){
+                        $fecha_plan = Plan::join('proyectos', 'proyectos.id_plan', '=', 'plans.id')
+                        ->join('factors', 'factors.id_proyecto', '=', 'proyectos.id')
+                        ->join('caracteristicas', 'caracteristicas.id_factor', '=', 'factors.id')
+                        ->join('aspectos', 'aspectos.id_caracteristica', '=', 'caracteristicas.id')
+                        ->join('indicadors', 'indicadors.id_aspecto', '=', 'aspectos.id')
+                        ->where('indicadors.id', $request['id_indicador'])
+                        ->select('plans.fecha_inicio as fecha_inicio')->get();
+
+                        if($fecha_plan[0]->fecha_inicio > $value){
+                            $fail("La fecha de inicio no puede ser anterior a la fecha de inicio del plan correspondiente");
+                        }
+                    }
+                }
+            ],
+            'tiempo_entrega' => [
+                'required',
+                function($attribute, $value, $fail) use($request) {
+                    if($request['id_indicador']){
+                        $fecha_plan = Plan::join('proyectos', 'proyectos.id_plan', '=', 'plans.id')
+                        ->join('factors', 'factors.id_proyecto', '=', 'proyectos.id')
+                        ->join('caracteristicas', 'caracteristicas.id_factor', '=', 'factors.id')
+                        ->join('aspectos', 'aspectos.id_caracteristica', '=', 'caracteristicas.id')
+                        ->join('indicadors', 'indicadors.id_aspecto', '=', 'aspectos.id')
+                        ->where('indicadors.id', $request['id_indicador'])
+                        ->select('plans.fecha_final as fecha_final')->get();
+
+                        if($fecha_plan[0]->fecha_final < $value){
+                            $fail("La fecha de final no puede ser superior a la fecha final del plan correspondiente");
+                        }
+                    }
+                }
+            ],
+            'usuarios' => 'required|array|min:1',
+            'usuarios.*' => 'required|integer|distinct|min:1'
+        ]);
+
+        $actividad->update([
+            'nombre' => $data['nombre'],
+            'descripcion' => $data['descripcion'],
+            'id_indicador' => $data['id_indicador'],
+            'fecha_inicio' => $data['fecha_inicio'],
+            'tiempo_entrega' => $data['tiempo_entrega']
+        ]);
+
+        $actividad->users()->sync($request->get('usuarios'));
+
+        return redirect()->action([ActividadController::class, 'index']);
     }
 
     public function fecha(Request $request)

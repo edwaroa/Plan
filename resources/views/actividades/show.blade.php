@@ -28,7 +28,7 @@
                             <i class="far fa-clock"></i> {{ $actividad->fecha_inicio }}
                         </div>
                         <div class="col-lg-6">
-                            <h4>Fecha Final</h4>
+                            <h4>Fecha Entrega</h4>
                             <i class="fas fa-stopwatch"></i> {{ $actividad->tiempo_entrega }}
                         </div>
                         <div class="col-lg-12 mt-3 p-0">

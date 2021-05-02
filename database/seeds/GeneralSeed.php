@@ -6,6 +6,7 @@ use App\Aspecto;
 use App\Caracteristica;
 use App\Factor;
 use App\Facultad;
+use App\Indicador;
 use App\Plan;
 use App\Programa;
 use App\Proyecto;
@@ -128,6 +129,17 @@ class GeneralSeed extends Seeder
             'nombre' => 'Mejoramiento de Misión',
             'descripcion' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
             'id_caracteristica' => 1,
+            'peso' => 20,
+            'progreso' => 0,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+
+        Indicador::create([
+            'codigo' => '1.1.1.1',
+            'nombre' => 'Indicador de peso integral',
+            'descripcion' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
+            'id_aspecto' => 1,
             'peso' => 20,
             'progreso' => 0,
             'created_at' => Carbon::now(),

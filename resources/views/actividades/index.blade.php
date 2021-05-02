@@ -62,17 +62,6 @@
                                 <a href="{{ route('actividades.edit', ['actividad' => $actividad->id]) }}" class="btn btn-warning mx-2 rounded">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
-
-                                <form action="{{ route('actividades.estado', ['actividad' => $actividad->id]) }}" method="POST">
-                                    @csrf
-                                    @if($actividad->estado=='Activado')
-                                    <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-trash"></i></button>
-                                    @else
-                                    <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-check"></i></button>
-                                    @endif
-                                </form>
-
-
                             </div>
                         </td>
                     </tr>
