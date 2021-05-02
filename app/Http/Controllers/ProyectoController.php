@@ -121,7 +121,7 @@ class ProyectoController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $planes = Plan::all(['id', 'nombre']);
-            $proyectos = Proyecto::all();
+            $proyectos = Proyecto::where('id_plan', $proyecto->id_plan)->where('estado', 'Activado')->get();
             $total_proyectos = $proyectos->count();
             $peso_total = 100;
 

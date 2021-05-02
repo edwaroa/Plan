@@ -109,7 +109,7 @@ class AspectoController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $caracteristicas = Caracteristica::all(['id', 'nombre', 'codigo']);
-            $aspectos = Aspecto::all();
+            $aspectos = Aspecto::where('id_caracteristica', $aspecto->id_caracteristica)->where('estado', 'Activado')->get();
 
             $total_aspectos = $aspectos->count();
             $peso_total = 100;

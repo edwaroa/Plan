@@ -8,6 +8,6 @@ proyecto.addEventListener('change', function () {
     axios.post('/pesofac', params)
         .then(function(res){
             var data = res.data;
-            peso_total.innerHTML = "Para " + data.proyecto + " puede agregar " + data.peso_total;
+            peso_total.innerHTML = "Puede agregar " + data.peso_total;
         })
 });

@@ -9,6 +9,6 @@ factor.addEventListener('change', function () {
     axios.post('/pesocar', params)
         .then(function(res){
             var data = res.data;
-            peso_total.innerHTML = "puede agregar " + data.peso_total;
+            peso_total.innerHTML = "Puede agregar " + data.peso_total;
         })
 });

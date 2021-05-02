@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total"></span></label>
+                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total">Puede agregar {{ $peso_total }}</span></label>
                                     <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" max="{{ $peso_total }}" min="0" name="peso" id="peso" value="{{ $caracteristica->peso }}" placeholder="Peso de la característica">
 
                                     @error('peso')

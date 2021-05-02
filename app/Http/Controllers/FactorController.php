@@ -124,7 +124,7 @@ class FactorController extends Controller
         if(Auth::user()->rol->nombre == 'Decano'){
             $tiposFactores = TipoFactor::all(['id', 'nombre']);
             $proyectos = Proyecto::all(['id', 'nombre']);
-            $factores = Factor::all();
+            $factores = Factor::where('id_proyecto', $factor->id_proyecto)->where('estado', 'Activado')->get();
 
             $total_factores = $factores->count();
             $peso_total = 100;

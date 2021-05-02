@@ -118,7 +118,7 @@ class CaracteristicaController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $factores = Factor::all(['id', 'nombre', 'codigo']);
-            $caracteristicas = Factor::all();
+            $caracteristicas = Factor::where('id_factor', $caracteristica->id_factor)->where('estado', 'Activado')->get();
 
             $total_caracteristicas = $caracteristicas->count();
             $peso_total = 100;

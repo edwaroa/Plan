@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function rol(){
         return $this->belongsTo(Rol::class, 'id_rol');
     }
+
+    public function actividades() {
+        return $this->belongsToMany(Actividad::class)->withPivot('id');
+    }
 }

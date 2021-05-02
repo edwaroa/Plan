@@ -10,7 +10,7 @@
     <div class="col-lg-12 order-lg-1">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ __('Editar Proyecto') }}</h6>
+                <h6 class="m-0 font-weight-bold text-primary">{{ __('Crear Actividad') }}</h6>
             </div>
             @if(session('estado'))
             <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -21,18 +21,17 @@
             </div>
             @endif
             <div class="card-body">
-                <form method="POST" action="{{ route('proyectos.update', ['proyecto' => $proyecto->id]) }}" autocomplete="off" novalidate enctype="multipart/form-data">
+                <form method="POST" action="{{ route('actividades.store') }}" autocomplete="off" novalidate enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @method('PUT')
 
-                    <h6 class="heading-small text-muted mb-4">Información del Proyecto</h6>
+                    <h6 class="heading-small text-muted mb-4">Información de la actividad</h6>
 
                     <div class="pl-lg-4">
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="form-group focused">
-                                    <label for="nombre" class="form-control-label">{{ __('Nombre del Proyecto') }}</label>
-                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $proyecto->nombre }}" placeholder="Nombre del proyecto">
+                                    <label for="nombre" class="form-control-label">{{ __('Nombre de la Actividad') }}</label>
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ old('nombre') }}" placeholder="Nombre de la actividad">
 
                                     @error('nombre')
                                         <span class="invalid-feedback" role="alert">
@@ -41,13 +40,11 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label for="descripcion" class="form-control-label">{{ __('Descripción') }}</label>
-                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción del proyecto">{{ $proyecto->descripcion }}</textarea>
+                                    <textarea name="descripcion" id="descripcion" class="form-control area @error('descripcion') is-invalid @enderror" placeholder="Descripción de la actividad">{{ old('descripcion') }}</textarea>
 
 
                                     @error('descripcion')
@@ -57,30 +54,22 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group focused">
-                                    <label for="objetivo_general" class="form-control-label">{{ __('Objetivo General') }}</label>
-
-                                    <textarea name="objetivo_general" id="objetivo_general" class="form-control area @error('objetivo_general') is-invalid @enderror" placeholder="Objetivo General del proyecto">{{ $proyecto->objetivo_general }}</textarea>
-
-                                    @error('objetivo_general')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
                         </div>
 
                         <div class="row justify-content-center">
                             <div class="col-lg-12">
                                 <div class="form-group focused">
-                                    <label for="objetivos_especificos" class="form-control-label">{{ __('Objetivos Especificos') }}</label>
-                                    <textarea name="objetivos_especificos" id="objetivos_especificos" class="form-control @error('objetivos_especificos') is-invalid @enderror" placeholder="Objetivos Especificos del proyecto" style="min-height: 200px">{{ $proyecto->objetivos_especificos }}</textarea>
+                                    <label for="id_indicador" class="form-control-label">{{ __('Indicador') }}</label>
+                                    <select name="id_indicador" id="id_indicador" class="form-control @error('id_indicador') is-invalid @enderror">
+                                        <option value="" selected disabled>-- Seleccione un Indicador --</option>
+                                        @foreach ($indicadores as $indicador)
+                                            <option value="{{ $indicador->id }}" {{ old('id_indicador') == $indicador->id ? 'selected' : '' }}>
+                                                {{ $indicador->nombre }}
+                                            </option>
+                                        @endforeach
+                                    </select>
 
-
-                                    @error('objetivos_especificos')
+                                    @error('id_indicador')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -92,17 +81,10 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="id_plan" class="form-control-label">{{ __('Plan') }}</label>
-                                    <select name="id_plan" id="id_plan" class="form-control @error('id_plan') is-invalid @enderror">
-                                        <option value="" selected disabled>-- Seleccione un Plan --</option>
-                                        @foreach ($planes as $plan)
-                                            <option value="{{ $plan->id }}" {{ $proyecto->id_plan == $plan->id ? 'selected' : '' }}>
-                                                {{ $plan->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <label for="fecha_inicio" class="form-control-label">{{ __('Fecha de inicio') }} <span class="text-success" id="fechap_inicio"></span></label>
+                                    <input class="form-control @error('fecha_inicio') is-invalid @enderror" name="fecha_inicio" type="date" id="fecha_inicio" value="{{ old('fecha_inicio') }}">
 
-                                    @error('id_plan')
+                                    @error('fecha_inicio')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -112,23 +94,52 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total">Puede agregar {{ $peso_total }}</span></label>
-                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" max="{{ ($peso_total + $proyecto->peso) }}" min="0" name="peso" id="peso" value="{{ $proyecto->peso }}" placeholder="Peso del proyecto">
+                                    <label for="tiempo_entrega" class="form-control-label">{{ __('Fecha de entrega') }} <span class="text-success" id="tiempop_entrega"></span></label>
+                                    <input class="form-control @error('tiempo_entrega') is-invalid @enderror" name="tiempo_entrega" type="date" id="tiempo_entrega" value="{{ old('tiempo_entrega') }}">
 
-                                    @error('peso')
+                                    @error('tiempo_entrega')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-lg-12 mx-2">
+                                <div class="form-group focused">
+                                    <h3 class="text-center">Elegir usuarios encargados:</h1>
+                                    @foreach ($usuarios as $usuario)
+                                        <div class="form-check-inline mr-5">
+                                            <input class="form-check-input text-lg" type="checkbox" id="usuario_{{ $usuario->id }}" name="usuarios[]" value="{{ $usuario->id }}" required
+
+                                            @if (is_array(old('usuarios')) && in_array("$usuario->id", old('usuarios')))
+                                                checked
+                                            @endif
+
+                                            >
+                                            <label class="form-check-label h5" for="usuario_{{ $usuario->id }}">{{ $usuario->fullname }}</label>
+                                        </div>
+                                    @endforeach
+
+                                    <div class="my-3">
+                                        {{ $usuarios->links('pagination::bootstrap-4') }}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        @error('usuarios')
+                            <div class="alert alert-danger">
+                                <li style="list-style: none">{{ $message }}</li>
+                            </div>
+                        @enderror
+
                                 <!-- Button -->
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col text-center">
                                     <button type="submit" class="btn btn-primary">
-                                        <span class="icon text-white-50">Guardar Cambios</span>
+                                        <span class="icon text-white-50">Crear Actividad</span>
                                     </button>
                                 </div>
                             </div>
@@ -142,6 +153,6 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/proyectos.js') }}"></script>
+    <script src="{{ asset('js/actividades.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.js" integrity="sha512-/1nVu72YEESEbcmhE/EvjH/RxTg62EKvYWLG3NdeZibTCuEtW5M4z3aypcvsoZw03FAopi94y04GhuqRU9p+CQ==" crossorigin="anonymous"></script>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\AspectoController;
 use App\Http\Controllers\CaracteristicaController;
 use App\Http\Controllers\FactorController;
@@ -132,6 +133,18 @@ Route::get('/indicadores/{indicador}', [IndicadorController::class, 'show'])->na
 Route::get('/indicadores/{indicador}/edit', [IndicadorController::class, 'edit'])->name('indicadores.edit');
 Route::put('/indicadores/{indicador}', [IndicadorController::class, 'update'])->name('indicadores.update');
 Route::post('/indicadores/{indicador}', [IndicadorController::class, 'estado'])->name('indicadores.estado');
+
+// Actividades
+Route::get('/actividades', [ActividadController::class, 'index'])->name('actividades.index');
+Route::get('/actividades/create', [ActividadController::class, 'create'])->name('actividades.create');
+Route::post('/actividades', [ActividadController::class, 'store'])->name('actividades.store');
+Route::get('/actividades/{actividad}', [ActividadController::class, 'show'])->name('actividades.show');
+Route::get('/actividades/{actividad}/edit', [ActividadController::class, 'edit'])->name('actividades.edit');
+Route::put('/actividades/{actividad}', [ActividadController::class, 'update'])->name('actividades.update');
+Route::post('/actividades/{actividad}', [ActividadController::class, 'estado'])->name('actividades.estado');
+
+// fecha del plan
+Route::post('/fecha', [ActividadController::class, 'fecha']);
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 
 class IndicadorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     public function index()
     {
         if(Auth::user()->rol->nombre == "Decano"){

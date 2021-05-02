@@ -157,7 +157,21 @@
                         <a class="collapse-item" href="{{ route('indicadores.create') }}">Crear</a>
                     </div>
                 </div>
+            </li>
         @endif
+
+        <li class="nav-item {{ Nav::isRoute('actividades') }}">
+            <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapseActividades" aria-expanded="true" aria-controls="collapseActividades">
+            <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+                <span>{{ __('Actividades') }}</span>
+            </a>
+            <div id="collapseActividades" class="collapse" aria-labelledby="headingActividades" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="{{ route('actividades.index') }}">Ver</a>
+                    <a class="collapse-item" href="{{ route('actividades.create') }}">Crear</a>
+                </div>
+            </div>
+        </li>
 
         {{--
 
