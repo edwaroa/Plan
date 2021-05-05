@@ -59,7 +59,8 @@ class UsuarioController extends Controller
         ]);
 
         // Variable para la ruta de la imagen
-        $ruta_imagen = $request['imagen']->store('upload-usuarios', 'public');
+        $archivo = $request->file('imagen');
+        $ruta_imagen = $archivo->storeAs('upload-usuarios',$archivo->getClientOriginalName());
 
         // resize de la imagen
         // $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 700);
@@ -122,7 +123,8 @@ class UsuarioController extends Controller
 
         // Si el usuario sube una nueva imagen
         if(request('imagen')){
-            $ruta_imagen = $request['imagen']->store('upload-usuarios', 'public');
+            $archivo = $request->file('imagen');
+            $ruta_imagen = $archivo->storeAs('upload-usuarios',$archivo->getClientOriginalName());
             $user->imagen = $ruta_imagen;
         }
 
