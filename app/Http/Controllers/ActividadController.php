@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Actividad;
-use App\Indicador;
 use App\Plan;
 use App\User;
+use App\Actividad;
+use App\Evidencia;
+use App\Indicador;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ActividadController extends Controller
 {
@@ -136,7 +137,9 @@ class ActividadController extends Controller
 
         $dias_fechas = $fecha_inicio->diffInDays($tiempo_entrega);
 
-        return view('actividades.show', compact('actividad', 'dias_fechas'));
+        $evidencias= Evidencia::where('actividad_id',$actividad->id)->get();
+
+        return view('actividades.show', compact('actividad', 'dias_fechas', 'evidencias'));
     }
 
     /**

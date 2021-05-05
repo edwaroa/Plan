@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActividadController;
 use App\Http\Controllers\AspectoController;
 use App\Http\Controllers\CaracteristicaController;
+use App\Http\Controllers\EvidenciaController;
 use App\Http\Controllers\FactorController;
 use App\Http\Controllers\FacultadController;
 use App\Http\Controllers\IndicadorController;
@@ -145,6 +146,11 @@ Route::post('/actividades/{actividad}', [ActividadController::class, 'estado'])-
 
 // fecha del plan
 Route::post('/fecha', [ActividadController::class, 'fecha']);
+
+// Evidencias
+Route::post('/evidencias/store', [EvidenciaController::class, 'store'])->name('evidencias.store');
+Route::get('/evidencias/descarga/{id}', [EvidenciaController::class, 'show'])->name('evidencias.descargar');
+Route::delete('/evidencias/{evidencia}', [EvidenciaController::class, 'destroy'])->name('evidencias.destroy');
 
 // Universidades
 Route::get('/universidades', [UniversidadController::class, 'index'])->name('universidades.index');

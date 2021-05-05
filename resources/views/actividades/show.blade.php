@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
 @section('main-content')
+    @include('alertas.success')
+
     <!-- Page Heading -->
     <a href="javascript:history.back()" class="btn btn-outline-warning px-3 mx-1 my-2"><i class="fas fa-arrow-circle-left"></i></a>
 
@@ -37,7 +39,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-center">
+                    <div class="d-inline-block text-white text-lg mx-1">
+                        <i class="fas fa-cloud-upload-alt text-lg"></i> Evidencias
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#evidenciaModal">
+                            <i class="fas fa-upload"></i> Subir Evidencias
+                        </button>
+
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#verEvidenciaModal">
+                            <i class="fas fa-file-word"></i> Ver Evidencias
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="col-lg-8 order-lg-1">
             <div class="card shadow mb-4 p-3">
                 <div class="mx-auto text-center col-md-10">
@@ -53,7 +75,7 @@
                     <div class="col-md-10 mx-auto">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 class="text-primary mb-2">Programa</h3>
+                                <h3 class="text-primary mb-2">Indicador</h3>
                                 <p>{{ $actividad->indicador->nombre }}</p>
                             </div>
                             <div class="col-md-6 float-right">
@@ -74,8 +96,10 @@
                         </div>
                     </div>
                 </div>
-            </div>|
+            </div>
         </div>
     </div>
+
+    @include('modales.evidencias')
 
 @endsection
