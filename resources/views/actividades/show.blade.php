@@ -1,18 +1,21 @@
 @extends('layouts.admin')
 
 @section('main-content')
-    @include('alertas.success')
+
 
     <!-- Page Heading -->
     <a href="javascript:history.back()" class="btn btn-outline-warning px-3 mx-1 my-2"><i class="fas fa-arrow-circle-left"></i></a>
-
+    @include('alertas.success')
     @if ($errors->any())
-        <div class="alert alert-danger border-left-danger" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show border-left-danger" role="alert">
             <ul class="pl-4 my-2">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     @endif
     <div class="row">
@@ -63,7 +66,7 @@
         <div class="col-lg-8 order-lg-1">
             <div class="card shadow mb-4 p-3">
                 <div class="mx-auto text-center col-md-10">
-                    <h3 class="p-0 mb-5">{{ $actividad->nombre }}</h3>
+                    <h3 class="p-0 mb-5 d-inline-block">{{ $actividad->nombre }}</h3>
                 </div>
                 <div class="row">
                     <div class="col-md-10 mx-auto">
@@ -88,11 +91,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-10 mx-auto">
+                        <div class="mb-3">
+                            <h3 class="text-primary mb-2">Peso de la actividad</h3>
+                            <p class="rounded font-weight-bold border border-success d-inline-block p-2 bg-success text-white">{{ $actividad->peso }}</p>
+                        </div>
+                    </div>
                     <div class="mx-auto col-md-10">
                         <div class="row my-3">
-                            <div class="col">
+                            <div class="col-md-8">
                                 <a href="{{ route('actividades.edit', ['actividad' => $actividad->id]) }}" class="text-primary">¿Desea editar esta actividad?</a>
                             </div>
+                            @if (Auth::user()->rol->nombre == "Decano")
+                                <div class="col-md-4">
+                                    <button class="btn btn-success d-inline-block float-right" data-toggle="modal" data-target="#tramitarModal">Tramitar</button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

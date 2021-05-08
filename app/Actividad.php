@@ -14,7 +14,8 @@ class Actividad extends Model
         'descripcion',
         'fecha_inicio',
         'id_indicador',
-        'tiempo_entrega'
+        'tiempo_entrega',
+        'peso'
     ];
 
     public function indicador() {

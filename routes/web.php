@@ -143,6 +143,7 @@ Route::get('/actividades/{actividad}', [ActividadController::class, 'show'])->na
 Route::get('/actividades/{actividad}/edit', [ActividadController::class, 'edit'])->name('actividades.edit');
 Route::put('/actividades/{actividad}', [ActividadController::class, 'update'])->name('actividades.update');
 Route::post('/actividades/{actividad}', [ActividadController::class, 'estado'])->name('actividades.estado');
+Route::post('/actividades/{actividad}', [ActividadController::class, 'avalar'])->name('actividades.avalar');
 
 // fecha del plan
 Route::post('/fecha', [ActividadController::class, 'fecha']);

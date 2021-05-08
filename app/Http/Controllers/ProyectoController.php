@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Caracteristica;
 use App\Plan;
 use App\Proyecto;
 use Illuminate\Http\Request;
@@ -169,15 +169,33 @@ class ProyectoController extends Controller
             ]
         ]);
 
-        $proyecto = Proyecto::findOrFail($proyecto->id);
-        $proyecto->nombre = $data['nombre'];
-        $proyecto->descripcion = $data['descripcion'];
-        $proyecto->objetivo_general = $data['objetivo_general'];
-        $proyecto->objetivos_especificos = $data['objetivos_especificos'];
-        $proyecto->id_plan = $data['id_plan'];
-        $proyecto->peso = $data['peso'];
+        if($proyecto->id_plan == $data['id_plan']){
+            $proyecto = Proyecto::findOrFail($proyecto->id);
+            $proyecto->nombre = $data['nombre'];
+            $proyecto->descripcion = $data['descripcion'];
+            $proyecto->objetivo_general = $data['objetivo_general'];
+            $proyecto->objetivos_especificos = $data['objetivos_especificos'];
+            $proyecto->id_plan = $data['id_plan'];
+            $proyecto->peso = $data['peso'];
 
-        $proyecto->save();
+            $proyecto->save();
+        }else {
+            $plan1 = Plan::find($proyecto->id_plan);
+            $plan2 = Plan::find($data['id_plan']);
+
+            $proyecto = Proyecto::findOrFail($proyecto->id);
+            $proyecto->nombre = $data['nombre'];
+            $proyecto->descripcion = $data['descripcion'];
+            $proyecto->objetivo_general = $data['objetivo_general'];
+            $proyecto->objetivos_especificos = $data['objetivos_especificos'];
+            $proyecto->id_plan = $data['id_plan'];
+            $proyecto->peso = $data['peso'];
+
+            $proyecto->save();
+
+            $this->progresos($plan1);
+            $this->progresos($plan2);
+        }
 
         return redirect()->action([ProyectoController::class, 'index']);
     }
@@ -200,6 +218,9 @@ class ProyectoController extends Controller
                 $proyecto->estado='Activado';
                 $proyecto->save();
 
+                $plan = Plan::find($proyecto->id_plan);
+                $this->progresos($plan);
+
                 return redirect()->route('proyectos.index')->with('status_estado', 'si')->with('tipo', 'Activado');
             }else {
                 return redirect()->route('proyectos.index')->with('status_estado', 'no');
@@ -208,6 +229,9 @@ class ProyectoController extends Controller
         else{
             $proyecto->estado='Desactivado';
             $proyecto->save();
+
+            $plan = Plan::find($proyecto->id_plan);
+            $this->progresos($plan);
 
             return redirect()->route('proyectos.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
@@ -226,5 +250,22 @@ class ProyectoController extends Controller
             'peso_total' => $peso_total,
             'plan' => $plan->nombre
         ], 200);
+    }
+
+    public function progresos(Plan $plan) {
+        // Calculamos el progreso del aspecto
+
+        $proyectos = Proyecto::where('id_plan', $plan->id)->where('estado','Activado')->get();
+
+        $cont_progreso = 0;
+
+        foreach($proyectos as $proyecto){
+            $cont_progreso += (($proyecto->progreso * $proyecto->peso) / 100);
+        }
+
+        $plan->progreso = $cont_progreso;
+        $plan->save();
+
+        return $plan;
     }
 }

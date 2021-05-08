@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\User;
 use App\Actividad;
+use App\Aspecto;
+use App\Caracteristica;
 use App\Evidencia;
+use App\Factor;
 use App\Indicador;
+use App\Proyecto;
+use App\TipoFactor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,7 +112,22 @@ class ActividadController extends Controller
                 }
             ],
             'usuarios' => 'required|array|min:1',
-            'usuarios.*' => 'required|integer|distinct|min:1'
+            'usuarios.*' => 'required|integer|distinct|min:1',
+            'peso' => [
+                'required',
+                function($attribute, $value, $fail)  use($request){
+                    $actividades = Actividad::where('id_indicador', $request['id_indicador'])->get();
+                    $peso_total = 100;
+
+                    for($i = 0; $i < $actividades->count(); $i++){
+                        $peso_total -= $actividades[$i]->peso;
+                    }
+
+                    if($peso_total < $value){
+                        $fail("El " .$attribute . " no puede ser mayor que el total disponible");
+                    }
+                }
+            ]
         ]);
 
         $actividad = Actividad::create([
@@ -115,7 +135,8 @@ class ActividadController extends Controller
             'descripcion' => $data['descripcion'],
             'id_indicador' => $data['id_indicador'],
             'fecha_inicio' => $data['fecha_inicio'],
-            'tiempo_entrega' => $data['tiempo_entrega']
+            'tiempo_entrega' => $data['tiempo_entrega'],
+            'peso' => $data['peso']
         ]);
 
         $actividad->users()->sync($request->get('usuarios'));
@@ -155,13 +176,22 @@ class ActividadController extends Controller
             $usuarios = User::paginate(10);
             $fecha_actual = Carbon::now()->format('Y-m-d');
 
+            $actividades = Actividad::where('id_indicador', $actividad->id_indicador)->get();
+
+            $total_actividades = $actividades->count();
+            $peso_total = 100;
+
+            for($i = 0; $i < $total_actividades; $i++){
+                $peso_total -= $actividades[$i]->peso;
+            }
+
             $actividad_user = [];
 
             foreach($actividad->users as $usuario) {
                 $actividad_user[] = $usuario->id;
             }
 
-            return view('actividades.edit', compact('indicadores', 'actividad_user', 'usuarios', 'actividad'));
+            return view('actividades.edit', compact('indicadores', 'actividad_user', 'usuarios', 'actividad', 'peso_total'));
         }else {
             return redirect()->action([ActividadController::class, 'index']);
         }
@@ -219,18 +249,55 @@ class ActividadController extends Controller
                 }
             ],
             'usuarios' => 'required|array|min:1',
-            'usuarios.*' => 'required|integer|distinct|min:1'
+            'usuarios.*' => 'required|integer|distinct|min:1',
+            'peso' => [
+                'required',
+                function($attribute, $value, $fail)  use($request, $actividad){
+                    $actividades = Actividad::where('id_indicador', $request['id_indicador'])->get();
+                    $peso_total = 100;
+
+                    for($i = 0; $i < $actividades->count(); $i++){
+                        $peso_total -= $actividades[$i]->peso;
+                    }
+
+                    $total_editar = $peso_total + $actividad->peso;
+
+                    if($total_editar < $value){
+                        $fail("No se puede agregar más " .$attribute . " del total disponible");
+                    }
+                }
+            ]
         ]);
 
-        $actividad->update([
-            'nombre' => $data['nombre'],
-            'descripcion' => $data['descripcion'],
-            'id_indicador' => $data['id_indicador'],
-            'fecha_inicio' => $data['fecha_inicio'],
-            'tiempo_entrega' => $data['tiempo_entrega']
-        ]);
+        if($actividad->id_indicador == $data['id_indicador']){
+            $actividad->update([
+                'nombre' => $data['nombre'],
+                'descripcion' => $data['descripcion'],
+                'id_indicador' => $data['id_indicador'],
+                'fecha_inicio' => $data['fecha_inicio'],
+                'tiempo_entrega' => $data['tiempo_entrega'],
+                'peso' => $data['peso']
+            ]);
 
-        $actividad->users()->sync($request->get('usuarios'));
+            $actividad->users()->sync($request->get('usuarios'));
+        }else {
+            $indicador1=Indicador::find($actividad->id_indicador);
+            $indicador2=Indicador::find($data['id_indicador']);
+
+            $actividad->update([
+                'nombre' => $data['nombre'],
+                'descripcion' => $data['descripcion'],
+                'id_indicador' => $data['id_indicador'],
+                'fecha_inicio' => $data['fecha_inicio'],
+                'tiempo_entrega' => $data['tiempo_entrega'],
+                'peso' => $data['peso']
+            ]);
+
+            $actividad->users()->sync($request->get('usuarios'));
+
+            $this->progresos($indicador1);
+            $this->progresos($indicador2);
+        }
 
         return redirect()->action([ActividadController::class, 'index']);
     }
@@ -246,8 +313,132 @@ class ActividadController extends Controller
         ->where('indicadors.id', $request['id_indicador'])
         ->select('plans.fecha_inicio as fecha_inicio', 'plans.fecha_final as fecha_final', 'indicadors.nombre as indicador')->get();
 
+        $actividad = Actividad::where('id_indicador', $request['id_indicador'])->get();
+        $peso_total = 100;
+
+        for($i = 0; $i < $actividad->count(); $i++){
+            $peso_total -= $actividad[$i]->peso;
+        }
+
+        $actividades=Actividad::where('id_indicador', $request['id_indicador'])->where('estado','Avalada')->get();
+
+        $cont_peso = 0;
+
+        foreach($actividades as $actividad){
+            $cont_peso += $actividad->peso;
+        }
+
         return response()->json([
-            'fecha_plan' => $fecha_plan
+            'fecha_plan' => $fecha_plan,
+            'peso_total' => $peso_total,
+            'cont_peso' => $cont_peso
         ], 200);
+    }
+
+    public function avalar(Actividad $actividad, Request $request) {
+        $data = $request->validate([
+            'estado' => 'required'
+        ]);
+
+        if (Auth::user()->rol->nombre == "Decano") {
+            $actividad->estado = $data['estado'];
+            $actividad->save();
+
+            $indicador = Indicador::find($actividad->id_indicador);
+
+            $this->progresos($indicador);
+
+            return back()->with('estado', 'La actividad ha sido ' . $data['estado'] . ' correctamente!');
+        }else {
+            return back()->with('error', 'No tiene permisos para ' . $data['estado'] . ' esta actividad');
+        }
+    }
+
+    public function progresos(Indicador $indicador) {
+        // Calculamos el progreso del indicador segun las actividades que tenga avaladas
+
+        $actividades=Actividad::where('id_indicador', $indicador->id)->where('estado','Avalada')->get();
+
+        $cont_progreso = 0;
+
+        foreach($actividades as $actividad){
+            $cont_progreso += $actividad->peso;
+        }
+
+        $indicador->progreso = $cont_progreso;
+        $indicador->save();
+
+        // Aspectos
+
+        $aspecto = Aspecto::findOrFail($indicador->id_aspecto);
+        $indicadores = Indicador::where('id_aspecto', $aspecto->id)->where('estado', 'Activado')->get();
+
+        $asp_progreso = 0;
+
+        foreach($indicadores as $indicador) {
+            $asp_progreso += (($indicador->progreso * $indicador->peso) / 100);
+        }
+
+        $aspecto->progreso = $asp_progreso;
+        $aspecto->save();
+
+        // Características
+
+        $caracteristica = Caracteristica::findOrFail($aspecto->id_caracteristica);
+        $aspectos = Aspecto::where('id_caracteristica', $caracteristica->id)->where('estado', 'Activado')->get();
+
+        $carac_progreso = 0;
+
+        foreach($aspectos as $aspecto) {
+            $carac_progreso += (($aspecto->progreso * $aspecto->peso) / 100);
+        }
+
+        $caracteristica->progreso = $carac_progreso;
+        $caracteristica->save();
+
+        // Factores
+
+        $factor = Factor::findOrFail($caracteristica->id_factor);
+        $caracteristicas = Caracteristica::where('id_factor', $factor->id)->where('estado', 'Activado')->get();
+
+        $fac_progreso = 0;
+
+        foreach($caracteristicas as $caracteristica) {
+            $fac_progreso += (($caracteristica->progreso * $caracteristica->peso) / 100);
+        }
+
+        $factor->progreso = $fac_progreso;
+        $factor->save();
+
+        // Proyectos
+
+        $proyecto = Proyecto::findOrFail($factor->id_proyecto);
+        $factores = Factor::where('id_proyecto', $proyecto->id)->where('estado', 'Activado')->get();
+
+        $pro_progreso = 0;
+
+        foreach($factores as $factor) {
+            $pro_progreso += (($factor->progreso * $factor->peso) / 100);
+        }
+
+        $proyecto->progreso = $pro_progreso;
+        $proyecto->save();
+
+        // Plan
+
+        $plan = Plan::findOrFail($proyecto->id_plan);
+        $proyectos = Proyecto::where('id_plan', $plan->id)->where('estado', 'Activado')->get();
+
+        $plan_progreso = 0;
+
+        foreach($proyectos as $proyecto) {
+            $plan_progreso += (($proyecto->progreso * $proyecto->peso) / 100);
+        }
+
+        $plan->progreso = $plan_progreso;
+        $plan->save();
+
+
+        return $indicador;
     }
 }

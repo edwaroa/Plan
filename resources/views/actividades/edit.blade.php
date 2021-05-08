@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="id_indicador" class="form-control-label">{{ __('Indicador') }}</label>
                                     <select name="id_indicador" id="id_indicador" class="form-control @error('id_indicador') is-invalid @enderror">
@@ -71,6 +71,19 @@
                                     </select>
 
                                     @error('id_indicador')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total">Puede agregar {{ $peso_total }}</span></label>
+                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" min="0" name="peso" id="peso" value="{{ $actividad->peso }}" placeholder="Peso de la">
+
+                                    @error('peso')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

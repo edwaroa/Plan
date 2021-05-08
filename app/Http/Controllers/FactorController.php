@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
 use App\Factor;
 use App\Proyecto;
 use App\TipoFactor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class FactorController extends Controller
 {
@@ -173,15 +174,33 @@ class FactorController extends Controller
             ]
         ]);
 
-        $factor = Factor::findOrFail($factor->id);
-        $factor->codigo = $data['codigo'];
-        $factor->nombre = $data['nombre'];
-        $factor->descripcion = $data['descripcion'];
-        $factor->id_proyecto = $data['id_proyecto'];
-        $factor->id_tipo_factor = $data['id_tipo_factor'];
-        $factor->peso = $data['peso'];
+        if($factor->id_proyecto == $data['id_proyecto']) {
+            $factor = Factor::findOrFail($factor->id);
+            $factor->codigo = $data['codigo'];
+            $factor->nombre = $data['nombre'];
+            $factor->descripcion = $data['descripcion'];
+            $factor->id_proyecto = $data['id_proyecto'];
+            $factor->id_tipo_factor = $data['id_tipo_factor'];
+            $factor->peso = $data['peso'];
 
-        $factor->save();
+            $factor->save();
+        }else {
+            $proyecto1 = Proyecto::find($factor->id_proyecto);
+            $proyecto2 = Proyecto::find($request['id_proyecto']);
+
+            $factor = Factor::findOrFail($factor->id);
+            $factor->codigo = $data['codigo'];
+            $factor->nombre = $data['nombre'];
+            $factor->descripcion = $data['descripcion'];
+            $factor->id_proyecto = $data['id_proyecto'];
+            $factor->id_tipo_factor = $data['id_tipo_factor'];
+            $factor->peso = $data['peso'];
+
+            $factor->save();
+
+            $this->progresos($proyecto1);
+            $this->progresos($proyecto2);
+        }
 
         return redirect()->action([FactorController::class, 'index']);
     }
@@ -204,6 +223,9 @@ class FactorController extends Controller
                 $factor->estado='Activado';
                 $factor->save();
 
+                $proyecto = Proyecto::find($factor->id_proyecto);
+                $this->progresos($proyecto);
+
                 return redirect()->route('factores.index')->with('status_estado', 'si')->with('tipo', 'Activado');
             }else {
                 return redirect()->route('factores.index')->with('status_estado', 'no');
@@ -212,6 +234,9 @@ class FactorController extends Controller
         else{
             $factor->estado='Desactivado';
             $factor->save();
+
+            $proyecto = Proyecto::find($factor->id_proyecto);
+            $this->progresos($proyecto);
 
             return redirect()->route('factores.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
@@ -230,5 +255,37 @@ class FactorController extends Controller
             'peso_total' => $peso_total,
             'proyecto' => $proyecto->nombre
         ], 200);
+    }
+
+    public function progresos(Proyecto $proyecto) {
+        // Calculamos el progreso del aspecto
+
+        $factores=Factor::where('id_proyecto', $proyecto->id)->where('estado','Activado')->get();
+
+        $cont_progreso = 0;
+
+        foreach($factores as $caracteristica){
+            $cont_progreso += (($caracteristica->progreso * $caracteristica->peso) / 100);
+        }
+
+        $proyecto->progreso = $cont_progreso;
+        $proyecto->save();
+
+        // Plan
+
+        $plan = Plan::findOrFail($proyecto->id_plan);
+        $proyectos = Proyecto::where('id_plan', $plan->id)->where('estado', 'Activado')->get();
+
+        $plan_progreso = 0;
+
+        foreach($proyectos as $proyecto) {
+            $plan_progreso += (($proyecto->progreso * $proyecto->peso) / 100);
+        }
+
+        $plan->progreso = $plan_progreso;
+        $plan->save();
+
+
+        return $proyecto;
     }
 }

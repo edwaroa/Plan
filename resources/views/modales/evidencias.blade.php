@@ -97,3 +97,36 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="tramitarModal" tabindex="-1" role="dialog" aria-labelledby="tramitarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-" id="tramitarModalLabel">Calificar Actividad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" action="{{ route('actividades.avalar', ['actividad' => $actividad->id]) }}">
+                @csrf
+                <div class="modal-body">
+                    <select class="form-control @error('estado') is-invalid @enderror" name="estado" id="estado">
+                        <option selected disabled>----- Seleccione una opción -----</option>
+                        <option value="Avalada">Avalar</option>
+                        <option value="Rechazada">Rechazar</option>
+                    </select>
+
+                    @error('estado')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-info text-white">Subir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

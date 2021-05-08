@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
 use App\Factor;
+use App\Proyecto;
 use App\Caracteristica;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class CaracteristicaController extends Controller
 {
@@ -118,7 +120,7 @@ class CaracteristicaController extends Controller
     {
         if(Auth::user()->rol->nombre == 'Decano'){
             $factores = Factor::all(['id', 'nombre', 'codigo']);
-            $caracteristicas = Factor::where('id_factor', $caracteristica->id_factor)->where('estado', 'Activado')->get();
+            $caracteristicas = Caracteristica::where('id_factor', $caracteristica->id_factor)->where('estado', 'Activado')->get();
 
             $total_caracteristicas = $caracteristicas->count();
             $peso_total = 100;
@@ -167,14 +169,31 @@ class CaracteristicaController extends Controller
             ]
         ]);
 
-        $caracteristica = Caracteristica::findOrFail($caracteristica->id);
-        $caracteristica->codigo = $data['codigo'];
-        $caracteristica->nombre = $data['nombre'];
-        $caracteristica->descripcion = $data['descripcion'];
-        $caracteristica->id_factor = $data['id_factor'];
-        $caracteristica->peso = $data['peso'];
+        if ($caracteristica->id_factor == $data['id_factor']) {
+            $caracteristica = Caracteristica::findOrFail($caracteristica->id);
+            $caracteristica->codigo = $data['codigo'];
+            $caracteristica->nombre = $data['nombre'];
+            $caracteristica->descripcion = $data['descripcion'];
+            $caracteristica->id_factor = $data['id_factor'];
+            $caracteristica->peso = $data['peso'];
 
-        $caracteristica->save();
+            $caracteristica->save();
+        }else {
+            $factor1 = Factor::find($caracteristica->id_factor);
+            $factor2 = Factor::find($data['id_factor']);
+
+            $caracteristica = Caracteristica::findOrFail($caracteristica->id);
+            $caracteristica->codigo = $data['codigo'];
+            $caracteristica->nombre = $data['nombre'];
+            $caracteristica->descripcion = $data['descripcion'];
+            $caracteristica->id_factor = $data['id_factor'];
+            $caracteristica->peso = $data['peso'];
+
+            $caracteristica->save();
+
+            $this->progresos($factor1);
+            $this->progresos($factor2);
+        }
 
         return redirect()->action([CaracteristicaController::class, 'index']);
     }
@@ -198,6 +217,9 @@ class CaracteristicaController extends Controller
                 $caracteristica->estado='Activado';
                 $caracteristica->save();
 
+                $factor = Factor::find($caracteristica->id_factor);
+                $this->progresos($factor);
+
                 return redirect()->route('caracteristicas.index')->with('status_estado', 'si')->with('tipo', 'Activado');
             }else {
                 return redirect()->route('caracteristicas.index')->with('status_estado', 'no');
@@ -206,6 +228,9 @@ class CaracteristicaController extends Controller
         else{
             $caracteristica->estado='Desactivado';
             $caracteristica->save();
+
+            $factor = Factor::find($caracteristica->id_factor);
+            $this->progresos($factor);
 
             return redirect()->route('caracteristicas.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
@@ -224,5 +249,51 @@ class CaracteristicaController extends Controller
             'peso_total' => $peso_total,
             'factor' => $factor->nombre
         ], 200);
+    }
+
+    public function progresos(Factor $factor) {
+        // Calculamos el progreso del aspecto
+
+        $caracteristicas=Caracteristica::where('id_factor', $factor->id)->where('estado','Activado')->get();
+
+        $cont_progreso = 0;
+
+        foreach($caracteristicas as $caracteristica){
+            $cont_progreso += (($caracteristica->progreso * $caracteristica->peso) / 100);
+        }
+
+        $factor->progreso = $cont_progreso;
+        $factor->save();
+
+        // Proyectos
+
+        $proyecto = Proyecto::findOrFail($factor->id_proyecto);
+        $factores = Factor::where('id_proyecto', $proyecto->id)->where('estado', 'Activado')->get();
+
+        $pro_progreso = 0;
+
+        foreach($factores as $factor) {
+            $pro_progreso += (($factor->progreso * $factor->peso) / 100);
+        }
+
+        $proyecto->progreso = $pro_progreso;
+        $proyecto->save();
+
+        // Plan
+
+        $plan = Plan::findOrFail($proyecto->id_plan);
+        $proyectos = Proyecto::where('id_plan', $plan->id)->where('estado', 'Activado')->get();
+
+        $plan_progreso = 0;
+
+        foreach($proyectos as $proyecto) {
+            $plan_progreso += (($proyecto->progreso * $proyecto->peso) / 100);
+        }
+
+        $plan->progreso = $plan_progreso;
+        $plan->save();
+
+
+        return $factor;
     }
 }

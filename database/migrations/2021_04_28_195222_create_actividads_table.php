@@ -19,6 +19,7 @@ class CreateActividadsTable extends Migration
             $table->text('descripcion');
             $table->date('fecha_inicio');
             $table->date('tiempo_entrega');
+            $table->float('peso');
             $table->foreignId('id_indicador')->references('id')->on('indicadors')->constrained()->onUpdate('cascade');
             $table->text('comentario')->nullable();
             $table->string('estado')->default('Iniciada');

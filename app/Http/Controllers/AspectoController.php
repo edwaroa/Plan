@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Plan;
+use App\Factor;
 use App\Aspecto;
+use App\Proyecto;
 use App\Caracteristica;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AspectoController extends Controller
 {
@@ -157,14 +160,31 @@ class AspectoController extends Controller
             ]
         ]);
 
-        $aspecto = Aspecto::findOrFail($aspecto->id);
-        $aspecto->codigo = $data['codigo'];
-        $aspecto->nombre = $data['nombre'];
-        $aspecto->descripcion = $data['descripcion'];
-        $aspecto->id_caracteristica = $data['id_caracteristica'];
-        $aspecto->peso = $data['peso'];
+        if($aspecto->id_caracteristica == $data['id_caracteristica']) {
+            $aspecto = Aspecto::findOrFail($aspecto->id);
+            $aspecto->codigo = $data['codigo'];
+            $aspecto->nombre = $data['nombre'];
+            $aspecto->descripcion = $data['descripcion'];
+            $aspecto->id_caracteristica = $data['id_caracteristica'];
+            $aspecto->peso = $data['peso'];
 
-        $aspecto->save();
+            $aspecto->save();
+        }else {
+            $caracteristica1 = Caracteristica::find($aspecto->id_caracteristica);
+            $caracteristica2 = Caracteristica::find($data['id_caracteristica']);
+
+            $aspecto = Aspecto::findOrFail($aspecto->id);
+            $aspecto->codigo = $data['codigo'];
+            $aspecto->nombre = $data['nombre'];
+            $aspecto->descripcion = $data['descripcion'];
+            $aspecto->id_caracteristica = $data['id_caracteristica'];
+            $aspecto->peso = $data['peso'];
+
+            $aspecto->save();
+
+            $this->progresos($caracteristica1);
+            $this->progresos($caracteristica2);
+        }
 
         return redirect()->action([AspectoController::class, 'index']);
     }
@@ -187,6 +207,10 @@ class AspectoController extends Controller
                 $aspecto->estado='Activado';
                 $aspecto->save();
 
+                $caracteristica = Caracteristica::find($aspecto->id_caracteristica);
+
+                $this->progresos($caracteristica);
+
                 return redirect()->route('aspectos.index')->with('status_estado', 'si')->with('tipo', 'Activado');
             }else {
                 return redirect()->route('aspectos.index')->with('status_estado', 'no');
@@ -195,6 +219,10 @@ class AspectoController extends Controller
         else{
             $aspecto->estado='Desactivado';
             $aspecto->save();
+
+            $caracteristica = Caracteristica::find($aspecto->id_caracteristica);
+
+            $this->progresos($caracteristica);
 
             return redirect()->route('aspectos.index')->with('status_estado', 'si')->with('tipo', 'Desactivado');
         }
@@ -213,5 +241,65 @@ class AspectoController extends Controller
             'peso_total' => $peso_total,
             'caracteristica' => $caracteristica->nombre
         ], 200);
+    }
+
+    public function progresos(Caracteristica $caracteristica) {
+        // Calculamos el progreso del aspecto
+
+        $aspectos=Aspecto::where('id_caracteristica', $caracteristica->id)->where('estado','Activado')->get();
+
+        $cont_progreso = 0;
+
+        foreach($aspectos as $aspecto){
+            $cont_progreso += (($aspecto->progreso * $aspecto->peso) / 100);
+        }
+
+        $caracteristica->progreso = $cont_progreso;
+        $caracteristica->save();
+
+        // Factores
+
+        $factor = Factor::findOrFail($caracteristica->id_factor);
+        $caracteristicas = Caracteristica::where('id_factor', $factor->id)->where('estado', 'Activado')->get();
+
+        $fac_progreso = 0;
+
+        foreach($caracteristicas as $caracteristica) {
+            $fac_progreso += (($caracteristica->progreso * $caracteristica->peso) / 100);
+        }
+
+        $factor->progreso = $fac_progreso;
+        $factor->save();
+
+        // Proyectos
+
+        $proyecto = Proyecto::findOrFail($factor->id_proyecto);
+        $factores = Factor::where('id_proyecto', $proyecto->id)->where('estado', 'Activado')->get();
+
+        $pro_progreso = 0;
+
+        foreach($factores as $factor) {
+            $pro_progreso += (($factor->progreso * $factor->peso) / 100);
+        }
+
+        $proyecto->progreso = $pro_progreso;
+        $proyecto->save();
+
+        // Plan
+
+        $plan = Plan::findOrFail($proyecto->id_plan);
+        $proyectos = Proyecto::where('id_plan', $plan->id)->where('estado', 'Activado')->get();
+
+        $plan_progreso = 0;
+
+        foreach($proyectos as $proyecto) {
+            $plan_progreso += (($proyecto->progreso * $proyecto->peso) / 100);
+        }
+
+        $plan->progreso = $plan_progreso;
+        $plan->save();
+
+
+        return $caracteristica;
     }
 }

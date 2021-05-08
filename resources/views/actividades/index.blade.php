@@ -47,10 +47,12 @@
                             @endforeach
                         </td>
                         <td class="text-center">
-                            @if ($actividad->estado == "Activado")
+                            @if ($actividad->estado == "Avalada")
                                 <span class="badge badge-success">{{ $actividad->estado }}</span>
-                            @else
+                            @elseif ($actividad->estado == "Rechazada")
                                 <span class="badge badge-danger">{{ $actividad->estado }}</span>
+                            @elseif ($actividad->estado == "Iniciada")
+                                <span class="badge badge-warning text-white">{{ $actividad->estado }}</span>
                             @endif
 
                         </td>
