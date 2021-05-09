@@ -46,9 +46,9 @@
                             @else
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $indicador->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                        {{ $indicador->progreso }} %
                                     </div>
                                 </div>
+                                <span class="badge badge-info d-inline-block mx-auto">{{ $indicador->progreso }} %</span>
                             @endif
 
                         </td>

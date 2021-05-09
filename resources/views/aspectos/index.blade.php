@@ -46,9 +46,9 @@
                             @else
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $aspecto->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                        {{ $aspecto->progreso }} %
                                     </div>
                                 </div>
+                                <span class="badge badge-info d-inline-block mx-auto">{{ $aspecto->progreso }} %</span>
                             @endif
 
                         </td>

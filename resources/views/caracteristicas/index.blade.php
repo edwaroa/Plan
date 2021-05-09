@@ -46,9 +46,9 @@
                             @else
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style="width: {{ $caracteristica->progreso }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                                        {{ $caracteristica->progreso }} %
                                     </div>
                                 </div>
+                                <span class="badge badge-info d-inline-block mx-auto">{{ $caracteristica->progreso }} %</span>
                             @endif
 
                         </td>
@@ -74,9 +74,9 @@
                                     <form action="{{ route('caracteristicas.estado', ['caracteristica' => $caracteristica->id]) }}" method="POST">
                                         @csrf
                                         @if($caracteristica->estado=='Activado')
-                                        <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-user-times"></i></button>
+                                        <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-trash"></i></button>
                                         @else
-                                        <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-user-check"></i></button>
+                                        <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-check"></i></button>
                                         @endif
                                     </form>
                                 @endif
