@@ -64,6 +64,21 @@
 
                     <div class="row">
                         <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label font-weight-bold" for="tipo documento">Telefono / Celular</label>
+                                <p>{{ $user->telefono }}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group focused">
+                                <label class="form-control-label font-weight-bold" for="documento">Genero</label>
+                                <p>{{ $user->genero }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="form-control-label font-weight-bold" for="email">Correo electronico</label>
                                 <p>{{ $user->email }}</p>

@@ -81,7 +81,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="peso" class="form-control-label">{{ __('Peso: ') }} <span class="text-success" id="peso_total">Puede agregar {{ $peso_total }}</span></label>
-                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" min="0" name="peso" id="peso" value="{{ $actividad->peso }}" placeholder="Peso de la">
+                                    <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" min="0" name="peso" id="peso" value="{{ $actividad->peso }}" placeholder="Peso de la actividad">
 
                                     @error('peso')
                                         <span class="invalid-feedback" role="alert">

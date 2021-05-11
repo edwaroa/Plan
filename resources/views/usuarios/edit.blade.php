@@ -70,6 +70,45 @@
 
                             <div class="row">
                                 <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label for="telefono" class="form-control-label">{{ __('Telefono / Celular') }}</label>
+                                        <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ $user->telefono }}" required placeholder="Numero de telefono o celular" autofocus>
+                                        @error('telefono')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label for="genero" class="form-control-label d-block">{{ __('Genero') }}</label>
+
+                                        <div class="@error('genero')
+                                            is-invalid border border-danger rounded p-1
+                                        @enderror">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="genero" id="genero1" value="Masculino" {{ $user->genero == "Masculino" ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="genero1">Masculino</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="genero" id="genero2" value="Femenino" {{ $user->genero == "Femenino" ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="genero2">Femenino</label>
+                                            </div>
+                                        </div>
+
+                                        @error('genero')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="email">Correo electronico<span class="small text-danger">*</span></label>
                                         <input type="email" id="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="example@example.com" value="{{$user->email}}">

@@ -50,6 +50,8 @@ class ProyectoController extends Controller
                 $peso_total -= $proyectos[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('proyectos.create', compact('planes', 'peso_total'));
         }else {
             return redirect()->action([ProyectoController::class, 'index']);
@@ -79,6 +81,8 @@ class ProyectoController extends Controller
                     for($i = 0; $i < $proyectos->count(); $i++){
                         $peso_total -= $proyectos[$i]->peso;
                     }
+
+                    $peso_total = round($peso_total, 2);
 
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
@@ -129,6 +133,8 @@ class ProyectoController extends Controller
                 $peso_total -= $proyectos[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('proyectos.edit', compact('proyecto', 'planes', 'peso_total'));
         }else {
             return redirect()->action([ProyectoController::class, 'index']);
@@ -160,6 +166,8 @@ class ProyectoController extends Controller
                         $peso_total -= $proyectos[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $proyecto->peso;
 
                     if($total_editar < $value){
@@ -169,17 +177,8 @@ class ProyectoController extends Controller
             ]
         ]);
 
-        if($proyecto->id_plan == $data['id_plan']){
-            $proyecto = Proyecto::findOrFail($proyecto->id);
-            $proyecto->nombre = $data['nombre'];
-            $proyecto->descripcion = $data['descripcion'];
-            $proyecto->objetivo_general = $data['objetivo_general'];
-            $proyecto->objetivos_especificos = $data['objetivos_especificos'];
-            $proyecto->id_plan = $data['id_plan'];
-            $proyecto->peso = $data['peso'];
+        if($proyecto->id_plan != $data['id_plan'] || $proyecto->peso != $data['peso']){
 
-            $proyecto->save();
-        }else {
             $plan1 = Plan::find($proyecto->id_plan);
             $plan2 = Plan::find($data['id_plan']);
 
@@ -195,6 +194,17 @@ class ProyectoController extends Controller
 
             $this->progresos($plan1);
             $this->progresos($plan2);
+        }else {
+
+            $proyecto = Proyecto::findOrFail($proyecto->id);
+            $proyecto->nombre = $data['nombre'];
+            $proyecto->descripcion = $data['descripcion'];
+            $proyecto->objetivo_general = $data['objetivo_general'];
+            $proyecto->objetivos_especificos = $data['objetivos_especificos'];
+            $proyecto->id_plan = $data['id_plan'];
+            $proyecto->peso = $data['peso'];
+
+            $proyecto->save();
         }
 
         return redirect()->action([ProyectoController::class, 'index']);
@@ -209,6 +219,8 @@ class ProyectoController extends Controller
         for($i = 0; $i < $proyectos->count(); $i++){
             $peso_total -= $proyectos[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $proyecto = Proyecto::findOrFail($proyecto->id);
 
@@ -244,6 +256,8 @@ class ProyectoController extends Controller
         for($i = 0; $i < $proyectos->count(); $i++){
             $peso_total -= $proyectos[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $plan = Plan::findOrFail($request['id_plan']);
         return response()->json([

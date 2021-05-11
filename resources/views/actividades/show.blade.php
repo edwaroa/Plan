@@ -44,19 +44,34 @@
             </div>
 
             <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-center">
+                <div class="card-header bg-info text-center">
                     <div class="d-inline-block text-white text-lg mx-1">
                         <i class="fas fa-cloud-upload-alt text-lg"></i> Evidencias
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#evidenciaModal">
+                        <button type="button" class="btn btn-info text-white" data-toggle="modal" data-target="#evidenciaModal">
                             <i class="fas fa-upload"></i> Subir Evidencias
                         </button>
 
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#verEvidenciaModal">
                             <i class="fas fa-file-word"></i> Ver Evidencias
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4">
+                <div class="card-header bg-warning text-center">
+                    <div class="d-inline-block text-white text-lg mx-1">
+                        <i class="fas fa-chart-line text-lg"></i> Calificación
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-warning text-white" data-toggle="modal" data-target="#calificacionModal">
+                            <i class="fas fa-book"></i> Ver calificación
                         </button>
                     </div>
                 </div>

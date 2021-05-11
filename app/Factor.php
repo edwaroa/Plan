@@ -9,9 +9,14 @@ class Factor extends Model
 {
     use HasFactory;
 
-    public function tipoFactor(){
-        return $this->belongsTo(TipoFactor::class, 'id_tipo_factor');
-    }
+    protected $fillable = [
+        'codigo',
+        'nombre',
+        'descripcion',
+        'id_proyecto',
+        'peso',
+        'progreso'
+    ];
 
     public function proyecto(){
         return $this->belongsTo(Proyecto::class, 'id_proyecto');

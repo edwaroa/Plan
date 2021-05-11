@@ -45,10 +45,6 @@
                     <div class="col-md-10 mx-auto">
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <h3 class="text-primary mb-2">Tipo de Factor</h3>
-                                <p>{{ $factor->tipoFactor->nombre }}</p>
-                            </div>
-                            <div class="mb-3 col-md-6">
                                 <h3 class="text-primary mb-2">Proyecto</h3>
                                 <p>{{ $factor->proyecto->nombre }}</p>
                             </div>
@@ -84,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            </div>|
+            </div>
         </div>
     </div>
 

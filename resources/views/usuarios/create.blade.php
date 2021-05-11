@@ -116,6 +116,44 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group focused">
+                                    <label for="telefono" class="form-control-label">{{ __('Telefono / Celular') }}</label>
+                                    <input id="telefono" type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ old('telefono')}}" required placeholder="Numero de telefono o celular" autofocus>
+                                    @error('telefono')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="genero" class="form-control-label d-block">{{ __('Genero') }}</label>
+
+                                    <div class="@error('genero')
+                                        is-invalid border border-danger rounded p-1
+                                    @enderror">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="genero" id="genero1" value="Masculino">
+                                            <label class="form-check-label" for="genero1">Masculino</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="genero" id="genero2" value="Femenino">
+                                            <label class="form-check-label" for="genero2">Femenino</label>
+                                        </div>
+                                    </div>
+
+                                    @error('genero')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
                                     <label for="rol" class="form-control-label">{{ __('Rol') }}</label>
                                     <select id="rol" name="rol" class="form-control @error('rol') is-invalid @enderror">
                                     <option value="" selected disabled>-- Seleccione un Rol --</option>

@@ -37,7 +37,9 @@ class UsuariosSeeder extends Seeder
             'email' => 'decano@udi.edu.co',
             'password' => Hash::make('123456789'),
             'id_rol' => 1,
-            'imagen' => 'Imagen'
+            'imagen' => 'Imagen',
+            'telefono' => '3165556766',
+            'genero' => 'Masculino'
         ]);
 
         $user2 = User::create([
@@ -48,7 +50,9 @@ class UsuariosSeeder extends Seeder
             'email' => 'administrativo@udi.edu.co',
             'password' => Hash::make('123456789'),
             'id_rol' => 2,
-            'imagen' => 'Imagen'
+            'imagen' => 'Imagen',
+            'telefono' => '3143954270',
+            'genero' => 'Masculino'
         ]);
 
         $user3 = User::create([
@@ -59,7 +63,9 @@ class UsuariosSeeder extends Seeder
             'email' => 'docente@udi.edu.co',
             'password' => Hash::make('123456789'),
             'id_rol' => 3,
-            'imagen' => 'Imagen'
+            'imagen' => 'Imagen',
+            'telefono' => '3185009645',
+            'genero' => 'Masculino'
         ]);
     }
 }

@@ -123,6 +123,8 @@ class ActividadController extends Controller
                         $peso_total -= $actividades[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
                     }
@@ -184,6 +186,8 @@ class ActividadController extends Controller
             for($i = 0; $i < $total_actividades; $i++){
                 $peso_total -= $actividades[$i]->peso;
             }
+
+            $peso_total = round($peso_total, 2);
 
             $actividad_user = [];
 
@@ -260,6 +264,8 @@ class ActividadController extends Controller
                         $peso_total -= $actividades[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $actividad->peso;
 
                     if($total_editar < $value){
@@ -269,18 +275,8 @@ class ActividadController extends Controller
             ]
         ]);
 
-        if($actividad->id_indicador == $data['id_indicador']){
-            $actividad->update([
-                'nombre' => $data['nombre'],
-                'descripcion' => $data['descripcion'],
-                'id_indicador' => $data['id_indicador'],
-                'fecha_inicio' => $data['fecha_inicio'],
-                'tiempo_entrega' => $data['tiempo_entrega'],
-                'peso' => $data['peso']
-            ]);
+        if($actividad->id_indicador != $data['id_indicador'] || $actividad->peso != $data['peso']){
 
-            $actividad->users()->sync($request->get('usuarios'));
-        }else {
             $indicador1=Indicador::find($actividad->id_indicador);
             $indicador2=Indicador::find($data['id_indicador']);
 
@@ -297,6 +293,17 @@ class ActividadController extends Controller
 
             $this->progresos($indicador1);
             $this->progresos($indicador2);
+        }else {
+            $actividad->update([
+                'nombre' => $data['nombre'],
+                'descripcion' => $data['descripcion'],
+                'id_indicador' => $data['id_indicador'],
+                'fecha_inicio' => $data['fecha_inicio'],
+                'tiempo_entrega' => $data['tiempo_entrega'],
+                'peso' => $data['peso']
+            ]);
+
+            $actividad->users()->sync($request->get('usuarios'));
         }
 
         return redirect()->action([ActividadController::class, 'index']);
@@ -320,6 +327,8 @@ class ActividadController extends Controller
             $peso_total -= $actividad[$i]->peso;
         }
 
+        $peso_total = round($peso_total, 2);
+
         $actividades=Actividad::where('id_indicador', $request['id_indicador'])->where('estado','Avalada')->get();
 
         $cont_peso = 0;
@@ -327,6 +336,8 @@ class ActividadController extends Controller
         foreach($actividades as $actividad){
             $cont_peso += $actividad->peso;
         }
+
+        $cont_peso = round($cont_peso, 2);
 
         return response()->json([
             'fecha_plan' => $fecha_plan,
@@ -337,11 +348,13 @@ class ActividadController extends Controller
 
     public function avalar(Actividad $actividad, Request $request) {
         $data = $request->validate([
-            'estado' => 'required'
+            'estado' => 'required',
+            'comentario' => 'required|max:100'
         ]);
 
         if (Auth::user()->rol->nombre == "Decano") {
             $actividad->estado = $data['estado'];
+            $actividad->comentario = $data['comentario'];
             $actividad->save();
 
             $indicador = Indicador::find($actividad->id_indicador);

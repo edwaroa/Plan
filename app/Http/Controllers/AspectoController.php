@@ -72,6 +72,8 @@ class AspectoController extends Controller
                         $peso_total -= $aspectos[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
                     }
@@ -121,6 +123,8 @@ class AspectoController extends Controller
                 $peso_total -= $aspectos[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('aspectos.edit', compact('caracteristicas', 'aspecto', 'peso_total'));
         }else {
             return redirect()->action([AspectoController::class, 'index']);
@@ -151,6 +155,8 @@ class AspectoController extends Controller
                         $peso_total -= $aspectos[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $aspecto->peso;
 
                     if($total_editar < $value){
@@ -160,16 +166,8 @@ class AspectoController extends Controller
             ]
         ]);
 
-        if($aspecto->id_caracteristica == $data['id_caracteristica']) {
-            $aspecto = Aspecto::findOrFail($aspecto->id);
-            $aspecto->codigo = $data['codigo'];
-            $aspecto->nombre = $data['nombre'];
-            $aspecto->descripcion = $data['descripcion'];
-            $aspecto->id_caracteristica = $data['id_caracteristica'];
-            $aspecto->peso = $data['peso'];
+        if($aspecto->id_caracteristica != $data['id_caracteristica'] || $aspecto->peso != $data['peso']) {
 
-            $aspecto->save();
-        }else {
             $caracteristica1 = Caracteristica::find($aspecto->id_caracteristica);
             $caracteristica2 = Caracteristica::find($data['id_caracteristica']);
 
@@ -184,6 +182,16 @@ class AspectoController extends Controller
 
             $this->progresos($caracteristica1);
             $this->progresos($caracteristica2);
+        }else {
+
+            $aspecto = Aspecto::findOrFail($aspecto->id);
+            $aspecto->codigo = $data['codigo'];
+            $aspecto->nombre = $data['nombre'];
+            $aspecto->descripcion = $data['descripcion'];
+            $aspecto->id_caracteristica = $data['id_caracteristica'];
+            $aspecto->peso = $data['peso'];
+
+            $aspecto->save();
         }
 
         return redirect()->action([AspectoController::class, 'index']);
@@ -198,6 +206,8 @@ class AspectoController extends Controller
         for($i = 0; $i < $aspectos->count(); $i++){
             $peso_total -= $aspectos[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $aspecto = Aspecto::findOrFail($aspecto->id);
 
@@ -235,6 +245,8 @@ class AspectoController extends Controller
         for($i = 0; $i < $aspecto->count(); $i++){
             $peso_total -= $aspecto[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $caracteristica = Caracteristica::findOrFail($request['id_caracteristica']);
         return response()->json([

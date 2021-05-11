@@ -88,7 +88,9 @@
                 <div id="collapsePlanes" class="collapse" aria-labelledby="headingPlanes" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('planes.index')}}">Ver</a>
-                        <a class="collapse-item" href="{{ route('planes.create') }}">Crear</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('planes.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -102,7 +104,9 @@
                 <div id="collapseProyectos" class="collapse" aria-labelledby="headingProyectos" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('proyectos.index')}}">Ver</a>
-                        <a class="collapse-item" href="{{ route('proyectos.create') }}">Crear</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('proyectos.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -114,8 +118,10 @@
                 </a>
                 <div id="collapseFactores" class="collapse" aria-labelledby="headingFactores" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{route('tipofactores.index')}}">Tipos de Factores</a>
-                        <a class="collapse-item" href="{{ route('factores.index') }}">Factores</a>
+                        <a class="collapse-item" href="{{ route('factores.index') }}">Ver</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('factores.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -128,7 +134,9 @@
                 <div id="collapseCaracteristicas" class="collapse" aria-labelledby="headingCaracteristicas" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{route('caracteristicas.index')}}">Ver</a>
-                        <a class="collapse-item" href="{{ route('caracteristicas.create') }}">Crear</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('caracteristicas.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -141,7 +149,9 @@
                 <div id="collapseAspectos" class="collapse" aria-labelledby="headingAspectos" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('aspectos.index') }}">Ver</a>
-                        <a class="collapse-item" href="{{ route('aspectos.create') }}">Crear</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('aspectos.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -154,7 +164,9 @@
                 <div id="collapseIndicadores" class="collapse" aria-labelledby="headingIndicadores" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('indicadores.index') }}">Ver</a>
-                        <a class="collapse-item" href="{{ route('indicadores.create') }}">Crear</a>
+                        @if (Auth::user()->rol->nombre == "Decano")
+                            <a class="collapse-item" href="{{ route('indicadores.create') }}">Crear</a>
+                        @endif
                     </div>
                 </div>
             </li>
@@ -168,7 +180,9 @@
             <div id="collapseActividades" class="collapse" aria-labelledby="headingActividades" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="{{ route('actividades.index') }}">Ver</a>
-                    <a class="collapse-item" href="{{ route('actividades.create') }}">Crear</a>
+                    @if (Auth::user()->rol->nombre == "Decano")
+                        <a class="collapse-item" href="{{ route('actividades.create') }}">Crear</a>
+                    @endif
                 </div>
             </div>
         </li>

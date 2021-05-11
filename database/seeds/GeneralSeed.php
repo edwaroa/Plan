@@ -25,10 +25,14 @@ class GeneralSeed extends Seeder
     public function run()
     {
         Universidad::create([
+            'nit' => '890212433-5',
             'nombre' => 'Universidad de Investigación y Desarrollo',
             'descripcion' => 'La Universidad de Investigación y Desarrollo - UDI -, es una institución universitaria de carácter privado, joven, con alto nivel de desarrollo y forjada en beneficio de la formación del pueblo Santandereano y Colombiano.',
             'mision' => 'La Universidad de Investigación y Desarrollo –UDI-, comprometida con la calidad de la educación superior, tiene como propósito formar profesionales integrales con pensamiento universal y crítico, desde los conceptos de Hombre, Sociedad, Educación y Desarrollo,  que a través de la ciencia, la  investigación y la tecnología contribuyan en el desarrollo humano, económico y social de la región y del país; profesionales éticos y responsables, con capacidades de emprendimiento, liderazgo,  creatividad,  innovación, pasión por el trabajo inteligente; conocedores y respetuosos de los principios constitucionales, los derechos humanos, el valor de la palabra y de las personas.',
             'vision' => 'En el año 2027, la Universidad de Investigación y Desarrollo -UDI- será reconocida en el ámbito nacional e internacional por su excelencia académica, avance científico y tecnológico, sentido humanístico y social, teniendo como premisa el fortalecimiento en los campos del conocimiento, la investigación, la extensión, la internacionalización y la innovación en los procesos educativos, articulados en la formación integradora de profesionales éticos, con valores humanos, comprometidos con la construcción y el desarrollo de la sociedad colombiana.',
+            'telefono' => '6352525',
+            'direccion' => 'Calle 9 No. 23-55',
+            'logo' => 'Imagen Universidad',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
@@ -74,38 +78,10 @@ class GeneralSeed extends Seeder
             'updated_at' => Carbon::now()
         ]);
 
-        TipoFactor::create([
-            'nombre' => 'Factores Estratégicos',
-            'descripcion' => 'Proporcionan directrices a los diferentes factores y son responsabilidad de los órganos de gobierno de la institución principalmente.',
-            'porcentaje' => 10,
-            'progreso' => 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        TipoFactor::create([
-            'nombre' => 'Factores Misionales',
-            'descripcion' => 'Determinan la razón de ser de la institución y apuntan al cumplimiento de los objetivos de la educación superior.',
-            'porcentaje' => 70,
-            'progreso' => 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
-        TipoFactor::create([
-            'nombre' => 'Factores de Apoyo',
-            'descripcion' => 'Brindan soporte a los Factores Misionales',
-            'porcentaje' => 20,
-            'progreso' => 0,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-
         Factor::create([
             'codigo' => '1',
             'nombre' => 'Misión, Visión y Proyecto Institucional y de Programa',
             'descripcion' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-            'id_tipo_factor' => 2,
             'id_proyecto' => 1,
             'peso' => 20,
             'progreso' => 0,

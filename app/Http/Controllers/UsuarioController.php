@@ -55,12 +55,14 @@ class UsuarioController extends Controller
             'contraseña' => ['required', 'string', 'min:8','max:12'],
             'confirmar_contraseña' => ['min:8','max:12','required_with:contraseña','same:contraseña'],
             'rol' => 'required',
-            'imagen' => 'required | image'
+            'imagen' => 'required | image',
+            'telefono' => 'required|numeric|max:10',
+            'genero' => 'required'
         ]);
 
         // Variable para la ruta de la imagen
         $archivo = $request->file('imagen');
-        $ruta_imagen = $archivo->storeAs('upload-usuarios',$archivo->getClientOriginalName());
+        $ruta_imagen = $archivo->store('upload-usuarios', 'public');
 
         // resize de la imagen
         // $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 700);
@@ -68,7 +70,6 @@ class UsuarioController extends Controller
 
         // Fecha actual
         $fecha = Carbon::now();
-        $fecha->format('d-m-Y');
 
         //Almacenar en la base de datos
         DB::table('users')->insert([
@@ -80,6 +81,8 @@ class UsuarioController extends Controller
             'password' => Hash::make($data['contraseña']),
             'id_rol' => $data['rol'],
             'imagen' => $ruta_imagen,
+            'telefono' => $data['telefono'],
+            'genero' => $data['genero'],
             'created_at' => $fecha,
             'updated_at' => $fecha
         ]);
@@ -110,6 +113,8 @@ class UsuarioController extends Controller
             'apellido' => ['required', 'string', 'max:255'],
             'email' =>'required|string|email|max:255|unique:users,email,'.$user->id,
             'rol' => 'required',
+            'telefono' => 'required|numeric',
+            'genero' => 'required'
         ]);
 
         //Asignar los valores
@@ -120,11 +125,13 @@ class UsuarioController extends Controller
         $user->apellido=$request['apellido'];
         $user->email=$request['email'];
         $user->id_rol=$request['rol'];
+        $user->telefono=$request['telefono'];
+        $user->genero=$request['genero'];
 
         // Si el usuario sube una nueva imagen
         if(request('imagen')){
             $archivo = $request->file('imagen');
-            $ruta_imagen = $archivo->storeAs('upload-usuarios',$archivo->getClientOriginalName());
+            $ruta_imagen = $archivo->store('upload-usuarios', 'public');
             $user->imagen = $ruta_imagen;
         }
 

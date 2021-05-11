@@ -42,7 +42,6 @@ class FactorController extends Controller
     public function create()
     {
         if(Auth::user()->rol->nombre == 'Decano'){
-            $tiposFactores = TipoFactor::all(['id', 'nombre']);
             $proyectos = Proyecto::all(['id', 'nombre']);
             $factores = Factor::all();
 
@@ -53,7 +52,9 @@ class FactorController extends Controller
                 $peso_total -= $factores[$i]->peso;
             }
 
-            return view('factores.create', compact('tiposFactores', 'proyectos', 'peso_total'));
+            $peso_total = round($peso_total, 2);
+
+            return view('factores.create', compact('proyectos', 'peso_total'));
         }else {
             return redirect()->action([FactorController::class, 'index']);
         }
@@ -72,7 +73,6 @@ class FactorController extends Controller
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string',
             'id_proyecto' => 'required',
-            'id_tipo_factor' => 'required',
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($request){
@@ -82,6 +82,8 @@ class FactorController extends Controller
                     for($i = 0; $i < $factores->count(); $i++){
                         $peso_total -= $factores[$i]->peso;
                     }
+
+                    $peso_total = round($peso_total, 2);
 
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
@@ -95,7 +97,6 @@ class FactorController extends Controller
             'nombre' => $data['nombre'],
             'descripcion' => $data['descripcion'],
             'id_proyecto' => $data['id_proyecto'],
-            'id_tipo_factor' => $data['id_tipo_factor'],
             'peso' => $data['peso'],
             'progreso' => 0
         ]);
@@ -123,7 +124,6 @@ class FactorController extends Controller
     public function edit(Factor $factor)
     {
         if(Auth::user()->rol->nombre == 'Decano'){
-            $tiposFactores = TipoFactor::all(['id', 'nombre']);
             $proyectos = Proyecto::all(['id', 'nombre']);
             $factores = Factor::where('id_proyecto', $factor->id_proyecto)->where('estado', 'Activado')->get();
 
@@ -134,7 +134,9 @@ class FactorController extends Controller
                 $peso_total -= $factores[$i]->peso;
             }
 
-            return view('factores.edit', compact('proyectos', 'factor', 'tiposFactores', 'peso_total'));
+            $peso_total = round($peso_total, 2);
+
+            return view('factores.edit', compact('proyectos', 'factor', 'peso_total'));
         }else {
             return redirect()->action([FactorController::class, 'index']);
         }
@@ -154,7 +156,6 @@ class FactorController extends Controller
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string',
             'id_proyecto' => 'required',
-            'id_tipo_factor' => 'required',
             'peso' => [
                 'required',
                 function($attribute, $value, $fail) use($factor, $request) {
@@ -165,6 +166,8 @@ class FactorController extends Controller
                         $peso_total -= $factores[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $factor->peso;
 
                     if($total_editar < $value){
@@ -174,17 +177,8 @@ class FactorController extends Controller
             ]
         ]);
 
-        if($factor->id_proyecto == $data['id_proyecto']) {
-            $factor = Factor::findOrFail($factor->id);
-            $factor->codigo = $data['codigo'];
-            $factor->nombre = $data['nombre'];
-            $factor->descripcion = $data['descripcion'];
-            $factor->id_proyecto = $data['id_proyecto'];
-            $factor->id_tipo_factor = $data['id_tipo_factor'];
-            $factor->peso = $data['peso'];
+        if($factor->id_proyecto != $data['id_proyecto'] || $factor->peso != $data['peso']) {
 
-            $factor->save();
-        }else {
             $proyecto1 = Proyecto::find($factor->id_proyecto);
             $proyecto2 = Proyecto::find($request['id_proyecto']);
 
@@ -193,13 +187,22 @@ class FactorController extends Controller
             $factor->nombre = $data['nombre'];
             $factor->descripcion = $data['descripcion'];
             $factor->id_proyecto = $data['id_proyecto'];
-            $factor->id_tipo_factor = $data['id_tipo_factor'];
             $factor->peso = $data['peso'];
 
             $factor->save();
 
             $this->progresos($proyecto1);
             $this->progresos($proyecto2);
+        }else {
+
+            $factor = Factor::findOrFail($factor->id);
+            $factor->codigo = $data['codigo'];
+            $factor->nombre = $data['nombre'];
+            $factor->descripcion = $data['descripcion'];
+            $factor->id_proyecto = $data['id_proyecto'];
+            $factor->peso = $data['peso'];
+
+            $factor->save();
         }
 
         return redirect()->action([FactorController::class, 'index']);
@@ -214,6 +217,8 @@ class FactorController extends Controller
         for($i = 0; $i < $factores->count(); $i++){
             $peso_total -= $factores[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $factor = Factor::findOrFail($factor->id);
 
@@ -249,6 +254,8 @@ class FactorController extends Controller
         for($i = 0; $i < $factores->count(); $i++){
             $peso_total -= $factores[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $proyecto = Proyecto::findOrFail($request['id_proyecto']);
         return response()->json([

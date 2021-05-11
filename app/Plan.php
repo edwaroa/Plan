@@ -9,6 +9,17 @@ class Plan extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'id_programa',
+        'objetivo_general',
+        'objetivos_especificos',
+        'fecha_inicio',
+        'fecha_final',
+        'progreso'
+    ];
+
     public function programa() {
         return $this->belongsTo(Programa::class, 'id_programa');
     }

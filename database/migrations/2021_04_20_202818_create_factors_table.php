@@ -21,7 +21,6 @@ class CreateFactorsTable extends Migration
             $table->float('peso');
             $table->float('progreso');
             $table->foreignId('id_proyecto')->references('id')->on('proyectos')->constrained()->onUpdate('cascade');
-            $table->foreignId('id_tipo_factor')->references('id')->on('tipo_factors')->constrained()->onUpdate('cascade');
             $table->string('estado')->default('Activado');
             $table->timestamps();
         });

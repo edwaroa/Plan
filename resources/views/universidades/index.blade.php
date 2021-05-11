@@ -24,6 +24,7 @@
                         <th scole="col">Nombre</th>
                         <th scole="col">Descripción</th>
                         <th scole="col">Estado</th>
+                        <th scole="col">Logo</th>
                         <th scole="col">Opciones</th>
                     </tr>
                 </thead>
@@ -39,6 +40,9 @@
                                 <span class="badge badge-danger">{{ $universidad->estado }}</span>
                             @endif
 
+                        </td>
+                        <td width="100" class="d-flex align-items-center" style="padding: 4px">
+                            <img src="{{ asset("/storage/$universidad->logo") }}" width="100%" alt="Logo Universidad">
                         </td>
                         <td>
                             <div class="btn-group">
@@ -70,5 +74,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/universidad.js') }}"></script>
 @endsection
 

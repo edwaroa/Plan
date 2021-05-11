@@ -82,15 +82,6 @@ Route::get('/proyectos/{proyecto}/edit', [ProyectoController::class, 'edit'])->n
 Route::put('/proyectos/{proyecto}', [ProyectoController::class, 'update'])->name('proyectos.update');
 Route::post('/proyectos/{proyecto}', [ProyectoController::class, 'estado'])->name('proyectos.estado');
 
-// TiposFatores
-Route::get('/tipofactores', [TipoFactorController::class, 'index'])->name('tipofactores.index');
-Route::get('/tipofactores/create', [TipoFactorController::class, 'create'])->name('tipofactores.create');
-Route::post('/tipofactores', [TipoFactorController::class, 'store'])->name('tipofactores.store');
-Route::get('/tipofactores/{tipofactor}', [TipoFactorController::class, 'show'])->name('tipofactores.show');
-Route::get('/tipofactores/{tipofactor}/edit', [TipoFactorController::class, 'edit'])->name('tipofactores.edit');
-Route::put('/tipofactores/{tipofactor}', [TipoFactorController::class, 'update'])->name('tipofactores.update');
-Route::post('/tipofactores/{tipofactor}', [TipoFactorController::class, 'estado'])->name('tipofactores.estado');
-
 // Factores
 // Peso
 Route::post('/pesofac', [FactorController::class, 'peso']);

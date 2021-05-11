@@ -29,12 +29,25 @@
 
                     <div class="pl-lg-4">
                         <div class="row justify-content-center">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="nombre" class="form-control-label">{{ __('Nombre de la Universidad') }}</label>
                                     <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" id="nombre" value="{{ $universidad->nombre }}" placeholder="Nombre de la Universidad">
 
                                     @error('nombre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="nit" class="form-control-label">{{ __('NIT de la Universidad') }}</label>
+                                    <input type="text" class="form-control @error('nit') is-invalid @enderror" name="nit" id="nit" value="{{ $universidad->nit }}" placeholder="Nit de la Universidad">
+
+                                    @error('nit')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -87,6 +100,48 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="direccion" class="form-control-label">{{ __('Dirección') }}</label>
+                                    <input type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" id="direccion" value="{{ $universidad->direccion }}" placeholder="Dirección de la Universidad">
+
+                                    @error('direccion')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label for="telefono" class="form-control-label">{{ __('Telefono / Celular') }}</label>
+                                    <input type="text" class="form-control @error('telefono') is-invalid @enderror" name="telefono" id="telefono" value="{{ $universidad->telefono }}" placeholder="Telefono de la Universidad">
+
+                                    @error('telefono')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group focused">
+                                    <label for="logo" class="form-control-label">{{ __('Logo') }}</label>
+                                    <input type="file" id="logo" class="form-control @error('logo') is-invalid @enderror" name="logo">
+
+                                    @error('logo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
                                 <!-- Button -->
                         <div class="pl-lg-4">

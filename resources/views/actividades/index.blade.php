@@ -30,6 +30,7 @@
                         <th scole="col">Fecha de Inicio</th>
                         <th scole="col">Fecha de Entrega</th>
                         <th scole="col">Usuarios Encargados</th>
+                        <th scole="col">Peso</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
                     </tr>
@@ -41,6 +42,7 @@
                         <td>{{$actividad->indicador->nombre}}</td>
                         <td>{{ $actividad->fecha_inicio }}</td>
                         <td>{{ $actividad->tiempo_entrega }}</td>
+                        <td>{{ $actividad->peso }}</td>
                         <td>
                             @foreach ($actividad->users as $usuarios)
                                 <li style="list-style: none">{{ $usuarios->fullname }}</li>
@@ -61,9 +63,11 @@
                                 <a href="{{route('actividades.show',['actividad'=>$actividad->id])}}" class="btn btn-primary rounded">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('actividades.edit', ['actividad' => $actividad->id]) }}" class="btn btn-warning mx-2 rounded">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
+                                @if (Auth::user()->rol->nombre == "Decano")
+                                    <a href="{{ route('actividades.edit', ['actividad' => $actividad->id]) }}" class="btn btn-warning mx-2 rounded">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                @endif
                             </div>
                         </td>
                     </tr>

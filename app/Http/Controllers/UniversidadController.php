@@ -39,6 +39,7 @@ class UniversidadController extends Controller
     {
         $contarUniversidades = DB::table('universidads')->count();
         if ($contarUniversidades === 0 && Auth::user()->rol->nombre == 'Decano') {
+
             return view('universidades.create');
         }else {
             return redirect()->action([UniversidadController::class, 'index']);
@@ -57,14 +58,27 @@ class UniversidadController extends Controller
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string',
             'mision' => 'required | string',
-            'vision' => 'required | string'
+            'vision' => 'required | string',
+            'nit' => 'required | unique:universidads',
+            'telefono' => 'required | numeric',
+            'direccion' => 'required | string',
+            'logo' => 'required | image'
         ]);
 
+        // Variable para la ruta del logo
+        $archivo = $request->file('logo');
+        $ruta_logo = $archivo->store('upload-universidad', 'public');
+
+
         DB::table('universidads')->insert([
+            'nit' => $data['nit'],
             'nombre' => $data['nombre'],
             'descripcion' => $data['descripcion'],
             'mision' => $data['mision'],
-            'vision' => $data['vision']
+            'vision' => $data['vision'],
+            'logo' => $ruta_logo,
+            'telefono' => $data['telefono'],
+            'direccion' => $data['direccion']
         ]);
 
         return redirect()->action([UniversidadController::class, 'index']);
@@ -90,6 +104,7 @@ class UniversidadController extends Controller
     public function edit(Universidad $universidad)
     {
         if (Auth::user()->rol->nombre == 'Decano') {
+
             return view('universidades.edit', compact('universidad'));
         }else {
             return redirect()->action([UniversidadController::class, 'index']);
@@ -109,14 +124,28 @@ class UniversidadController extends Controller
             'nombre' => 'required | string | max:255',
             'descripcion' => 'required | string',
             'mision' => 'required | string',
-            'vision' => 'required | string'
+            'vision' => 'required | string',
+            'nit' => 'required | unique:universidads,nit,' . $universidad->id,
+            'telefono' => 'required | numeric',
+            'direccion' => 'required | string',
+            'logo' => 'image'
         ]);
 
         $universidad = Universidad::findorFail($universidad->id);
+        $universidad->nit = $data['nit'];
         $universidad->nombre = $data['nombre'];
         $universidad->descripcion = $data['descripcion'];
         $universidad->mision = $data['mision'];
         $universidad->vision = $data['vision'];
+        $universidad->telefono = $data['telefono'];
+        $universidad->direccion = $data['direccion'];
+
+        if($request['logo']){
+            $archivo = $request->file('logo');
+            $ruta_logo = $archivo->store('upload-universidad', 'public');
+            $universidad->logo = $ruta_logo;
+        }
+
 
         $universidad->save();
 

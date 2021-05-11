@@ -68,6 +68,8 @@ class IndicadorController extends Controller
                         $peso_total -= $indicadores[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
                     }
@@ -117,6 +119,8 @@ class IndicadorController extends Controller
                 $peso_total -= $indicadores[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('indicadores.edit', compact('aspectos', 'indicador', 'peso_total'));
         }else {
             return redirect()->action([AspectoController::class, 'index']);
@@ -147,6 +151,8 @@ class IndicadorController extends Controller
                         $peso_total -= $indicadores[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $indicador->peso;
 
                     if($total_editar < $value){
@@ -156,16 +162,8 @@ class IndicadorController extends Controller
             ]
         ]);
 
-        if ($indicador->id_aspecto == $data['id_aspecto']) {
-            $indicador = indicador::findOrFail($indicador->id);
-            $indicador->codigo = $data['codigo'];
-            $indicador->nombre = $data['nombre'];
-            $indicador->descripcion = $data['descripcion'];
-            $indicador->id_aspecto = $data['id_aspecto'];
-            $indicador->peso = $data['peso'];
+        if ($indicador->id_aspecto != $data['id_aspecto'] || $indicador->peso != $data['peso']) {
 
-            $indicador->save();
-        }else {
             $aspecto1 = Aspecto::find($indicador->id_aspecto);
             $aspecto2 = Aspecto::find($data['id_aspecto']);
 
@@ -180,6 +178,16 @@ class IndicadorController extends Controller
 
             $this->progresos($aspecto1);
             $this->progresos($aspecto2);
+
+        }else {
+            $indicador = indicador::findOrFail($indicador->id);
+            $indicador->codigo = $data['codigo'];
+            $indicador->nombre = $data['nombre'];
+            $indicador->descripcion = $data['descripcion'];
+            $indicador->id_aspecto = $data['id_aspecto'];
+            $indicador->peso = $data['peso'];
+
+            $indicador->save();
         }
 
         return redirect()->action([IndicadorController::class, 'index']);
@@ -194,6 +202,8 @@ class IndicadorController extends Controller
         for($i = 0; $i < $indicadores->count(); $i++){
             $peso_total -= $indicadores[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $indicador = Indicador::findOrFail($indicador->id);
 
@@ -230,6 +240,8 @@ class IndicadorController extends Controller
         for($i = 0; $i < $indicadores->count(); $i++){
             $peso_total -= $indicadores[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $aspecto = Aspecto::findOrFail($request['id_aspecto']);
         return response()->json([

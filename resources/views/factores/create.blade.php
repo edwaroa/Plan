@@ -73,26 +73,6 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label for="id_tipo_factor" class="form-control-label">{{ __('Tipo de Factor') }}</label>
-                                    <select name="id_tipo_factor" id="id_tipo_factor" class="form-control @error('id_tipo_factor') is-invalid @enderror">
-                                        <option value="" selected disabled>-- Seleccione un Tipo de Factor --</option>
-                                        @foreach ($tiposFactores as $tipofactor)
-                                            <option value="{{ $tipofactor->id }}" {{ old('id_tipo_factor') == $tipofactor->id ? 'selected' : '' }}>
-                                                {{ $tipofactor->nombre }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('id_tipo_factor')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group focused">
                                     <label for="id_proyecto" class="form-control-label">{{ __('Proyecto') }}</label>
                                     <select name="id_proyecto" id="id_proyecto" class="form-control @error('id_proyecto') is-invalid @enderror">
                                         <option value="" selected disabled>-- Seleccione un Proyecto --</option>
@@ -110,9 +90,8 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12">
+
+                            <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label for="peso" class="form-control-label">{{ __('Peso ') }} <span class="text-success" id="peso_total"></span></label>
                                     <input type="number" step=".1" class="form-control @error('peso') is-invalid @enderror" max="{{ $peso_total }}" min="0" name="peso" id="peso" value="{{ old('peso') }}" placeholder="Peso del factor">

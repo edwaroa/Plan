@@ -50,6 +50,8 @@ class CaracteristicaController extends Controller
                 $peso_total -= $caracteristicas[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('caracteristicas.create', compact('factores', 'peso_total'));
         }else {
             return redirect()->action([CaracteristicaController::class, 'index']);
@@ -129,6 +131,8 @@ class CaracteristicaController extends Controller
                 $peso_total -= $caracteristicas[$i]->peso;
             }
 
+            $peso_total = round($peso_total, 2);
+
             return view('caracteristicas.edit', compact('factores', 'caracteristica', 'peso_total'));
         }else {
             return redirect()->action([CaracteristicaController::class, 'index']);
@@ -160,6 +164,8 @@ class CaracteristicaController extends Controller
                         $peso_total -= $caracteristicas[$i]->peso;
                     }
 
+                    $peso_total = round($peso_total, 2);
+
                     $total_editar = $peso_total + $caracteristica->peso;
 
                     if($total_editar < $value){
@@ -169,16 +175,8 @@ class CaracteristicaController extends Controller
             ]
         ]);
 
-        if ($caracteristica->id_factor == $data['id_factor']) {
-            $caracteristica = Caracteristica::findOrFail($caracteristica->id);
-            $caracteristica->codigo = $data['codigo'];
-            $caracteristica->nombre = $data['nombre'];
-            $caracteristica->descripcion = $data['descripcion'];
-            $caracteristica->id_factor = $data['id_factor'];
-            $caracteristica->peso = $data['peso'];
+        if ($caracteristica->id_factor != $data['id_factor'] || $caracteristica->peso != $data['peso']) {
 
-            $caracteristica->save();
-        }else {
             $factor1 = Factor::find($caracteristica->id_factor);
             $factor2 = Factor::find($data['id_factor']);
 
@@ -193,6 +191,16 @@ class CaracteristicaController extends Controller
 
             $this->progresos($factor1);
             $this->progresos($factor2);
+        }else {
+
+            $caracteristica = Caracteristica::findOrFail($caracteristica->id);
+            $caracteristica->codigo = $data['codigo'];
+            $caracteristica->nombre = $data['nombre'];
+            $caracteristica->descripcion = $data['descripcion'];
+            $caracteristica->id_factor = $data['id_factor'];
+            $caracteristica->peso = $data['peso'];
+
+            $caracteristica->save();
         }
 
         return redirect()->action([CaracteristicaController::class, 'index']);
@@ -208,6 +216,8 @@ class CaracteristicaController extends Controller
         for($i = 0; $i < $caracteristicas->count(); $i++){
             $peso_total -= $caracteristicas[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $caracteristica = Caracteristica::findOrFail($caracteristica->id);
 
@@ -243,6 +253,8 @@ class CaracteristicaController extends Controller
         for($i = 0; $i < $caracteristicas->count(); $i++){
             $peso_total -= $caracteristicas[$i]->peso;
         }
+
+        $peso_total = round($peso_total, 2);
 
         $factor = Factor::findOrFail($request['id_factor']);
         return response()->json([

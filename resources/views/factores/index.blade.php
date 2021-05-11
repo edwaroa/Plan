@@ -27,7 +27,6 @@
                     <tr>
                         <th scole="col">Codigo</th>
                         <th scole="col">Nombre</th>
-                        <th scole="col">Tipo Factor</th>
                         <th scole="col">Proyecto</th>
                         <th scole="col">Progreso</th>
                         <th scole="col">Peso</th>
@@ -40,7 +39,6 @@
                     <tr>
                         <td class="text-center">{{$factor->codigo}}</td>
                         <td>{{$factor->nombre}}</td>
-                        <td>{{$factor->tipoFactor->nombre}}</td>
                         <td>{{$factor->proyecto->nombre}}</td>
                         <td>
                             @if ($factor->progreso == 0)
