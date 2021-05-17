@@ -45,7 +45,7 @@
                     <div class="col-md-10 mx-auto">
                         <div class="row">
                             <div class="mb-3 col-md-6">
-                                <h3 class="text-primary mb-2">Proyecto</h3>
+                                <h3 class="text-primary mb-2">Aspecto</h3>
                                 <p>{{ $indicador->aspecto->nombre }}</p>
                             </div>
                             <div class="col-md-6">
