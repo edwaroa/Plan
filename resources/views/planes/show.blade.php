@@ -47,15 +47,15 @@
                     <div class="col-md-10 mx-auto">
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Descripción</h3>
-                            <p>{{ $plan->descripcion }}</p>
+                            <p class="text-justify">{{ $plan->descripcion }}</p>
                         </div>
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Objetivo General</h3>
-                            <p>{{ $plan->objetivo_general }}</p>
+                            <p class="text-justify">{{ $plan->objetivo_general }}</p>
                         </div>
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Objetivos Especificos</h3>
-                            <p>{{ $plan->objetivos_especificos }}</p>
+                            <p class="text-justify">{{ $plan->objetivos_especificos }}</p>
                         </div>
                     </div>
                     <div class="col-md-10 mx-auto">

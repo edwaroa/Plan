@@ -39,22 +39,22 @@
                     <div class="col-md-10 mx-auto">
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Descripción</h3>
-                            <p>{{ $proyecto->descripcion }}</p>
+                            <p class="text-justify">{{ $proyecto->descripcion }}</p>
                         </div>
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Objetivo General</h3>
-                            <p>{{ $proyecto->objetivo_general }}</p>
+                            <p class="text-justify">{{ $proyecto->objetivo_general }}</p>
                         </div>
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Objetivos Especificos</h3>
-                            <p>{{ $proyecto->objetivos_especificos }}</p>
+                            <p class="text-justify">{{ $proyecto->objetivos_especificos }}</p>
                         </div>
                     </div>
                     <div class="col-md-10 mx-auto">
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="text-primary mb-2">Plan</h3>
-                                <p>{{ $proyecto->plan->nombre }}</p>
+                                <p class="text-justify">{{ $proyecto->plan->nombre }}</p>
                             </div>
                             <div class="col-md-6 float-right">
                                 <h3 class="text-primary mb-2">Progreso</h3>

@@ -39,7 +39,7 @@
                     <div class="col-md-10 mx-auto">
                         <div class="mb-3">
                             <h3 class="text-primary mb-2">Descripción</h3>
-                            <p>{{ $factor->descripcion }}</p>
+                            <p class="text-justify">{{ $factor->descripcion }}</p>
                         </div>
                     </div>
                     <div class="col-md-10 mx-auto">

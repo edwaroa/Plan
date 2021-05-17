@@ -22,7 +22,7 @@
             <div class="col-md-10 mx-auto">
                 <div class="mb-3">
                     <h3 class="text-primary mb-2">Descripción</h3>
-                    <p>{{ $programa->descripcion }}</p>
+                    <p class="text-justify">{{ $programa->descripcion }}</p>
                 </div>
                 <div class="mb-3">
                     <h3 class="text-primary mb-2">Facultad</h3>
