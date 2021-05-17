@@ -13,7 +13,7 @@
             </div>
         @else
             <div class="card-header py-3">
-                <h6 class="text-primary font-weight-bold">Actividades Registrados</h6>
+                <h6 class="text-primary font-weight-bold">Actividades Registradas</h6>
             </div>
         @endif
 
@@ -29,8 +29,8 @@
                         <th scole="col">Indicador</th>
                         <th scole="col">Fecha de Inicio</th>
                         <th scole="col">Fecha de Entrega</th>
-                        <th scole="col">Usuarios Encargados</th>
                         <th scole="col">Peso</th>
+                        <th scole="col">Usuarios Encargados</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
                     </tr>
