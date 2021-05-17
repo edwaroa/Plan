@@ -349,7 +349,7 @@ class ActividadController extends Controller
     public function avalar(Actividad $actividad, Request $request) {
         $data = $request->validate([
             'estado' => 'required',
-            'comentario' => 'required|max:100'
+            'comentario' => 'required|max:300'
         ]);
 
         if (Auth::user()->rol->nombre == "Decano") {

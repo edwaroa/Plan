@@ -153,12 +153,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-12">
-                    <h4 class="text-primary mb-2">Estado: <span class="badge {{ $actividad->estado == 'Avalada' ? 'badge-success' : 'badge-danger' }}">{{ $actividad->estado }}</span></h4>
-                </div>
-                <div class="col-md-12">
-                    <p class="border {{ $actividad->estado == 'Avalada' ? 'border-success' : 'border-danger' }} p-2">{{ $actividad->comentario }}</p>
-                </div>
+                @if ($actividad->estado == 'Iniciada')
+                    <div class="col-md-12">
+                        <h4 class="text-primary mb-2">Estado: <span class="badge badge-warning">{{ $actividad->estado }}</span></h4>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-justify border border-warning p-2">Aún no se ha tramitado la actividad</p>
+                    </div>
+                @else
+                    <div class="col-md-12">
+                        <h4 class="text-primary mb-2">Estado: <span class="badge {{ $actividad->estado == 'Avalada' ? 'badge-success' : 'badge-danger' }}">{{ $actividad->estado }}</span></h4>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="text-justify border {{ $actividad->estado == 'Avalada' ? 'border-success' : 'border-danger' }} p-2">{{ $actividad->comentario }}</p>
+                    </div>
+                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
