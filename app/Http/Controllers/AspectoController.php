@@ -6,9 +6,12 @@ use App\Plan;
 use App\Factor;
 use App\Aspecto;
 use App\Proyecto;
+use Carbon\Carbon;
+use App\Universidad;
 use App\Caracteristica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class AspectoController extends Controller
@@ -313,5 +316,20 @@ class AspectoController extends Controller
 
 
         return $caracteristica;
+    }
+
+    public function exportar()
+    {
+        $aspectos = Aspecto::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteAspectos', compact('aspectos', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->download('aspectos.pdf');
     }
 }

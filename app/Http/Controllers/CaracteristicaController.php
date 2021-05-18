@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\Factor;
 use App\Proyecto;
+use Carbon\Carbon;
+use App\Universidad;
 use App\Caracteristica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class CaracteristicaController extends Controller
@@ -307,5 +310,20 @@ class CaracteristicaController extends Controller
 
 
         return $factor;
+    }
+
+    public function exportar()
+    {
+        $caracteristicas = Caracteristica::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteCaracteristicas', compact('caracteristicas', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->download('caracteristicas.pdf');
     }
 }

@@ -94,6 +94,7 @@ Route::put('/factores/{factor}', [FactorController::class, 'update'])->name('fac
 Route::post('/factores/{factor}', [FactorController::class, 'estado'])->name('factores.estado');
 
 // Características
+Route::get('caracteristicas/exportar', [CaracteristicaController::class, 'exportar'])->name('caracteristicas.exportar');
 // Peso
 Route::post('/pesocar', [CaracteristicaController::class, 'peso']);
 Route::get('/caracteristicas', [CaracteristicaController::class, 'index'])->name('caracteristicas.index');
@@ -105,6 +106,7 @@ Route::put('/caracteristicas/{caracteristica}', [CaracteristicaController::class
 Route::post('/caracteristicas/{caracteristica}', [CaracteristicaController::class, 'estado'])->name('caracteristicas.estado');
 
 // Aspectos
+Route::get('aspectos/exportar', [AspectoController::class, 'exportar'])->name('aspectos.exportar');
 // Peso
 Route::post('/pesoasp', [AspectoController::class, 'peso']);
 Route::get('/aspectos', [AspectoController::class, 'index'])->name('aspectos.index');
@@ -116,6 +118,7 @@ Route::put('/aspectos/{aspecto}', [AspectoController::class, 'update'])->name('a
 Route::post('/aspectos/{aspecto}', [AspectoController::class, 'estado'])->name('aspectos.estado');
 
 // Indicadores
+Route::get('indicadores/exportar', [IndicadorController::class, 'exportar'])->name('indicadores.exportar');
 // Peso
 Route::post('/pesoind', [IndicadorController::class, 'peso']);
 Route::get('/indicadores', [IndicadorController::class, 'index'])->name('indicadores.index');
@@ -125,6 +128,7 @@ Route::get('/indicadores/{indicador}', [IndicadorController::class, 'show'])->na
 Route::get('/indicadores/{indicador}/edit', [IndicadorController::class, 'edit'])->name('indicadores.edit');
 Route::put('/indicadores/{indicador}', [IndicadorController::class, 'update'])->name('indicadores.update');
 Route::post('/indicadores/{indicador}', [IndicadorController::class, 'estado'])->name('indicadores.estado');
+
 
 // Actividades
 

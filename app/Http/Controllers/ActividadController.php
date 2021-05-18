@@ -481,7 +481,7 @@ class ActividadController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdf.reporteActividades', compact('actividades', 'universidad', 'fecha', 'codigo', 'usuario'))->setPaper('a4', 'landscape');
 
-        return $pdf ->stream('actividades.pdf');
+        return $pdf ->download('actividades.pdf');
 
     }
 }
