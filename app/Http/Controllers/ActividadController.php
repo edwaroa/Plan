@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Plan;
 use App\User;
-use App\Actividad;
-use App\Aspecto;
-use App\Caracteristica;
-use App\Evidencia;
 use App\Factor;
-use App\Indicador;
+use App\Aspecto;
 use App\Proyecto;
-use App\TipoFactor;
+use App\Actividad;
+use App\Evidencia;
+use App\Indicador;
 use Carbon\Carbon;
+use App\Caracteristica;
+use App\Universidad;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Illuminate\Support\Facades\App;
 
 class ActividadController extends Controller
 {
@@ -29,6 +32,7 @@ class ActividadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         if(Auth::user()->rol->nombre == "Decano"){
@@ -347,6 +351,7 @@ class ActividadController extends Controller
     }
 
     public function avalar(Actividad $actividad, Request $request) {
+
         $data = $request->validate([
             'estado' => 'required',
             'comentario' => 'required|max:300'
@@ -453,5 +458,30 @@ class ActividadController extends Controller
 
 
         return $indicador;
+    }
+
+    public function exportar()
+    {
+        if(Auth::user()->rol->nombre == "Decano"){
+            $actividades = Actividad::all();
+        }else {
+            $actividades = Actividad::join('actividad_user', 'actividad_user.actividad_id', '=', 'actividads.id')
+            ->join('users', 'users.id', '=', 'actividad_user.user_id')
+            ->where('actividad_user.user_id', '=', Auth::user()->id)
+            ->select('actividads.*')->get();
+        }
+
+        $universidad = Universidad::all();
+        $usuarios = User::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+        $usuario = User::where('documento', '109882453')->get();
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteActividades', compact('actividades', 'universidad', 'fecha', 'codigo', 'usuario'))->setPaper('a4', 'landscape');
+
+        return $pdf ->stream('actividades.pdf');
+
     }
 }

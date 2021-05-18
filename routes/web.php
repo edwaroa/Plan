@@ -127,6 +127,8 @@ Route::put('/indicadores/{indicador}', [IndicadorController::class, 'update'])->
 Route::post('/indicadores/{indicador}', [IndicadorController::class, 'estado'])->name('indicadores.estado');
 
 // Actividades
+
+Route::get('actividades/exportar', [ActividadController::class, 'exportar'])->name('actividades.exportar');
 Route::get('/actividades', [ActividadController::class, 'index'])->name('actividades.index');
 Route::get('/actividades/create', [ActividadController::class, 'create'])->name('actividades.create');
 Route::post('/actividades', [ActividadController::class, 'store'])->name('actividades.store');

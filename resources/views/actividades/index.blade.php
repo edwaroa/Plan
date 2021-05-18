@@ -7,15 +7,17 @@
         <h2>Administrar Actividades</h2>
     </div>
     <div class="card shadow mb-4">
-        @if (auth()->user()->rol->nombre == 'Decano')
-            <div class="card-header py-3">
+
+        <div class="card-header py-3">
+            @if (auth()->user()->rol->nombre == 'Decano')
                 <a href="{{ route('actividades.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
-            </div>
-        @else
-            <div class="card-header py-3">
-                <h6 class="text-primary font-weight-bold">Actividades Registradas</h6>
-            </div>
-        @endif
+            @else
+                <h6 class="text-primary font-weight-bold d-inline-block">Actividades Registradas</h6>
+            @endif
+
+            <a href="{{ route('actividades.exportar') }}" class="m-0 btn btn-outline-danger inline-block float-right" target="__blank">Reporte pdf <i class="fas fa-file-pdf"></i></a>
+        </div>
+
 
         <div class="card-body">
 
@@ -30,7 +32,7 @@
                         <th scole="col">Fecha de Inicio</th>
                         <th scole="col">Fecha de Entrega</th>
                         <th scole="col">Peso</th>
-                        <th scole="col">Usuarios Encargados</th>
+                        <th scole="col">Responsables</th>
                         <th scole="col">Estado</th>
                         <th scole="col">Opciones</th>
                     </tr>
