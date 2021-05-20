@@ -20,6 +20,10 @@ class Plan extends Model
         'progreso'
     ];
 
+    public function proyectos() {
+        return $this->hasMany(Proyecto::class, 'id_plan');
+    }
+
     public function programa() {
         return $this->belongsTo(Programa::class, 'id_programa');
     }

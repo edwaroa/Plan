@@ -7,15 +7,15 @@
         <h2>Administrar Proyectos</h2>
     </div>
     <div class="card shadow mb-4">
-        @if (auth()->user()->rol->nombre == 'Decano')
-            <div class="card-header py-3">
+        <div class="card-header py-3">
+            @if (auth()->user()->rol->nombre == 'Decano')
                 <a href="{{ route('proyectos.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
-            </div>
-        @else
-            <div class="card-header py-3">
-                <h6 class="text-primary font-weight-bold">Proyectos Registrados</h6>
-            </div>
-        @endif
+
+                <a href="{{ route('proyectos.exportar') }}" class="m-0 btn btn-outline-danger inline-block float-right" target="__blank">Reporte pdf <i class="fas fa-file-pdf"></i></a>
+            @else
+                <h6 class="text-primary font-weight-bold d-inline-block">Proyectos Registrados</h6>
+            @endif
+        </div>
 
         <div class="card-body">
 

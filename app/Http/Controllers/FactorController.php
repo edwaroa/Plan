@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\Factor;
 use App\Proyecto;
+use Carbon\Carbon;
 use App\TipoFactor;
+use App\Universidad;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
 class FactorController extends Controller
@@ -294,5 +297,20 @@ class FactorController extends Controller
 
 
         return $proyecto;
+    }
+
+    public function exportar()
+    {
+        $factores = Factor::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteFactores', compact('factores', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->download('factores.pdf');
     }
 }

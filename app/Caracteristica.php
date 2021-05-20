@@ -21,4 +21,8 @@ class Caracteristica extends Model
     public function factor() {
         return $this->belongsTo(Factor::class, 'id_factor');
     }
+
+    public function aspectos() {
+        return $this->hasMany(Aspecto::class, 'id_caracteristica');
+    }
 }

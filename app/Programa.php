@@ -19,4 +19,8 @@ class Programa extends Model
     public function facultad() {
         return $this->belongsTo(Facultad::class, 'id_facultad');
     }
+
+    public function planes() {
+        return $this->hasMany(Plan::class);
+    }
 }

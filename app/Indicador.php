@@ -21,4 +21,8 @@ class Indicador extends Model
     public function aspecto() {
         return $this->belongsTo(Aspecto::class, 'id_aspecto');
     }
+
+    public function actividades() {
+        return $this->hasMany(Actividad::class, 'id_indicador');
+    }
 }

@@ -22,4 +22,8 @@ class Proyecto extends Model
     public function plan() {
         return $this->belongsTo(Plan::class, 'id_plan');
     }
+
+    public function factores() {
+        return $this->hasMany(Factor::class, 'id_proyecto');
+    }
 }

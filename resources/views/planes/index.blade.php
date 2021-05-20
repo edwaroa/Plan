@@ -7,15 +7,15 @@
         <h2>Administrar Planes</h2>
     </div>
     <div class="card shadow mb-4">
-        @if (auth()->user()->rol->nombre == 'Decano')
-            <div class="card-header py-3">
+        <div class="card-header py-3">
+            @if (auth()->user()->rol->nombre == 'Decano')
                 <a href="{{ route('planes.create') }}" class="m-0 btn btn-outline-success inline-block">Agregar <i class="fas fa-plus"></i></a>
-            </div>
-        @else
-            <div class="card-header py-3">
-                <h6 class="text-primary font-weight-bold">Planes Registrados</h6>
-            </div>
-        @endif
+
+                <a href="{{ route('planes.exportar') }}" class="m-0 btn btn-outline-danger inline-block float-right" target="__blank">Reporte pdf <i class="fas fa-file-pdf"></i></a>
+            @else
+                <h6 class="text-primary font-weight-bold d-inline-block">Planes Registrados</h6>
+            @endif
+        </div>
 
         <div class="card-body">
             <div class="table-responsive">
@@ -55,6 +55,7 @@
                             @endif
 
                         </td>
+
                         <td>
                             <div class="btn-group">
                                 <a href="{{route('planes.show',['plan'=>$plan->id])}}" class="btn btn-primary rounded">
@@ -65,12 +66,17 @@
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
+                                    <form action="{{ route('planes.pdf', ['id' => $plan->id]) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-info icon text-white-100 mr-2"><i class="fas fa-print"></i></button>
+                                    </form>
+
                                     <form action="{{ route('planes.estado', ['plan' => $plan->id]) }}" method="POST">
                                         @csrf
                                         @if($plan->estado=='Activado')
-                                        <button type="submit" class="btn btn-danger icon text-white-50"><i class="fas fa-trash"></i></button>
+                                        <button type="submit" class="btn btn-danger icon text-white-100"><i class="fas fa-trash"></i></button>
                                         @else
-                                        <button type="submit" class="btn btn-success icon text-white-50"><i class="fas fa-check"></i></button>
+                                        <button type="submit" class="btn btn-success icon text-white-100"><i class="fas fa-check"></i></button>
                                         @endif
                                     </form>
                                 @endif

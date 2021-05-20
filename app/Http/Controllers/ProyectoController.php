@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Caracteristica;
 use App\Plan;
 use App\Proyecto;
+use Carbon\Carbon;
+use App\Universidad;
+use App\Caracteristica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -281,5 +284,20 @@ class ProyectoController extends Controller
         $plan->save();
 
         return $plan;
+    }
+
+    public function exportar()
+    {
+        $proyectos = Proyecto::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteProyectos', compact('proyectos', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->stream('proyectos.pdf');
     }
 }

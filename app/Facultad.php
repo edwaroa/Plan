@@ -19,4 +19,8 @@ class Facultad extends Model
     public function universidad() {
         return $this->belongsTo(Universidad::class, 'id_universidad');
     }
+
+    public function programas() {
+        return $this->hasMany(Programa::class);
+    }
 }

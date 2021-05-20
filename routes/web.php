@@ -12,6 +12,8 @@ use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\TipoFactorController;
 use App\Http\Controllers\UniversidadController;
+use App\Plan;
+use App\Proyecto;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -63,6 +65,8 @@ Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 
 // Planes
+Route::post('planes/exportar/{id}', [PlanController::class, 'exportarPlan'])->name('planes.pdf');
+Route::get('planes/exportar', [PlanController::class, 'exportar'])->name('planes.exportar');
 Route::get('/planes', [PlanController::class, 'index'])->name('planes.index');
 Route::get('/planes/create', [PlanController::class, 'create'])->name('planes.create');
 Route::post('/planes', [PlanController::class, 'store'])->name('planes.store');
@@ -72,6 +76,7 @@ Route::put('/planes/{plan}', [PlanController::class, 'update'])->name('planes.up
 Route::post('/planes/{plan}', [PlanController::class, 'estado'])->name('planes.estado');
 
 // Proyectos
+Route::get('proyectos/exportar', [ProyectoController::class, 'exportar'])->name('proyectos.exportar');
 // Peso
 Route::post('/pesopro', [ProyectoController::class, 'peso'])->name('proyectos.peso');
 Route::get('/proyectos', [ProyectoController::class, 'index'])->name('proyectos.index');
@@ -83,6 +88,7 @@ Route::put('/proyectos/{proyecto}', [ProyectoController::class, 'update'])->name
 Route::post('/proyectos/{proyecto}', [ProyectoController::class, 'estado'])->name('proyectos.estado');
 
 // Factores
+Route::get('factores/exportar', [FactorController::class, 'exportar'])->name('factores.exportar');
 // Peso
 Route::post('/pesofac', [FactorController::class, 'peso']);
 Route::get('/factores', [FactorController::class, 'index'])->name('factores.index');

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\Programa;
 use Carbon\Carbon;
+use App\Universidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Psy\CodeCleaner\ReturnTypePass;
 use Illuminate\Support\Facades\Auth;
 
@@ -170,5 +172,34 @@ class PlanController extends Controller
             $plan->save();
         }
         return redirect()->action([PlanController::class, 'index']);
+    }
+
+    public function exportar()
+    {
+        $planes = Plan::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reportePlanes', compact('planes', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->download('planes.pdf');
+    }
+
+    public function exportarPlan($id) {
+        $planes = Plan::where('id', $id)->get();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.planes.reporte', compact('planes', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->download('plan_'. $id . '.pdf');
     }
 }

@@ -21,4 +21,8 @@ class Aspecto extends Model
     public function caracteristica() {
         return $this->belongsTo(Caracteristica::class, 'id_caracteristica');
     }
+
+    public function indicadores() {
+        return $this->hasMany(Indicador::class, 'id_aspecto');
+    }
 }

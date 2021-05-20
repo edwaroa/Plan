@@ -21,4 +21,8 @@ class Factor extends Model
     public function proyecto(){
         return $this->belongsTo(Proyecto::class, 'id_proyecto');
     }
+
+    public function caracteristicas() {
+        return $this->hasMany(Caracteristica::class, 'id_factor');
+    }
 }
