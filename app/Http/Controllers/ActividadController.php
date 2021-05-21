@@ -12,6 +12,7 @@ use App\Evidencia;
 use App\Indicador;
 use Carbon\Carbon;
 use App\Caracteristica;
+use App\Notifications\NuevaActividad;
 use App\Universidad;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
@@ -132,6 +133,11 @@ class ActividadController extends Controller
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
                     }
+                },
+                function($attribute, $value, $fail) {
+                    if($value <= 0) {
+                        $fail("El " . $attribute . " no puede ser menor o igual a 0");
+                    }
                 }
             ]
         ]);
@@ -146,6 +152,13 @@ class ActividadController extends Controller
         ]);
 
         $actividad->users()->sync($request->get('usuarios'));
+        $actividadNombre = $data['nombre'];
+
+
+        foreach ($data['usuarios'] as $usuario) {
+            $user = User::findOrFail($usuario);
+            $user->notify(new NuevaActividad($actividadNombre));
+        }
 
         return redirect()->action([ActividadController::class, 'index']);
 
@@ -274,6 +287,11 @@ class ActividadController extends Controller
 
                     if($total_editar < $value){
                         $fail("No se puede agregar más " .$attribute . " del total disponible");
+                    }
+                },
+                function($attribute, $value, $fail) {
+                    if($value <= 0) {
+                        $fail("El " . $attribute . " no puede ser menor o igual a 0");
                     }
                 }
             ]

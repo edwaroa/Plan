@@ -33,7 +33,7 @@
                     Universidad: <span style="font-weight: normal">{{ $universidad[0]->nombre }}</span></td>
                 </td>
 
-                <td colspan="2" style="text-align: center; font-weight: bold">Reporte de Aspectos</td>
+                <td colspan="2" style="text-align: center; font-weight: bold">Reporte de Usuarios</td>
             </tr>
 
             <tr>
@@ -49,26 +49,30 @@
     <div>
         <table width="100%" border="1" border="1" cellpadding="0" cellspacing="0" bordercolor="#000000">
             <tr>
-                <th colspan="6" style="padding: 5px 0 5px 0">Listado de aspectos</th>
+                <th colspan="7" style="padding: 5px 0 5px 0">Listado de usuarios</th>
             </tr>
             <tr>
-                <th>Código</th>
+                <th>Documento</th>
                 <th>Nombre</th>
-                <th>Característica</th>
-                <th>Progreso</th>
-                <th>Peso</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Telefono</th>
+                <th>Genero</th>
                 <th>Estado</th>
             </tr>
             <tbody>
-                @foreach($aspectos as $aspecto)
+                @foreach($usuarios as $usuario)
                 <tr>
-                    <td>{{ $aspecto->codigo }}</td>
-                    <td>{{$aspecto->nombre}}</td>
-                    <td>{{$aspecto->caracteristica->nombre}}</td>
-                    <td>{{ $aspecto->progreso }}%</td>
-                    <td>{{ $aspecto->peso }}</td>
+                    <td>{{$usuario->documento}}</td>
+                    <td>{{$usuario->nombre}}</td>
+                    <td>{{ $usuario->email }}</td>
+                    <td>{{ $usuario->rol->nombre }}</td>
+                    <td>{{ $usuario->telefono }}</td>
                     <td>
-                        {{ $aspecto->estado }}
+                        {{ $usuario->genero }}
+                    </td>
+                    <td>
+                        {{ $usuario->estado }}
                     </td>
                 </tr>
                 @endforeach

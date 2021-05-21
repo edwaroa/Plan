@@ -29,11 +29,11 @@
 
             <tr>
 
-                <td rowspan="2" valign="middle" align="left" width="200px" style="padding: 4px">
-                    <img width="200px" src="https://i.ibb.co/cL8F3q8/Logo-udi-web.png" alt="">
+                <td colspan="2" valign="middle" align="left" width="200px" style="padding: 4px; font-weight: bold">
+                    Universidad: <span style="font-weight: normal">{{ $universidad[0]->nombre }}</span></td>
                 </td>
 
-                <td colspan="4" style="text-align: center; font-weight: bold">Reporte de Planes</td>
+                <td colspan="2" style="text-align: center; font-weight: bold">Reporte de Planes</td>
             </tr>
 
             <tr>

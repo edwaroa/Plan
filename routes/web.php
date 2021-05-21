@@ -12,6 +12,7 @@ use App\Http\Controllers\ProgramaController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\TipoFactorController;
 use App\Http\Controllers\UniversidadController;
+use App\Http\Controllers\UsuarioController;
 use App\Plan;
 use App\Proyecto;
 use Illuminate\Support\Facades\Artisan;
@@ -44,7 +45,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/roles', 'RolController@index')->name('roles.index');
 Route::get('/roles/{rol}', 'RolController@show')->name('roles.show');
 
-// Usuarios
+//usuarios
+Route::get('usuarios/exportar', [UsuarioController::class, 'exportar'])->name('usuarios.exportar');
 Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
 Route::get('/usuarios/create', 'UsuarioController@create')->name('usuarios.create');
 Route::post('/usuarios', 'UsuarioController@store')->name('usuarios.store');

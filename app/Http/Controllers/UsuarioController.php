@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Rol;
 use App\User;
 use App\Actividad;
+use Carbon\Carbon;
+use App\Universidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use App\Notifications\EstadoUsuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 use App\Notifications\DesactivarUsuario;
-use Carbon\Carbon;
 
 class UsuarioController extends Controller
 {
@@ -87,6 +89,8 @@ class UsuarioController extends Controller
             'updated_at' => $fecha
         ]);
 
+
+
         return redirect()->action('UsuarioController@index');
     }
     public function show(User $user){
@@ -155,6 +159,21 @@ class UsuarioController extends Controller
             $user->save();
         }
         return redirect()->action('UsuarioController@index');
+    }
+
+    public function exportar()
+    {
+        $usuarios = User::all();
+
+        $universidad = Universidad::all();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $aleatorio = rand(0, getrandmax());
+        $codigo = 'RP-' . $aleatorio;
+
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdf.reporteUsuarios', compact('usuarios', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
+
+        return $pdf ->stream('usuarios.pdf');
     }
 
 }

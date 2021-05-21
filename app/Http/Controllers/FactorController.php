@@ -91,6 +91,11 @@ class FactorController extends Controller
                     if($peso_total < $value){
                         $fail("El " .$attribute . " no puede ser mayor que el total disponible");
                     }
+                },
+                function($attribute, $value, $fail) {
+                    if($value <= 0) {
+                        $fail("El " . $attribute . " no puede ser menor o igual a 0");
+                    }
                 }
             ]
         ]);
@@ -175,6 +180,11 @@ class FactorController extends Controller
 
                     if($total_editar < $value){
                         $fail("No se puede agregar más " .$attribute . " del total disponible");
+                    }
+                },
+                function($attribute, $value, $fail) {
+                    if($value <= 0) {
+                        $fail("El " . $attribute . " no puede ser menor o igual a 0");
                     }
                 }
             ]
