@@ -1,4 +1,4 @@
-# Primera versión del prototipo software para plan de mejoramiento
+# Proyecto de grado Ingeniería de sistemas
 
 Prototipo de software para documentar las evidencias de las actividades del plan de mejoramiento para el programa de Ingeniería de Sistemas.
 
@@ -8,6 +8,16 @@ Prototipo de software para documentar las evidencias de las actividades del plan
 - Modificacion de perfil
 - Inicio de Sesión
 - Recuperacion de Contraseña
+- CRUD de los planes de mejoramiento
+- CRUD de los proyectos que corresponden a esos planes
+- CRUD de los factores
+- CRUD de las características
+- CRUD de los aspectos
+- CRUD de los indicadores
+- CRUD de las actividades
+- Manejo de evidencias (Subir y descargar evidencias)
+- Tramitar actividades (Avalar o rechazar) según sea el caso
+- Llevar calculo del progreso de cada relación para así saber el progreso que tiene el plan
 
 ## Preview
 
@@ -31,9 +41,21 @@ Algunas de las paginas principales:
 
 ***
 
-`Perfil`
+`Subir Evidencias`
 
-<img src="public/img/udi/Perfil.png">
+<img src="public/img/udi/SubirEvidencia.png">
+
+***
+
+`Ver Evidencias`
+
+<img src="public/img/udi/VerEvidencia.png">
+
+***
+
+`Tramitar Actividad`
+
+<img src="public/img/udi/TramitarActividad.png">
 
 ## Creado
 

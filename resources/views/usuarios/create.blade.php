@@ -134,11 +134,11 @@
                                         is-invalid border border-danger rounded p-1
                                     @enderror">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="genero" id="genero1" value="Masculino">
+                                            <input class="form-check-input" type="radio" name="genero" id="genero1" value="Masculino" {{ old('genero') == "Masculino" ? 'checked' : '' }}>
                                             <label class="form-check-label" for="genero1">Masculino</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="genero" id="genero2" value="Femenino">
+                                            <input class="form-check-input" type="radio" name="genero" id="genero2" value="Femenino" {{ old('genero') == "Femenino" ? 'checked' : '' }}>
                                             <label class="form-check-label" for="genero2">Femenino</label>
                                         </div>
                                     </div>

@@ -114,6 +114,11 @@ class ActividadController extends Controller
                             $fail("La fecha de final no puede ser superior a la fecha final del plan correspondiente");
                         }
                     }
+                },
+                function ($attribute, $value, $fail) use($request) {
+                    if($value < $request['fecha_inicio']){
+                        $fail('El ' .$attribute. ' no puede ser menor a la fecha de inicio');
+                    }
                 }
             ],
             'usuarios' => 'required|array|min:1',
@@ -266,6 +271,11 @@ class ActividadController extends Controller
                         if($fecha_plan[0]->fecha_final < $value){
                             $fail("La fecha de final no puede ser superior a la fecha final del plan correspondiente");
                         }
+                    }
+                },
+                function ($attribute, $value, $fail) use($request) {
+                    if($value < $request['fecha_inicio']){
+                        $fail('El ' .$attribute. ' no puede ser menor a la fecha de inicio');
                     }
                 }
             ],
