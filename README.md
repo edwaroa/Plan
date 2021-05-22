@@ -43,19 +43,19 @@ Algunas de las paginas principales:
 
 `Subir Evidencias`
 
-<img src="public/img/udi/SubirEvidencia.png">
+<img src="public/img/udi/SubirEvidencia.PNG">
 
 ***
 
 `Ver Evidencias`
 
-<img src="public/img/udi/VerEvidencia.png">
+<img src="public/img/udi/VerEvidencia.PNG">
 
 ***
 
 `Tramitar Actividad`
 
-<img src="public/img/udi/TramitarActividad.png">
+<img src="public/img/udi/TramitarActividad.PNG">
 
 ## Creado
 
