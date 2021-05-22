@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Actividad;
+use App\Aspecto;
+use App\Caracteristica;
+use App\Factor;
+use App\Indicador;
 use App\Plan;
+use App\Proyecto;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,8 +33,23 @@ class HomeController extends Controller
     {
         $usuarios=User::where('estado','Activado');
         $users = $usuarios->count();
+        $planes = Plan::where('estado', 'Activado')->count();
+        $proyectos = Proyecto::where('estado', 'Activado')->count();
+        $factores = Factor::where('estado', 'Activado')->count();
+        $caracteristicas = Caracteristica::where('estado', 'Activado')->count();
+        $aspectos = Aspecto::where('estado', 'Activado')->count();
+        $indicadores = Indicador::where('estado', 'Activado')->count();
+        $actividades = Actividad::where('estado', 'Activado')->count();
+
         $widget = [
-            'users' => $users
+            'users' => $users,
+            'planes' => $planes,
+            'proyectos' => $proyectos,
+            'factores' => $factores,
+            'caracteristicas' => $caracteristicas,
+            'aspectos' => $aspectos,
+            'indicadores' => $indicadores,
+            'actividades' => $actividades
         ];
 
         return view('home', compact('widget'));

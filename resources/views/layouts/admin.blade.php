@@ -325,7 +325,7 @@
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle mr-2" src="/storage/{{ Auth::user()->imagen }}">
+                            <img class="img-profile rounded-circle mr-2"  src="{{ asset("/storage/" . Auth::user()->imagen) }}">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->nombre }}</span>
                         </a>
                         <!-- Dropdown - User Information -->

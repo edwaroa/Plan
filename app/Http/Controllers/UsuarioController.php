@@ -67,8 +67,8 @@ class UsuarioController extends Controller
         $ruta_imagen = $archivo->store('upload-usuarios', 'public');
 
         // resize de la imagen
-        $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 700);
-        $img->save(72);
+        // $img = Image::make(public_path("/storage/{$ruta_imagen}"))->resize(500, 700);
+        // $img->save(72);
 
         // Fecha actual
         $fecha = Carbon::now();
