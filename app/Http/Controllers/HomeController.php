@@ -39,7 +39,7 @@ class HomeController extends Controller
         $caracteristicas = Caracteristica::where('estado', 'Activado')->count();
         $aspectos = Aspecto::where('estado', 'Activado')->count();
         $indicadores = Indicador::where('estado', 'Activado')->count();
-        $actividades = Actividad::where('estado', 'Activado')->count();
+        $actividades = Actividad::all()->count();
 
         $widget = [
             'users' => $users,
