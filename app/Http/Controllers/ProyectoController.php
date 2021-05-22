@@ -308,6 +308,6 @@ class ProyectoController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdf.reporteProyectos', compact('proyectos', 'universidad', 'fecha', 'codigo'))->setPaper('a4', 'landscape');
 
-        return $pdf ->stream('proyectos.pdf');
+        return $pdf ->download('proyectos.pdf');
     }
 }
